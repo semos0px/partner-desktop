@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import normalize from "styled-normalize";
 import colors from "./constants/colors";
 import fonts from "./constants/fonts";
+import typography from "./constants/typography";
 
 const GlobalStyles = createGlobalStyle`
     ${normalize};
@@ -20,7 +21,7 @@ const GlobalStyles = createGlobalStyle`
 
     html {
         font-family: ${fonts.kr.primary};
-        font-size: 16px;
+        font-size: ${typography.size.base}px;
     }
 
     body {
