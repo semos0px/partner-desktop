@@ -69,6 +69,10 @@ const GlobalStyles = createGlobalStyle`
         padding-left: 0;
         list-style: none;
     }
+
+    address {
+        all: unset;
+    }
 `;
 
 export default GlobalStyles;
