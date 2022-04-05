@@ -1,15 +1,19 @@
 import styled from "styled-components";
 import transition from "../styles/func/transition";
 import colors from "../styles/constants/colors";
+import typography from "../styles/constants/typography";
 
 const SButton = styled.button`
-  height: 44px;
+  width: 100%;
+  height: 66px;
   padding: 10px 20px;
   background-color: ${({ color }) => (color === "blue" ? colors.blue : color)};
   color: ${({ fontColor }) =>
     fontColor === "white" ? colors.white : fontColor};
   border-radius: ${({ borderRadius }) => borderRadius}px;
   transition: ${transition("opacity")};
+  font-size: ${typography.size.medium}px;
+  font-weight: ${typography.weight.regular};
 
   &:hover,
   &:active {
@@ -23,6 +27,7 @@ const Button = ({
   color = "blue",
   fontColor = "white",
   borderRadius = "30",
+  clickHandler,
 }) => {
   return (
     <SButton
@@ -30,6 +35,7 @@ const Button = ({
       color={color}
       fontColor={fontColor}
       borderRadius={borderRadius}
+      onClick={clickHandler}
     >
       {children}
       {text}
