@@ -5,10 +5,11 @@ const colors = {
   lightRed: "#E635521A",
   red: "#E63553",
   violet: "#6D37BE",
-  lightGray: "#F9F9F9",
-  darkGray: "#707070",
+  lightGray: "#979797",
+  darkGray: "#4b4b4b",
   gray: "#ECECEC",
   vanilla: "#F4F4F4",
+  darkWhite: "#EBEBEB45",
   white: "#fff",
   black: "#000",
 };
