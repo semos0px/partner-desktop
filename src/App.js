@@ -13,6 +13,8 @@ import NotFound from "./pages/notFound";
 import ClassDetailPage from "./pages/class/detail";
 import AuthProvider, { ProtectRouter } from "./context/auth";
 import EditPartnerInfoPage from "./pages/user/edit";
+import ProfileDetailPage from "./pages/profile/detail";
+import NoticePage from "./pages/notice";
 
 const App = () => {
   return (
@@ -28,6 +30,7 @@ const App = () => {
                 <Route path=":pid" element={<EditPartnerInfoPage />} />
 
                 <Route path="profile" element={<ProfilePage />} />
+                <Route path="profile/:pid" element={<ProfileDetailPage />} />
 
                 <Route path="class/*" element={<ClassPage />}>
                   <Route path=":cid" element={<ClassDetailPage />} />
@@ -35,7 +38,9 @@ const App = () => {
 
                 <Route path="inquiry" element={<InquiryPage />} />
                 <Route path="sales" element={<SalesPage />} />
+
                 <Route path="viewmore" element={<ViewMore />} />
+                <Route path="notice" element={<NoticePage />} />
                 <Route path="signup" element={<SignUpPage />} />
 
                 <Route path="/*" element={<NotFound />} />
