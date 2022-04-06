@@ -6,6 +6,7 @@ import colors from "../styles/constants/colors";
 import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
 import flexbox from "../styles/func/flexbox";
+import zIndex from "../styles/constants/z-index";
 
 const SHeader = styled.header`
   width: 100%;
@@ -16,6 +17,7 @@ const SHeader = styled.header`
   top: 0;
   font-weight: ${typography.weight.regular};
   background-color: ${colors.white};
+  z-index: ${zIndex.header};
 `;
 
 const GoBackButton = styled.button`
