@@ -12,7 +12,7 @@ import ViewMore from "./pages/viewMore";
 import NotFound from "./pages/notFound";
 import ClassDetailPage from "./pages/class/detail";
 import AuthProvider, { ProtectRouter } from "./context/auth";
-import EditUserInfoPage from "./pages/user/edit";
+import EditPartnerInfoPage from "./pages/user/edit";
 
 const App = () => {
   return (
@@ -25,7 +25,7 @@ const App = () => {
                 <Route index element={<SignInPage />} />
                 <Route path="signup" element={<SignUpPage />} />
 
-                <Route path=":pid" element={<EditUserInfoPage />} />
+                <Route path=":pid" element={<EditPartnerInfoPage />} />
 
                 <Route path="profile" element={<ProfilePage />} />
 
@@ -42,7 +42,7 @@ const App = () => {
               </Routes>
             </ProtectRouter>
 
-            <GNB />
+            {/* <GNB /> */}
           </BrowserRouter>
         </GlobalLayout>
       </AuthProvider>
