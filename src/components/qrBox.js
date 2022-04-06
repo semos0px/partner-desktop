@@ -54,7 +54,7 @@ const QRBox = () => {
     {
       imgURL: iQRCode,
       alt: "ios QR code",
-      title: "ios 다운로드",
+      title: "iOS 다운로드",
     },
     {
       imgURL: aQRCode,
