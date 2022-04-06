@@ -43,11 +43,17 @@ const SelectIcon = styled.div`
   pointer-events: none;
 `;
 
-const SelectField = ({ name, value, label, optionList = [] }) => {
+const SelectField = ({
+  name,
+  value,
+  label,
+  optionList = [],
+  changeHandler,
+}) => {
   return (
     <Div>
       {label && <Label htmlFor={`select-${name}`}>{label}</Label>}
-      <Select name={name} id={`select-${name}`}>
+      <Select name={name} id={`select-${name}`} onChange={changeHandler}>
         <Option value={value}>연령대 선택</Option>
 
         {optionList.map((option, idx) => (
