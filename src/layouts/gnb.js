@@ -4,17 +4,18 @@ import NavList from "../components/navList";
 import profileIcon from "../assets/icon/navbar/profile.svg";
 import colors from "../styles/constants/colors";
 import base from "../styles/constants/base";
+import responsive from "../styles/constants/responsive";
 
 const Navbar = styled.nav`
-  max-width: 100%;
+  width: 100%;
+  max-width: ${responsive.maxWidth.sm}px;
   position: fixed;
   bottom: 0;
-  left: 0;
 
-  height: 85px;
+  height: ${base.gnbHeight}px;
   border-top-left-radius: ${base.borderRadius}px;
   border-top-right-radius: ${base.borderRadius}px;
-  /* background-color: ${colors.white}; */
+  background-color: ${colors.white};
   background-color: pink;
 `;
 
