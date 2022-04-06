@@ -3,16 +3,17 @@ import styled from "styled-components";
 import chevron from "../assets/icon/page/chevron.svg";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
+import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
 import flexbox from "../styles/func/flexbox";
 
 const SHeader = styled.header`
   width: 100%;
-  height: ${base.headerHeight}px;
+  max-width: ${responsive.maxWidth.sm}px;
+  height: ${base.height.header}px;
   ${flexbox()};
   position: fixed;
   top: 0;
-  left: 0;
   font-weight: ${typography.weight.regular};
   background-color: ${colors.white};
 `;

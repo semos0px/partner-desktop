@@ -12,11 +12,11 @@ const Navbar = styled.nav`
   position: fixed;
   bottom: 0;
 
-  height: ${base.gnbHeight}px;
+  height: ${base.height.gnb}px;
   border-top-left-radius: ${base.borderRadius}px;
   border-top-right-radius: ${base.borderRadius}px;
+  box-shadow: ${base.boxShadow};
   background-color: ${colors.white};
-  background-color: pink;
 `;
 
 const GNB = () => {
