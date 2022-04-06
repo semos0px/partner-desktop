@@ -1,6 +1,9 @@
 const base = {
-  gnbHeight: 85,
-  headerHeight: 44,
+  height: {
+    gnb: 85,
+    header: 44,
+    input: 60,
+  },
 
   borderRadius: 16,
 
