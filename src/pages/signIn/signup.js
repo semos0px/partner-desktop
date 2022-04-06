@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import InputField from "../../components/inputField";
 import SelectField from "../../components/selectField";
+import SexField from "../../components/sexField";
 import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
 import BottomButton from "../../modules/bottomButton";
@@ -18,17 +19,6 @@ const MobileValidateBox = styled.div`
   }
 `;
 
-const SexField = styled.div`
-  p {
-    margin-bottom: 10px;
-  }
-
-  button {
-  }
-`;
-
-const SexBox = styled.div``;
-
 const Button = styled.button`
   width: 40%;
   margin-left: 10px;
@@ -40,9 +30,9 @@ const Button = styled.button`
 
 const SignUpPage = () => {
   const [inputValue, setInputValue] = useState({
-    name: undefined,
-    ageGroup: undefined,
-    sex: "m",
+    name: "",
+    ageGroup: "",
+    isMale: true,
   });
 
   const [validated, setValidated] = useState(false);
@@ -62,6 +52,7 @@ const SignUpPage = () => {
 
   const infoChangeHandler = (e) => {
     const { name, value } = e.target;
+    console.log(name);
 
     setInputValue((prev) => ({
       ...prev,
@@ -77,14 +68,20 @@ const SignUpPage = () => {
     setValidated(true);
   };
 
-  const maleCheckHandler = () => {
-    setInputValue(inputValue.sex === "m");
-    console.log(inputValue.sex);
+  const maleCheckHandler = (e) => {
+    e.preventDefault();
+    setInputValue((prev) => ({
+      ...prev,
+      isMale: true,
+    }));
   };
 
-  const femaleCheckHandler = () => {
-    setInputValue(inputValue.sex === "f");
-    console.log(inputValue.sex);
+  const femaleCheckHandler = (e) => {
+    e.preventDefault();
+    setInputValue((prev) => ({
+      ...prev,
+      isMale: false,
+    }));
   };
 
   const ageGroupOptionList = [
@@ -127,13 +124,14 @@ const SignUpPage = () => {
             name="ageGroup"
             optionList={ageGroupOptionList}
             value={inputValue.ageGroup}
+            changeHandler={infoChangeHandler}
           />
 
-          {/* <SexField>
-            <p>성별을 알려주세요.</p>
-            <SexBox onClick={maleCheckHandler}>남성</SexBox>
-            <SexBox onClick={femaleCheckHandler}>여성</SexBox>
-          </SexField> */}
+          <SexField
+            isMale={inputValue.isMale}
+            maleCheckHandler={maleCheckHandler}
+            femaleCheckHandler={femaleCheckHandler}
+          />
 
           <MobileValidateBox>
             <p>전화번호를 알려주세요.</p>
