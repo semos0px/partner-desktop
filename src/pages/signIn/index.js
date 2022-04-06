@@ -54,7 +54,7 @@ const SignInPage = () => {
       </Header>
 
       <Greeting>
-        <strong>세모스 입정 강사님 환영합니다!</strong>
+        <strong>세모스 입점 강사님 환영합니다!</strong>
         <p>강사님의 강습 등록부터 관리까지 세모스로 해결하세요.</p>
       </Greeting>
 
