@@ -6,7 +6,7 @@ import responsive from "../styles/constants/responsive";
 const Container = styled.div`
   width: 100%;
   min-height: 100vh;
-  padding: 0 ${responsive.margin.sm}px;
+  /* padding: 0 ${responsive.margin.sm}px; */
   padding-bottom: 20px;
   background-color: ${({ backgroundColor }) =>
     backgroundColor === "white" ? colors.white : backgroundColor};
