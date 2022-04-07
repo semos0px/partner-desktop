@@ -4,8 +4,9 @@ import colors from "../styles/constants/colors";
 import selectIcon from "../assets/icon/input/select-chevron.svg";
 
 const Div = styled.div`
+  width: 100%;
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: ${({ isBottom }) => (isBottom ? `30px` : "0")};
 `;
 
 const Label = styled.label`
@@ -39,7 +40,7 @@ const Option = styled.option``;
 const SelectIcon = styled.div`
   position: absolute;
   right: 20px;
-  top: ${base.height.input / 2 + 15}px;
+  top: 15px;
   pointer-events: none;
 `;
 
@@ -49,12 +50,13 @@ const SelectField = ({
   label,
   optionList = [],
   changeHandler,
+  isBottom = true,
 }) => {
   return (
-    <Div>
+    <Div isBottom={isBottom}>
       {label && <Label htmlFor={`select-${name}`}>{label}</Label>}
       <Select name={name} id={`select-${name}`} onChange={changeHandler}>
-        <Option value={value}>연령대 선택</Option>
+        {/* <Option value={value}>연령대 선택</Option> */}
 
         {optionList.map((option, idx) => (
           <Option key={idx} value={option.value}>
