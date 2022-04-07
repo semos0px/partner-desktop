@@ -4,6 +4,7 @@ import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
 import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
+import RatingBox from "./ratingBox";
 
 const Card = styled.li`
   width: 100%;
@@ -40,26 +41,6 @@ const Title = styled.p`
   margin-bottom: 5px;
 `;
 
-const RatingBox = styled.div`
-  display: flex;
-  margin-bottom: 5px;
-`;
-
-const Rating = styled.div`
-  display: flex;
-  align-items: center;
-
-  &:first-child {
-    margin-right: 5px;
-  }
-
-  span {
-    margin-left: 3px;
-    font-size: ${typography.size.tiny}px;
-    color: ${colors.mediumGray}
-    
-`;
-
 const RegionBox = styled.div`
   font-size: ${typography.size.micro}px;
 `;
@@ -73,13 +54,7 @@ const ProfileCard = ({ profile }) => {
         <MetaData>
           <Title>{`[${profile.category}] ${profile.nickname}(${profile.name})`}</Title>
 
-          <RatingBox>
-            <Rating>
-              {profile.rating} <span>/5</span>
-            </Rating>
-
-            <Rating>{profile.like}</Rating>
-          </RatingBox>
+          <RatingBox rating={profile.rating} like={profile.like} />
 
           <RegionBox>{profile.region.join(" | ")}</RegionBox>
         </MetaData>
