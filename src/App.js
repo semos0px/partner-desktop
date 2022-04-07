@@ -16,6 +16,7 @@ import EditPartnerInfoPage from "./pages/user/edit";
 import ProfileDetailPage from "./pages/profile/detail";
 import NoticePage from "./pages/notice";
 import FAQPage from "./pages/faq";
+import ProfileEditPage from "./pages/profile/edit";
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
 
                 <Route path="profile" element={<ProfilePage />} />
                 <Route path="profile/:pid" element={<ProfileDetailPage />} />
+                <Route path="profile/:pid/edit" element={<ProfileEditPage />} />
 
                 <Route path="class/*" element={<ClassPage />}>
                   <Route path=":cid" element={<ClassDetailPage />} />
