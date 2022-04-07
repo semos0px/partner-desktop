@@ -15,6 +15,7 @@ import AuthProvider, { ProtectRouter } from "./context/auth";
 import EditPartnerInfoPage from "./pages/user/edit";
 import ProfileDetailPage from "./pages/profile/detail";
 import NoticePage from "./pages/notice";
+import FAQPage from "./pages/faq";
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
 
                 <Route path="viewmore" element={<ViewMore />} />
                 <Route path="notice" element={<NoticePage />} />
+                <Route path="faq" element={<FAQPage />} />
                 <Route path="signup" element={<SignUpPage />} />
 
                 <Route path="/*" element={<NotFound />} />
