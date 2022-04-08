@@ -7,6 +7,7 @@ import FAQList from "../../data/faq/faqList";
 import usePagination from "../../hooks/usePagination";
 import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
+import SearchBar from "../../components/searchBar";
 
 const FAQ_PER_PAGE = 10;
 
@@ -36,7 +37,7 @@ const FAQPage = () => {
   return (
     <PageLayout headerTitle="자주 묻는 질문" isGoBack={true}>
       <PaddingLayout>
-        <InputField
+        <SearchBar
           placeholder="어떤 내용이 궁금한가요?"
           value={searchInput}
           changeHandler={searchInputChangeHandler}
