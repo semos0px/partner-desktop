@@ -6,6 +6,8 @@ import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
 import flexbox from "../styles/func/flexbox";
 import transition from "../styles/func/transition";
+import appleIcon from "../assets/icon/login/apple.svg";
+import kakaoIcon from "../assets/icon/login/kakao.svg";
 
 const Box = styled.div`
   width: 100%;
@@ -32,6 +34,7 @@ const ButtonBox = styled.div`
   padding: 0 40px;
 
   button {
+    ${flexbox()}
     width: 100%;
     height: 66px;
     padding: 10px 20px;
@@ -40,14 +43,18 @@ const ButtonBox = styled.div`
     font-size: ${typography.size.medium}px;
     font-weight: ${typography.weight.regular};
 
+    img {
+      margin-right: 10px;
+    }
+
     &:first-child {
       margin-bottom: 10px;
     }
-  }
 
-  &:hover,
-  &:active {
-    opacity: 0.8;
+    &:hover,
+    &:active {
+      opacity: 0.8;
+    }
   }
 
   ${responsive.mediaQuery.mobile} {
@@ -78,9 +85,11 @@ const LoginBox = () => {
 
       <ButtonBox>
         <KakaoButton type="button" onClick={loginHandler}>
+          <img src={kakaoIcon} />
           카카오톡으로 로그인하기
         </KakaoButton>
         <AppleButton type="button" onClick={loginHandler}>
+          <img src={appleIcon} />
           Apple로 로그인하기
         </AppleButton>
       </ButtonBox>
