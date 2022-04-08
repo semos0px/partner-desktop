@@ -23,6 +23,7 @@ const Input = styled.input`
   border-radius: ${base.borderRadius}px;
   color: ${colors.mediumGray};
   padding: 10px 20px;
+  padding-right: ${({ isIcon }) => (isIcon ? "50px" : "20px")};
 
   :focus {
     box-shadow: ${base.boxShadow};
@@ -37,6 +38,7 @@ const InputField = ({
   placeholder = "",
   type = "text",
   changeHandler,
+  isIcon = false,
 }) => {
   return (
     <Div>
@@ -49,6 +51,7 @@ const InputField = ({
           value={value}
           placeholder={placeholder}
           onChange={changeHandler}
+          isIcon={isIcon}
         />
         {children}
       </InputWrapper>
