@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import CheckBox from "../../components/checkBox";
-import ReportsCard from "../../components/reportsCard";
+import CommonCard from "../../components/commonCard";
 import SearchBar from "../../components/searchBar";
 import SelectField from "../../components/selectField";
 import reportsList from "../../data/reports";
@@ -49,12 +49,17 @@ const ReportsPage = () => {
 
           <FilterBox>
             <SelectField optionList={optionList} isBottom={false} />
-            <CheckBox label="미작성" name="written" value={written} />
+            <CheckBox
+              label="미작성"
+              name="written"
+              value={written}
+              checkHandler={() => setWritten(!written)}
+            />
           </FilterBox>
 
           <List>
             {filterdList.map((item, idx) => (
-              <ReportsCard key={idx} report={item} />
+              <CommonCard key={idx} item={item} page="reports" />
             ))}
           </List>
         </RowLayout>
