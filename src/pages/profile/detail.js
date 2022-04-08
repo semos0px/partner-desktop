@@ -3,13 +3,18 @@ import styled from "styled-components";
 import Carousel from "../../components/carousel";
 import ImageBox from "../../components/imageBox";
 import profileDetailData from "../../data/profile/detail";
-import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
 import BottomButton from "../../modules/bottomButton";
 import base from "../../styles/constants/base";
 import colors from "../../styles/constants/colors";
 import responsive from "../../styles/constants/responsive";
 import typography from "../../styles/constants/typography";
+
+const PaddingLayout = styled.div`
+  width: 100%;
+  height: 100%;
+  padding-top: ${base.height.header}px;
+`;
 
 const ProfileImageBox = styled.div`
   position: relative;
@@ -31,7 +36,7 @@ const MainImage = styled.img`
 `;
 
 const MetaDataBox = styled.div`
-  padding: ${60 + 15}px 15px 15px;
+  padding: ${60 + 15}px 15px;
 `;
 
 const Title = styled.p`
@@ -85,14 +90,14 @@ const ProfileDetailPage = () => {
     title,
     career,
     category: { main, sub },
-    image: { lesson },
+    image: { lesson, background },
   } = profileDetailData;
 
   return (
     <PageLayout headerTitle={`[${sub}] ${title}`} isGoBack={true}>
       <PaddingLayout>
         <ProfileImageBox>
-          <Carousel />
+          {/* <Carousel /> */}
 
           <MainImage />
         </ProfileImageBox>
