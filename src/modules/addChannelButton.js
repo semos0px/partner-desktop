@@ -8,9 +8,9 @@ const Button = styled.button`
 
 const AddChannelButton = () => {
   const addChannelHandler = () => {
-    // Kakao.Channel.chat({
-    //   channelPublicId: "_YxfVxfK",
-    // });
+    window.Kakao.Channel.chat({
+      channelPublicId: "_YxfVxfK",
+    });
   };
 
   return (
