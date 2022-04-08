@@ -19,6 +19,9 @@ import FAQPage from "./pages/faq";
 import ProfileEditPage from "./pages/profile/edit";
 import ReportsPage from "./pages/reports";
 import ReportsDetailPage from "./pages/reports/detail";
+import ReportsWritePage from "./pages/reports/write";
+import InquiryMessage from "./pages/inquiry/message";
+import CancelPage from "./pages/sales/cancelList";
 
 const App = () => {
   return (
@@ -42,14 +45,21 @@ const App = () => {
                 </Route>
 
                 <Route path="inquiry" element={<InquiryPage />} />
+                <Route path="inquiry/:mid" element={<InquiryMessage />} />
+
                 <Route path="sales" element={<SalesPage />} />
+                <Route path="cancel" element={<CancelPage />} />
 
                 <Route path="viewmore" element={<ViewMore />} />
                 <Route path="notice" element={<NoticePage />} />
                 <Route path="faq" element={<FAQPage />} />
 
                 <Route path="reports" element={<ReportsPage />} />
-                <Route path="reports/:rid" element={<ReportsDetailPage />} />
+                <Route path="reports/:sid" element={<ReportsDetailPage />} />
+                <Route
+                  path="reports/:sid/write"
+                  element={<ReportsWritePage />}
+                />
 
                 <Route path="signup" element={<SignUpPage />} />
 
