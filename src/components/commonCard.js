@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
+import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
 import flexbox from "../styles/func/flexbox";
 
@@ -29,12 +30,18 @@ const LeftData = styled.div`
 `;
 
 const RightData = styled.div`
+  max-width: 40%;
   height: 100%;
   ${flexbox("space-between", "flex-end", "column")}
 
   time {
     display: block;
     font-size: ${typography.size.small}px;
+    white-space: nowrap;
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    width: 100%;
   }
 `;
 
@@ -47,6 +54,7 @@ const StatusIcon = styled.span`
   font-weight: ${typography.weight.regular};
   font-size: ${typography.size.small}px;
   margin-bottom: 5px;
+  white-space: nowrap;
 `;
 
 const Nickname = styled.p`
@@ -64,25 +72,35 @@ const Category = styled.p`
   font-size: ${typography.size.small}px;
 `;
 
-const ReportsCard = ({ report }) => {
+const CommonCard = ({ item, page }) => {
   return (
     <Card>
-      <SLink to={`/reports/${report.id}`}>
+      <SLink to={`/${page}/${item.id}`}>
         <LeftData>
-          <Nickname>{report.nickname}님</Nickname>
-          <Title>{report.lesson}</Title>
-          <Category>{report.category}</Category>
+          <Nickname>{item.nickname}님</Nickname>
+          <Title>{item.lesson}</Title>
+          <Category>
+            {page === "reports" ? item.category : item.comment}
+          </Category>
         </LeftData>
 
         <RightData>
-          <time>{report.datetime}</time>
-          <StatusIcon color={report.status ? colors.mediumGray : colors.red}>
-            {report.status ? "작성 완료" : "미작성"}
-          </StatusIcon>
+          <time>{item.datetime}</time>
+          {page === "reports" && (
+            <StatusIcon color={item.status ? colors.mediumGray : colors.red}>
+              {item.status ? "작성 완료" : "미작성"}
+            </StatusIcon>
+          )}
+
+          {page === "inquiry" && (
+            <StatusIcon color={item.status ? colors.mediumGray : colors.red}>
+              {item.status ? "확인 완료" : "미확인"}
+            </StatusIcon>
+          )}
         </RightData>
       </SLink>
     </Card>
   );
 };
 
-export default ReportsCard;
+export default CommonCard;
