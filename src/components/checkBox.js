@@ -18,10 +18,15 @@ const Input = styled.input`
   height: 20px;
 `;
 
-const CheckBox = ({ label = "", name, value }) => {
+const CheckBox = ({ label = "", name, value, checkHandler }) => {
   return (
     <Box>
-      <Input type="checkbox" name={name} value={value} />
+      <Input
+        type="checkbox"
+        name={name}
+        checked={value}
+        onChange={checkHandler}
+      />
       <Label>{label}</Label>
     </Box>
   );
