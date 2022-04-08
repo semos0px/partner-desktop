@@ -52,17 +52,17 @@ const Carousel = ({ classImageList }) => {
 
   const TOTAL_SLIDES = classImageList.length - 1;
 
-  //   const nextSlideHandler = () => {
-  //     if (currentSlide < TOTAL_SLIDES) {
-  //       setCurrentSlide(currentSlide + 1);
-  //     }
-  //   };
+  const nextSlideHandler = () => {
+    if (currentSlide < TOTAL_SLIDES) {
+      setCurrentSlide(currentSlide + 1);
+    }
+  };
 
-  //   const prevSlideHandler = () => {
-  //     if (currentSlide !== 0) {
-  //       setCurrentSlide(currentSlide - 1);
-  //     }
-  //   };
+  const prevSlideHandler = () => {
+    if (currentSlide !== 0) {
+      setCurrentSlide(currentSlide - 1);
+    }
+  };
 
   return (
     <Container>
