@@ -17,6 +17,8 @@ import ProfileDetailPage from "./pages/profile/detail";
 import NoticePage from "./pages/notice";
 import FAQPage from "./pages/faq";
 import ProfileEditPage from "./pages/profile/edit";
+import ReportsPage from "./pages/reports";
+import ReportsDetailPage from "./pages/reports/detail";
 
 const App = () => {
   return (
@@ -45,6 +47,10 @@ const App = () => {
                 <Route path="viewmore" element={<ViewMore />} />
                 <Route path="notice" element={<NoticePage />} />
                 <Route path="faq" element={<FAQPage />} />
+
+                <Route path="reports" element={<ReportsPage />} />
+                <Route path="reports/:rid" element={<ReportsDetailPage />} />
+
                 <Route path="signup" element={<SignUpPage />} />
 
                 <Route path="/*" element={<NotFound />} />
