@@ -22,6 +22,8 @@ import ReportsDetailPage from "./pages/reports/detail";
 import ReportsWritePage from "./pages/reports/write";
 import InquiryMessage from "./pages/inquiry/message";
 import CancelPage from "./pages/sales/cancelList";
+import CancelDetailPage from "./pages/sales/cancelDetail";
+import SalesDetailPage from "./pages/sales/detail";
 
 const App = () => {
   return (
@@ -48,7 +50,9 @@ const App = () => {
                 <Route path="inquiry/:mid" element={<InquiryMessage />} />
 
                 <Route path="sales" element={<SalesPage />} />
+                <Route path="sales/:sid" element={<SalesDetailPage />} />
                 <Route path="cancel" element={<CancelPage />} />
+                <Route path="cancel/:cid" element={<CancelDetailPage />} />
 
                 <Route path="viewmore" element={<ViewMore />} />
                 <Route path="notice" element={<NoticePage />} />
