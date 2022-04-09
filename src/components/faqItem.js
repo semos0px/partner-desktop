@@ -19,7 +19,6 @@ const QuestionBox = styled.div`
   width: 100%;
   height: 50px;
   ${flexbox("space-between")}
-  padding: 0 20px;
   cursor: pointer;
 
   img {

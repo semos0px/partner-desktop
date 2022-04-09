@@ -8,6 +8,8 @@ import BottomButton from "../../modules/bottomButton";
 import colors from "../../styles/constants/colors";
 import SelectField from "../../components/selectField";
 import base from "../../styles/constants/base";
+import RowLayout from "../../layouts/rowLayout";
+import responsive from "../../styles/constants/responsive";
 
 const Form = styled.form`
   color: ${colors.black};
@@ -20,12 +22,16 @@ const MobileValidateBox = styled.div`
 `;
 
 const Button = styled.button`
-  width: 40%;
+  width: 50%;
   margin-left: 10px;
   color: ${colors.white};
   border-radius: ${base.borderRadius}px;
   background-color: ${({ isActive }) =>
     isActive ? colors.mediumGray : colors.blue};
+
+  ${responsive.mediaQuery.mobile} {
+    width: 40%;
+  }
 `;
 
 const EditPartnerInfoPage = () => {
@@ -96,51 +102,53 @@ const EditPartnerInfoPage = () => {
   return (
     <>
       <PageLayout headerTitle="개인정보 수정" isGoBack={true}>
-        <PaddingLayout>
-          <Form onSubmit={partnerInfoSubmitHandler}>
-            <InputField
-              label="이름"
-              placeholder="본명"
-              name="name"
-              value={inputValue.name}
-              changeHandler={infoChangeHandler}
-            />
+        <PaddingLayout isBottomButton={true}>
+          <RowLayout>
+            <Form onSubmit={partnerInfoSubmitHandler}>
+              <InputField
+                label="이름"
+                placeholder="본명"
+                name="name"
+                value={inputValue.name}
+                changeHandler={infoChangeHandler}
+              />
 
-            <SelectField
-              label="연령대"
-              name="ageGroup"
-              optionList={ageGroupOptionList}
-              value={inputValue.ageGroup}
-            />
+              <SelectField
+                label="연령대"
+                name="ageGroup"
+                optionList={ageGroupOptionList}
+                value={inputValue.ageGroup}
+              />
 
-            <MobileValidateBox>
-              <p>전화번호를 알려주세요.</p>
-              <InputField name="mobileNumber" placeholder="-없이 입력">
-                <Button
-                  type="button"
-                  onClick={sendCertificationNumHandler}
-                  isActive={sendCertificationNum}
-                >
-                  인증번호 전송
-                </Button>
-              </InputField>
-              <InputField name="mobileNumber" placeholder="6자리 입력">
-                {sendCertificationNum && (
-                  <Button type="button" onClick={verifiedHandler}>
-                    인증하기
+              <MobileValidateBox>
+                <p>전화번호를 알려주세요.</p>
+                <InputField name="mobileNumber" placeholder="-없이 입력">
+                  <Button
+                    type="button"
+                    onClick={sendCertificationNumHandler}
+                    isActive={sendCertificationNum}
+                  >
+                    인증번호 전송
                   </Button>
-                )}
-              </InputField>
-            </MobileValidateBox>
-          </Form>
+                </InputField>
+                <InputField name="mobileNumber" placeholder="6자리 입력">
+                  {sendCertificationNum && (
+                    <Button type="button" onClick={verifiedHandler}>
+                      인증하기
+                    </Button>
+                  )}
+                </InputField>
+              </MobileValidateBox>
+            </Form>
+
+            <BottomButton
+              text="수정완료"
+              color={validated ? colors.blue : colors.mediumGray}
+              clickHandler={partnerInfoSubmitHandler}
+            />
+          </RowLayout>
         </PaddingLayout>
       </PageLayout>
-
-      <BottomButton
-        text="수정완료"
-        color={validated ? colors.blue : colors.mediumGray}
-        clickHandler={partnerInfoSubmitHandler}
-      />
     </>
   );
 };

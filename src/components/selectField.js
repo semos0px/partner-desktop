@@ -4,8 +4,8 @@ import colors from "../styles/constants/colors";
 import selectIcon from "../assets/icon/input/select-chevron.svg";
 
 const Div = styled.div`
-  width: 100%;
   position: relative;
+  width: 100%;
   margin-bottom: ${({ isBottom }) => (isBottom ? `30px` : "0")};
 `;
 
@@ -40,7 +40,7 @@ const Option = styled.option``;
 const SelectIcon = styled.div`
   position: absolute;
   right: 20px;
-  top: 15px;
+  bottom: 20px;
   pointer-events: none;
 `;
 
@@ -64,6 +64,7 @@ const SelectField = ({
           </Option>
         ))}
       </Select>
+
       <SelectIcon>
         <img src={selectIcon} />
       </SelectIcon>

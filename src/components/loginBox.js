@@ -13,7 +13,7 @@ const Box = styled.div`
   width: 100%;
   ${flexbox("center", "center", "column")};
   margin: 50px 0;
-  padding: 50px 0;
+  padding: 50px 10px;
   background-color: ${colors.white};
   border-radius: ${base.borderRadius}px;
   box-shadow: ${base.boxShadow};
@@ -31,7 +31,6 @@ const Title = styled.p`
 const ButtonBox = styled.div`
   width: 100%;
   margin-top: 50px;
-  padding: 0 40px;
 
   button {
     ${flexbox()}

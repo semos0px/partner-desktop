@@ -4,9 +4,11 @@ import colors from "../styles/constants/colors";
 import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
 
+const LEFT_RIGHT_PADDING = 20;
+
 const Button = styled.button`
-  max-width: ${responsive.maxWidth.sm}px;
-  width: 100%;
+  max-width: ${responsive.maxWidth.sm - LEFT_RIGHT_PADDING}px;
+  width: calc(100% - ${LEFT_RIGHT_PADDING}px);
   height: 66px;
   position: fixed;
   bottom: 10px;

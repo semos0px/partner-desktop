@@ -22,7 +22,7 @@ const SHeader = styled.header`
 
 const GoBackButton = styled.button`
   position: absolute;
-  left: 10px;
+  left: 0;
   padding: 10px;
 
   img {

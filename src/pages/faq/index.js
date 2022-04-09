@@ -8,6 +8,7 @@ import usePagination from "../../hooks/usePagination";
 import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
 import SearchBar from "../../components/searchBar";
+import RowLayout from "../../layouts/rowLayout";
 
 const FAQ_PER_PAGE = 10;
 
@@ -37,28 +38,30 @@ const FAQPage = () => {
   return (
     <PageLayout headerTitle="자주 묻는 질문" isGoBack={true}>
       <PaddingLayout>
-        <SearchBar
-          placeholder="어떤 내용이 궁금한가요?"
-          value={searchInput}
-          changeHandler={searchInputChangeHandler}
-        />
-
-        <Main>
-          <List>
-            {FAQList.slice(offset, offset + limit).map((faq) => (
-              <FAQItem key={faq.id} faq={faq} idx={faq.id} />
-            ))}
-          </List>
-        </Main>
-
-        <Footer>
-          <Pagination
-            total={faqList.length}
-            limit={limit}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+        <RowLayout>
+          <SearchBar
+            placeholder="어떤 내용이 궁금한가요?"
+            value={searchInput}
+            changeHandler={searchInputChangeHandler}
           />
-        </Footer>
+
+          <Main>
+            <List>
+              {FAQList.slice(offset, offset + limit).map((faq) => (
+                <FAQItem key={faq.id} faq={faq} idx={faq.id} />
+              ))}
+            </List>
+          </Main>
+
+          <Footer>
+            <Pagination
+              total={faqList.length}
+              limit={limit}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
+          </Footer>
+        </RowLayout>
       </PaddingLayout>
     </PageLayout>
   );

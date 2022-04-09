@@ -2,7 +2,9 @@ import styled from "styled-components";
 import LoginBox from "../../components/loginBox";
 import SNSBox from "../../components/snsBox";
 import Footer from "../../layouts/footer";
+import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
+import RowLayout from "../../layouts/rowLayout";
 import AddChannelButton from "../../modules/addChannelButton";
 import Logo from "../../modules/logo";
 import colors from "../../styles/constants/colors";
@@ -49,32 +51,34 @@ const A = styled.a`
 const SignInPage = () => {
   return (
     <PageLayout>
-      <Header>
-        <Logo />
-      </Header>
+      <RowLayout>
+        <Header>
+          <Logo />
+        </Header>
 
-      <Greeting>
-        <strong>세모스 입점 강사님 환영합니다!</strong>
-        <p>강사님의 강습 등록부터 관리까지 세모스로 해결하세요.</p>
-      </Greeting>
+        <Greeting>
+          <strong>세모스 입점 강사님 환영합니다!</strong>
+          <p>강사님의 강습 등록부터 관리까지 세모스로 해결하세요.</p>
+        </Greeting>
 
-      <LoginBox />
+        <LoginBox />
 
-      <Box>
-        <A href="http://reports.semos.kr/" target="_blank">
-          세모스에 대해 궁금하다면?
-        </A>
+        <Box>
+          <A href="http://reports.semos.kr/" target="_blank">
+            세모스에 대해 궁금하다면?
+          </A>
 
-        <p>
-          고객센터: 카카오톡 채널 <AddChannelButton />
-        </p>
+          <p>
+            고객센터: 카카오톡 채널 <AddChannelButton />
+          </p>
 
-        <time>(평일 AM 10:00 - PM 07:00)</time>
+          <time>(평일 AM 10:00 - PM 07:00)</time>
 
-        <SNSBox />
-      </Box>
+          <SNSBox />
+        </Box>
 
-      <Footer />
+        <Footer />
+      </RowLayout>
     </PageLayout>
   );
 };

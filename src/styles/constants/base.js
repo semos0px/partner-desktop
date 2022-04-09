@@ -3,6 +3,7 @@ const base = {
     gnb: 85,
     header: 44,
     input: 60,
+    bottomButton: 66,
   },
 
   borderRadius: 16,

@@ -5,6 +5,7 @@ import RatingBox from "../../components/ratingBox";
 import classList from "../../data/class";
 import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
+import RowLayout from "../../layouts/rowLayout";
 import colors from "../../styles/constants/colors";
 import typography from "../../styles/constants/typography";
 import flexbox from "../../styles/func/flexbox";
@@ -69,39 +70,41 @@ const ClassPage = () => {
   return (
     <PageLayout headerTitle="강습">
       <PaddingLayout>
-        <ProfileSection>
-          <Avatar />
+        <RowLayout>
+          <ProfileSection>
+            <Avatar />
 
-          <MetaData>
-            <Title>{`[${profile.category}] ${profile.nickname}(${profile.name})`}</Title>
+            <MetaData>
+              <Title>{`[${profile.category}] ${profile.nickname}(${profile.name})`}</Title>
 
-            <RatingBox rating={profile.rating} like={profile.like} />
+              <RatingBox rating={profile.rating} like={profile.like} />
 
-            <RegionBox>{profile.region.join(" | ")}</RegionBox>
-          </MetaData>
-        </ProfileSection>
+              <RegionBox>{profile.region.join(" | ")}</RegionBox>
+            </MetaData>
+          </ProfileSection>
 
-        <Main>
-          <ClassSection>
-            <Title>일반강습</Title>
-            <Description>
-              수정 또는 일정 등록은 해당 강습을 클릭해 주세요.
-            </Description>
+          <Main>
+            <ClassSection>
+              <Title>일반강습</Title>
+              <Description>
+                수정 또는 일정 등록은 해당 강습을 클릭해 주세요.
+              </Description>
 
-            <ul>
-              {classList.general.map((item, idx) => (
+              <ul>
+                {classList.general.map((item, idx) => (
+                  <ClassCard key={idx} classItem={item} />
+                ))}
+              </ul>
+            </ClassSection>
+
+            <ClassSection>
+              <Title>세모스 크루 강습</Title>
+              {classList.crew.map((item, idx) => (
                 <ClassCard key={idx} classItem={item} />
               ))}
-            </ul>
-          </ClassSection>
-
-          <ClassSection>
-            <Title>세모스 크루 강습</Title>
-            {classList.crew.map((item, idx) => (
-              <ClassCard key={idx} classItem={item} />
-            ))}
-          </ClassSection>
-        </Main>
+            </ClassSection>
+          </Main>
+        </RowLayout>
       </PaddingLayout>
     </PageLayout>
   );

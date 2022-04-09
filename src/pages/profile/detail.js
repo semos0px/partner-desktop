@@ -4,6 +4,7 @@ import Carousel from "../../components/carousel";
 import ImageBox from "../../components/imageBox";
 import profileDetailData from "../../data/profile/detail";
 import PageLayout from "../../layouts/pageLayout";
+import RowLayout from "../../layouts/rowLayout";
 import BottomButton from "../../modules/bottomButton";
 import base from "../../styles/constants/base";
 import colors from "../../styles/constants/colors";
@@ -14,6 +15,7 @@ const PaddingLayout = styled.div`
   width: 100%;
   height: 100%;
   padding-top: ${base.height.header}px;
+  padding-bottom: 56px;
 `;
 
 const ProfileImageBox = styled.div`
@@ -120,13 +122,15 @@ const ProfileDetailPage = () => {
             <ImageBox imageList={lesson} />
           </ClassImageBox>
         </MetaDataBox>
-      </PaddingLayout>
 
-      <BottomButton
-        text="수정하기"
-        color={colors.blue}
-        clickHandler={() => navigate(`/profile/${pid}/edit`)}
-      />
+        <RowLayout>
+          <BottomButton
+            text="수정하기"
+            color={colors.blue}
+            clickHandler={() => navigate(`/profile/${pid}/edit`)}
+          />
+        </RowLayout>
+      </PaddingLayout>
     </PageLayout>
   );
 };
