@@ -10,6 +10,8 @@ import base from "../../styles/constants/base";
 import colors from "../../styles/constants/colors";
 import responsive from "../../styles/constants/responsive";
 import typography from "../../styles/constants/typography";
+import awardsIcon from "../../assets/icon/profile/awards.svg";
+import flexbox from "../../styles/func/flexbox";
 
 const PaddingLayout = styled.div`
   width: 100%;
@@ -51,11 +53,6 @@ const CareerBox = styled.div`
   width: 100%;
   margin-bottom: 50px;
 
-  p {
-    font-weight: ${typography.weight.regular};
-    margin-bottom: 10px;
-  }
-
   ul {
     width: 100%;
 
@@ -73,6 +70,19 @@ const CareerBox = styled.div`
       display: flex;
       flex-wrap: wrap;
     }
+  }
+`;
+
+const TitleBox = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+
+  img {
+    margin-right: 5px;
+  }
+
+  p {
+    font-weight: ${typography.weight.regular};
   }
 `;
 
@@ -99,7 +109,7 @@ const ProfileDetailPage = () => {
     <PageLayout headerTitle={`[${sub}] ${title}`} isGoBack={true}>
       <PaddingLayout>
         <ProfileImageBox>
-          {/* <Carousel /> */}
+          <Carousel classImageList={background} />
 
           <MainImage />
         </ProfileImageBox>
@@ -108,7 +118,10 @@ const ProfileDetailPage = () => {
           <Title>{`[${sub}] ${title}`}</Title>
 
           <CareerBox>
-            <p>시설/강사 경력</p>
+            <TitleBox>
+              <img src={awardsIcon} />
+              <p>시설/강사 경력</p>
+            </TitleBox>
 
             <ul>
               {career.map((item, idx) => (
