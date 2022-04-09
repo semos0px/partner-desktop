@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
+import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
 import flexbox from "../styles/func/flexbox";
 import DateField from "./dateField";
@@ -25,9 +26,8 @@ const SLink = styled(Link)`
   color: ${colors.blue};
   background-color: ${colors.white};
   padding: 5px 10px;
-  font-size: ${typography.size.base}px;
   white-space: nowrap;
-  border-radius: ${base.borderRadius}px;
+  border-radius: 5px;
 `;
 
 const Total = styled.div`
