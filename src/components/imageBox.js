@@ -45,8 +45,6 @@ const Container = styled.div`
   }
 `;
 
-const ScrollBar = styled.div``;
-
 const ImageBox = ({ imageList }) => {
   return (
     <Container>
@@ -57,10 +55,6 @@ const ImageBox = ({ imageList }) => {
           </li>
         ))}
       </ul>
-
-      <ScrollBar>
-        <bar></bar>
-      </ScrollBar>
     </Container>
   );
 };
