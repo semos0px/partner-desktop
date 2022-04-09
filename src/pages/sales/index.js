@@ -11,6 +11,9 @@ import flexbox from "../../styles/func/flexbox";
 import salesImage from "../../assets/images/sale/sale-default.png";
 import { useState } from "react";
 import HistoryBox from "../../components/historyBox";
+import RowLayout from "../../layouts/rowLayout";
+import SalesCertainCard from "../../components/salesCertainCard";
+import SalesUncertainCard from "../../components/salesUncertainCard";
 
 const Header = styled.header`
   width: 100%;
@@ -25,13 +28,43 @@ const Header = styled.header`
   border-bottom-right-radius: ${base.borderRadius}px;
   box-shadow: ${base.boxShadow};
   overflow: hidden;
-  padding: 0 10px 50px;
+  padding: 0 10px 30px;
 
   p {
     width: 100%;
     ${flexbox()}
     height: ${base.height.header}px;
   }
+`;
+
+const WrapperLayout = styled.div`
+  padding-top: 210px;
+`;
+
+const Section = styled.section`
+  margin: 50px 0;
+`;
+
+const List = styled.ul`
+  box-shadow: ${base.boxShadow};
+  padding: 20px;
+  border-radius: ${base.borderRadius}px;
+`;
+
+const Title = styled.p`
+  span {
+    color: ${colors.blue};
+  }
+`;
+
+const Comment = styled.p`
+  margin-top: 5px;
+  color: ${colors.mediumGray};
+  font-size: ${typography.size.small}px;
+`;
+
+const Top = styled.div`
+  margin-bottom: 20px;
 `;
 
 const SalesPage = () => {
@@ -45,19 +78,59 @@ const SalesPage = () => {
         <p>판매</p>
 
         <HistoryBox
-          cnt={data.certain.length + data.uncertain.length}
-          income={data.income}
+          cnt={data ? data.certain.length + data.uncertain.length : 0}
+          income={data ? data.income : 0}
         />
       </Header>
 
-      {data.length === 0 && (
-        <NotExistBox
-          page="sales"
-          imgURL={salesImage}
-          redirectPath="/class"
-          comment="나의 강습을 확인하고 강습 일정을 등록해 보세요!"
-        />
-      )}
+      <WrapperLayout>
+        {data.length === 0 && (
+          <NotExistBox
+            page="sales"
+            imgURL={salesImage}
+            redirectPath="/class"
+            comment="나의 강습을 확인하고 강습 일정을 등록해 보세요!"
+          />
+        )}
+
+        {data && (
+          <RowLayout>
+            <Section>
+              <Top>
+                <Title>
+                  일정 확인이 필요해요! <span>({data.uncertain.length}건)</span>
+                </Title>
+                <Comment>아래 강습을 클릭해서 일정을 확정해 주세요.</Comment>
+              </Top>
+
+              <List>
+                {data.uncertain.map((item, idx) => (
+                  <SalesUncertainCard
+                    length={data.uncertain.length}
+                    idx={idx}
+                    key={idx}
+                    sales={item}
+                  />
+                ))}
+              </List>
+            </Section>
+
+            <Section>
+              <Top>
+                <Title>
+                  일정이 확인 된 강습이에요. ({data.certain.length}건)
+                </Title>
+              </Top>
+
+              <ul>
+                {data.certain.map((item, idx) => (
+                  <SalesCertainCard sales={item} key={idx} />
+                ))}
+              </ul>
+            </Section>
+          </RowLayout>
+        )}
+      </WrapperLayout>
     </PageLayout>
   );
 };
