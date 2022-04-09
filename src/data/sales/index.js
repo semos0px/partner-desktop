@@ -34,6 +34,14 @@ const salesData = {
       status: false,
       datetime: "2월 13일(일)",
     },
+    {
+      id: 2,
+      category: "스쿠버다이빙",
+      title: "오픈워터 코스",
+      price: 360000,
+      status: true,
+      datetime: "2월 13일(일)",
+    },
   ],
 };
 
