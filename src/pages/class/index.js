@@ -9,6 +9,7 @@ import RowLayout from "../../layouts/rowLayout";
 import colors from "../../styles/constants/colors";
 import typography from "../../styles/constants/typography";
 import flexbox from "../../styles/func/flexbox";
+import regionIcon from "../../assets/icon/region/region.png";
 
 const ProfileSection = styled.section`
   width: 100%;
@@ -34,6 +35,13 @@ const Title = styled.p`
 
 const RegionBox = styled.div`
   font-size: ${typography.size.micro}px;
+  ${flexbox("flex-start")}
+
+  img {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+  }
 `;
 
 const Main = styled.main`
@@ -79,7 +87,10 @@ const ClassPage = () => {
 
               <RatingBox rating={profile.rating} like={profile.like} />
 
-              <RegionBox>{profile.region.join(" | ")}</RegionBox>
+              <RegionBox>
+                <img src={regionIcon} />
+                {profile.region.join(" | ")}
+              </RegionBox>
             </MetaData>
           </ProfileSection>
 
