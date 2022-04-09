@@ -4,6 +4,7 @@ import colors from "../../styles/constants/colors";
 import flexbox from "../../styles/func/flexbox";
 
 const Card = styled.li`
+  flex-shrink: 0;
   width: 100%;
   height: 100%;
   background-color: ${colors.mediumGray};
