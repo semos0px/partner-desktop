@@ -5,6 +5,8 @@ import colors from "../styles/constants/colors";
 import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
 import RatingBox from "./ratingBox";
+import regionIcon from "../assets/icon/region/region.png";
+import flexbox from "../styles/func/flexbox";
 
 const Card = styled.li`
   width: 100%;
@@ -43,6 +45,13 @@ const Title = styled.p`
 
 const RegionBox = styled.div`
   font-size: ${typography.size.micro}px;
+  ${flexbox("flex-start")}
+
+  img {
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+  }
 `;
 
 const ProfileCard = ({ profile }) => {
@@ -56,7 +65,10 @@ const ProfileCard = ({ profile }) => {
 
           <RatingBox rating={profile.rating} like={profile.like} />
 
-          <RegionBox>{profile.region.join(" | ")}</RegionBox>
+          <RegionBox>
+            <img src={regionIcon} />
+            {profile.region.join(" | ")}
+          </RegionBox>
         </MetaData>
       </SLink>
     </Card>
