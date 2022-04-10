@@ -24,6 +24,7 @@ import InquiryMessage from "./pages/inquiry/message";
 import CancelPage from "./pages/sales/cancelList";
 import CancelDetailPage from "./pages/sales/cancelDetail";
 import SalesDetailPage from "./pages/sales/detail";
+import ReviewPage from "./pages/review";
 
 const App = () => {
   return (
@@ -55,6 +56,7 @@ const App = () => {
                 <Route path="cancel/:cid" element={<CancelDetailPage />} />
 
                 <Route path="viewmore" element={<ViewMore />} />
+                <Route path="review" element={<ReviewPage />} />
                 <Route path="notice" element={<NoticePage />} />
                 <Route path="faq" element={<FAQPage />} />
 
