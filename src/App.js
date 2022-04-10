@@ -73,7 +73,7 @@ const App = () => {
               </Routes>
             </ProtectRouter>
 
-            {/* <GNB /> */}
+            <GNB />
           </BrowserRouter>
         </GlobalLayout>
       </AuthProvider>
