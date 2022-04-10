@@ -3,6 +3,7 @@ import ProfileCard from "../../components/profileCard";
 import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
 import profileThumbnail from "../../assets/images/profile/thumbnail.png";
+import BottomLayout from "../../layouts/bottomLayout";
 
 const CardList = styled.ul`
   width: 100%;
@@ -58,11 +59,13 @@ const ProfilePage = () => {
   return (
     <PageLayout headerTitle="프로필">
       <PaddingLayout>
-        <CardList>
-          {profiles.map((profile, idx) => (
-            <ProfileCard key={idx} profile={profile} />
-          ))}
-        </CardList>
+        <BottomLayout>
+          <CardList>
+            {profiles.map((profile, idx) => (
+              <ProfileCard key={idx} profile={profile} />
+            ))}
+          </CardList>
+        </BottomLayout>
       </PaddingLayout>
     </PageLayout>
   );

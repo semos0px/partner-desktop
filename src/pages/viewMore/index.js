@@ -14,6 +14,7 @@ import reportsIcon from "../../assets/icon/viewmore/reports.png";
 import reviewIcon from "../../assets/icon/viewmore/review.png";
 import kakaoIcon from "../../assets/icon/login/kakao.svg";
 import responsive from "../../styles/constants/responsive";
+import BottomLayout from "../../layouts/bottomLayout";
 
 const Section = styled.section`
   padding: 0px 20px;
@@ -152,106 +153,108 @@ const ViewMore = () => {
   return (
     <PageLayout headerTitle="더보기" backgroundColor={colors.darkWhite}>
       <PaddingLayout>
-        <RowLayout>
-          <Section>
-            <PartnerInfoBox>
-              <Data>
-                <p>{partnerInfo.name}강사님</p>
-                <p>{partnerInfo.mobile}</p>
-              </Data>
-              <FLink to={`/${partnerInfo.id}`}>
-                <img src={editIcon} />
-              </FLink>
-            </PartnerInfoBox>
+        <BottomLayout>
+          <RowLayout>
+            <Section>
+              <PartnerInfoBox>
+                <Data>
+                  <p>{partnerInfo.name}강사님</p>
+                  <p>{partnerInfo.mobile}</p>
+                </Data>
+                <FLink to={`/${partnerInfo.id}`}>
+                  <img src={editIcon} />
+                </FLink>
+              </PartnerInfoBox>
 
-            <Border />
+              <Border />
 
-            <SLink to="/reports">
-              <div>
-                <img src={reportsIcon} />
-                <p>강습 리포트</p>
-              </div>
+              <SLink to="/reports">
+                <div>
+                  <img src={reportsIcon} />
+                  <p>강습 리포트</p>
+                </div>
 
-              <Chevron src={chevron} />
-            </SLink>
+                <Chevron src={chevron} />
+              </SLink>
 
-            <Border />
+              <Border />
 
-            <SLink to="/review">
-              <div>
-                <img src={reviewIcon} />
-                <p>후기 답변 관리</p>
-              </div>
+              <SLink to="/review">
+                <div>
+                  <img src={reviewIcon} />
+                  <p>후기 답변 관리</p>
+                </div>
 
-              <Chevron src={chevron} />
-            </SLink>
-          </Section>
+                <Chevron src={chevron} />
+              </SLink>
+            </Section>
 
-          <Title>고객센터</Title>
+            <Title>고객센터</Title>
 
-          <KakaoSection>
-            <Button type="button" onClick={kakaoInquiryHandler}>
-              <div>
-                <img src={kakaoIcon} />
-                <p>
-                  카카오톡 문의 <span>(평일: 10:00 - 19:00)</span>
-                </p>
-              </div>
+            <KakaoSection>
+              <Button type="button" onClick={kakaoInquiryHandler}>
+                <div>
+                  <img src={kakaoIcon} />
+                  <p>
+                    카카오톡 문의 <span>(평일: 10:00 - 19:00)</span>
+                  </p>
+                </div>
 
-              <Chevron src={chevron} />
-            </Button>
-          </KakaoSection>
+                <Chevron src={chevron} />
+              </Button>
+            </KakaoSection>
 
-          <Section>
-            <SLink to="/faq">
-              <div>
-                <p>자주 묻는 질문</p>
-              </div>
+            <Section>
+              <SLink to="/faq">
+                <div>
+                  <p>자주 묻는 질문</p>
+                </div>
 
-              <Chevron src={chevron} />
-            </SLink>
+                <Chevron src={chevron} />
+              </SLink>
 
-            <Border />
+              <Border />
 
-            <SLink to="/notice">
-              <div>
-                <p>공지사항</p>
-              </div>
+              <SLink to="/notice">
+                <div>
+                  <p>공지사항</p>
+                </div>
 
-              <Chevron src={chevron} />
-            </SLink>
+                <Chevron src={chevron} />
+              </SLink>
 
-            <Border />
+              <Border />
 
-            <ALink href="http://reports.semos.kr/">
-              <div>
-                <p>리포츠 정보</p>
-              </div>
+              <ALink href="http://reports.semos.kr/">
+                <div>
+                  <p>리포츠 정보</p>
+                </div>
 
-              <Chevron src={chevron} />
-            </ALink>
+                <Chevron src={chevron} />
+              </ALink>
 
-            <Border />
+              <Border />
 
-            <Button type="button" onClick={shareHandler}>
-              <div>
-                <p>세모스 공유하기</p>
-              </div>
+              <Button type="button" onClick={shareHandler}>
+                <div>
+                  <p>세모스 공유하기</p>
+                </div>
 
-              <Chevron src={chevron} />
-            </Button>
+                <Chevron src={chevron} />
+              </Button>
 
-            <Border />
+              <Border />
 
-            <Button type="button" onClick={logoutHandler}>
-              <div>
-                <p>로그아웃</p>
-              </div>
+              <Button type="button" onClick={logoutHandler}>
+                <div>
+                  <p>로그아웃</p>
+                </div>
 
-              <Chevron src={chevron} />
-            </Button>
-          </Section>
-        </RowLayout>
+                <Chevron src={chevron} />
+              </Button>
+            </Section>
+          </RowLayout>
+        </BottomLayout>
       </PaddingLayout>
     </PageLayout>
   );

@@ -14,6 +14,7 @@ import classActiveIcon from "../assets/icon/gnb/class-a.png";
 import inquiryIcon from "../assets/icon/gnb/inquiry.png";
 import inquiryActiveIcon from "../assets/icon/gnb/inquiry-a.png";
 import zIndex from "../styles/constants/z-index";
+import { useLocation } from "react-router-dom";
 
 const Navbar = styled.nav`
   width: 100%;
@@ -31,6 +32,8 @@ const Navbar = styled.nav`
 `;
 
 const GNB = () => {
+  const { pathname } = useLocation();
+
   const navList = [
     {
       text: "프로필",
@@ -75,9 +78,15 @@ const GNB = () => {
   ];
 
   return (
-    <Navbar>
-      <NavList navList={navList} />
-    </Navbar>
+    (pathname === "/profile" ||
+      pathname === "/class" ||
+      pathname === "/viewmore" ||
+      pathname === "/inquiry" ||
+      pathname === "/sales") && (
+      <Navbar>
+        <NavList navList={navList} />
+      </Navbar>
+    )
   );
 };
 

@@ -14,6 +14,7 @@ import HistoryBox from "../../components/historyBox";
 import RowLayout from "../../layouts/rowLayout";
 import SalesCertainCard from "../../components/salesCertainCard";
 import SalesUncertainCard from "../../components/salesUncertainCard";
+import BottomLayout from "../../layouts/bottomLayout";
 
 const Header = styled.header`
   width: 100%;
@@ -74,63 +75,66 @@ const SalesPage = () => {
 
   return (
     <PageLayout>
-      <Header>
-        <p>판매</p>
+      <BottomLayout>
+        <Header>
+          <p>판매</p>
 
-        <HistoryBox
-          cnt={data ? data.certain.length + data.uncertain.length : 0}
-          income={data ? data.income : 0}
-        />
-      </Header>
-
-      <WrapperLayout>
-        {data.length === 0 && (
-          <NotExistBox
-            page="sales"
-            imgURL={salesImage}
-            redirectPath="/class"
-            comment="나의 강습을 확인하고 강습 일정을 등록해 보세요!"
+          <HistoryBox
+            cnt={data ? data.certain.length + data.uncertain.length : 0}
+            income={data ? data.income : 0}
           />
-        )}
+        </Header>
 
-        {data && (
-          <RowLayout>
-            <Section>
-              <Top>
-                <Title>
-                  일정 확인이 필요해요! <span>({data.uncertain.length}건)</span>
-                </Title>
-                <Comment>아래 강습을 클릭해서 일정을 확정해 주세요.</Comment>
-              </Top>
+        <WrapperLayout>
+          {data.length === 0 && (
+            <NotExistBox
+              page="sales"
+              imgURL={salesImage}
+              redirectPath="/class"
+              comment="나의 강습을 확인하고 강습 일정을 등록해 보세요!"
+            />
+          )}
 
-              <List>
-                {data.uncertain.map((item, idx) => (
-                  <SalesUncertainCard
-                    length={data.uncertain.length}
-                    idx={idx}
-                    key={idx}
-                    sales={item}
-                  />
-                ))}
-              </List>
-            </Section>
+          {data && (
+            <RowLayout>
+              <Section>
+                <Top>
+                  <Title>
+                    일정 확인이 필요해요!{" "}
+                    <span>({data.uncertain.length}건)</span>
+                  </Title>
+                  <Comment>아래 강습을 클릭해서 일정을 확정해 주세요.</Comment>
+                </Top>
 
-            <Section>
-              <Top>
-                <Title>
-                  일정이 확인 된 강습이에요. ({data.certain.length}건)
-                </Title>
-              </Top>
+                <List>
+                  {data.uncertain.map((item, idx) => (
+                    <SalesUncertainCard
+                      length={data.uncertain.length}
+                      idx={idx}
+                      key={idx}
+                      sales={item}
+                    />
+                  ))}
+                </List>
+              </Section>
 
-              <ul>
-                {data.certain.map((item, idx) => (
-                  <SalesCertainCard sales={item} key={idx} />
-                ))}
-              </ul>
-            </Section>
-          </RowLayout>
-        )}
-      </WrapperLayout>
+              <Section>
+                <Top>
+                  <Title>
+                    일정이 확인 된 강습이에요. ({data.certain.length}건)
+                  </Title>
+                </Top>
+
+                <ul>
+                  {data.certain.map((item, idx) => (
+                    <SalesCertainCard sales={item} key={idx} />
+                  ))}
+                </ul>
+              </Section>
+            </RowLayout>
+          )}
+        </WrapperLayout>
+      </BottomLayout>
     </PageLayout>
   );
 };
