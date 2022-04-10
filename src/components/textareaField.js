@@ -12,19 +12,34 @@ const Label = styled.label`
 `;
 
 const Textarea = styled.textarea`
-  background-color: ${colors.vanilla};
+  background-color: ${({ color }) =>
+    color === "blue" ? colors.lightBlue : colors.vanilla};
   width: 100%;
   min-height: 100px;
   padding: 20px;
   border-radius: ${base.borderRadius}px;
   resize: none;
+  padding-bottom: ${({ isPadding }) => (isPadding ? "50px" : "20px")};
 `;
 
-const TextareaField = ({ label, name, value, changeHandler }) => {
+const TextareaField = ({
+  label,
+  name,
+  value,
+  changeHandler,
+  color = "base",
+  isPadding = false,
+}) => {
   return (
     <Box>
       <Label>{label}</Label>
-      <Textarea name={name} value={value} onChange={changeHandler} />
+      <Textarea
+        name={name}
+        value={value}
+        onChange={changeHandler}
+        color={color}
+        isPadding={isPadding}
+      />
     </Box>
   );
 };
