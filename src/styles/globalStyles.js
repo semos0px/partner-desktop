@@ -73,6 +73,10 @@ const GlobalStyles = createGlobalStyle`
     address {
         all: unset;
     }
+
+    fieldset {
+        all: unset;
+    }
 `;
 
 export default GlobalStyles;
