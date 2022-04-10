@@ -177,7 +177,7 @@ const ViewMore = () => {
 
             <Border />
 
-            <SLink to="/">
+            <SLink to="/review">
               <div>
                 <img src={reviewIcon} />
                 <p>후기 답변 관리</p>
