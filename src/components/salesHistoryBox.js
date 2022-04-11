@@ -35,6 +35,7 @@ const A = styled.a`
   background-color: ${colors.blue};
   color: ${colors.white};
   padding: 5px;
+  border-radius: 5px;
 `;
 
 const SalesHistoryBox = ({ payment, member }) => {
