@@ -225,7 +225,7 @@ const ViewMore = () => {
 
               <Border />
 
-              <ALink href="http://reports.semos.kr/">
+              <ALink href="http://reports.semos.kr/" target="_blank">
                 <div>
                   <p>리포츠 정보</p>
                 </div>
