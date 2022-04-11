@@ -89,7 +89,7 @@ const BaseInfoField = () => {
 
         <Div>
           <Select name="base-sub">
-            <ption>소분류</ption>
+            <option>소분류</option>
             <option>스쿠버다이빙</option>
             <option>프리다이빙</option>
             <option>서핑</option>
