@@ -14,6 +14,7 @@ import InputField from "../../components/inputField.js";
 import responsive from "../../styles/constants/responsive";
 import BaseInfoField from "../../components/baseInfoField";
 import CareerInputField from "../../components/careerInputField";
+import ClassImageField from "../../components/classImageField";
 
 const Form = styled.form`
   fieldset {
@@ -46,7 +47,7 @@ const ButtonBox = styled.button`
   ${flexbox("space-between", "center")}
   margin-bottom: 20px;
 
-  button {
+  span {
     color: ${colors.white};
     background-color: ${colors.blue};
     padding: 5px 10px;
@@ -103,13 +104,43 @@ const ProfileEditPage = () => {
     "SDI 스쿠버다이빙 강사",
   ]);
 
-  const [classImage, setClassImage] = useState([]);
+  const [classImage, setClassImage] = useState([
+    {
+      id: 0,
+      base: null,
+      files: null,
+    },
+    {
+      id: 1,
+      base: null,
+      files: null,
+    },
+    {
+      id: 2,
+      base: null,
+      files: null,
+    },
+    {
+      id: 3,
+      base: null,
+      files: null,
+    },
+    {
+      id: 3,
+      base: null,
+      files: null,
+    },
+  ]);
 
   const submitHandler = () => {
     console.log("저장하기");
 
     // 이미지 폼 데이터
+
+    // PATCH: base, background, career, class state 한번에 묶어서 저장
   };
+
+  // Image 관련 로직: preview,
 
   const imagePreview = (e) => {
     const { name, files } = e.target;
@@ -215,9 +246,9 @@ const ProfileEditPage = () => {
             <fieldset>
               <ButtonBox>
                 <legend>시설/강사 경력</legend>
-                <button type="button" onClick={careerAddHandler}>
+                <span type="button" onClick={careerAddHandler}>
                   + 추가하기
-                </button>
+                </span>
               </ButtonBox>
 
               <CareerInputField />
@@ -229,6 +260,13 @@ const ProfileEditPage = () => {
                 강사님 또는 수강생 사진이나 센터 사진을 자유롭게 등록할 수
                 있어요.
               </p>
+
+              <ClassImageField
+                name="class"
+                changeHandler={imageChangeHandler}
+                deleteHandler={deleteHandler}
+                value={classImage}
+              />
             </fieldset>
           </Form>
 
