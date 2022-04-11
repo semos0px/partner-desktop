@@ -4,12 +4,17 @@ import colors from "./styles/constants/colors";
 import responsive from "./styles/constants/responsive";
 import typography from "./styles/constants/typography";
 
-const Container = styled.div``;
+const Container = styled.div`
+  overflow: hidden;
+`;
 
 const Box = styled.div`
   display: flex;
-  margin: 40px 20px;
+  margin: 20px 0px;
   flex-direction: ${({ isMe }) => isMe && "row-reverse"};
+
+  padding-right: ${({ isMe }) => isMe && "20px;"};
+  padding-left: ${({ isMe }) => !isMe && "20px;"};
 `;
 
 const TimeBox = styled.div`
@@ -30,7 +35,7 @@ const BubbleBox = styled.div`
 `;
 
 const Bubble = styled.div`
-  width: 300px;
+  width: 270px;
   padding: 10px;
   height: 100%;
   border-radius: ${base.borderRadius}px;
@@ -49,7 +54,6 @@ const Tooltip = styled.div`
   width: 70px;
   height: 70px;
   top: 0;
-  /* position: absolute; */
   position: absolute;
   right: -40px;
   top: -17px;
