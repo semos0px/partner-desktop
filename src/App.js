@@ -43,9 +43,8 @@ const App = () => {
                 <Route path="profile/:pid" element={<ProfileDetailPage />} />
                 <Route path="profile/:pid/edit" element={<ProfileEditPage />} />
 
-                <Route path="class/*" element={<ClassPage />}>
-                  <Route path=":cid" element={<ClassDetailPage />} />
-                </Route>
+                <Route path="class" element={<ClassPage />} />
+                <Route path="class/:cid" element={<ClassDetailPage />} />
 
                 <Route path="inquiry" element={<InquiryPage />} />
                 <Route path="inquiry/:mid" element={<InquiryMessage />} />
