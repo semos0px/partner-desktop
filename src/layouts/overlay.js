@@ -22,8 +22,8 @@ const SOverlay = styled.div`
 `;
 
 const Overlay = ({ toggleHandler }) => (
-  <SOverlay aria-hidden onClick={toggleHandler}>
-    <div></div>
+  <SOverlay aria-hidden>
+    <div onClick={toggleHandler}></div>
   </SOverlay>
 );
 
