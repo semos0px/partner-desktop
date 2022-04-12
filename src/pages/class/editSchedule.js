@@ -1,7 +1,7 @@
 import PageLayout from "../../layouts/pageLayout";
 
-const ClassEditPage = () => {
+const ClassEditSchedulePage = () => {
   return <PageLayout></PageLayout>;
 };
 
-export default ClassEditPage;
+export default ClassEditSchedulePage;

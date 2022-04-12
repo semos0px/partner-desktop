@@ -25,6 +25,8 @@ import CancelPage from "./pages/sales/cancelList";
 import CancelDetailPage from "./pages/sales/cancelDetail";
 import SalesDetailPage from "./pages/sales/detail";
 import ReviewPage from "./pages/review";
+import ClassEditContentsPage from "./pages/class/editContents";
+import ClassEditSchedulePage from "./pages/class/editSchedule";
 
 const App = () => {
   return (
@@ -45,6 +47,14 @@ const App = () => {
 
                 <Route path="class" element={<ClassPage />} />
                 <Route path="class/:cid" element={<ClassDetailPage />} />
+                <Route
+                  path="class/:cid/edit/contents"
+                  element={<ClassEditContentsPage />}
+                />
+                <Route
+                  path="class/:cid/edit/schedule"
+                  element={<ClassEditSchedulePage />}
+                />
 
                 <Route path="inquiry" element={<InquiryPage />} />
                 <Route path="inquiry/:mid" element={<InquiryMessage />} />
