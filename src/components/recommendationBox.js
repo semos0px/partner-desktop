@@ -21,12 +21,11 @@ const Box = styled.div`
   z-index: ${zIndex.navbar};
   overflow-y: scroll;
   padding: 20px;
-  transform: translateY(100px);
+  transform: translate3d(0, 100%, 0);
   opacity: 0;
   transition: ${transition()};
 
-  transform: translate3d(100%, 0, 0);
-  ${({ open }) => (open ? `transform: translate3d(0, 0, 0)` : "")};
+  ${({ open }) => (open ? `transform: translate3d(0, 0, 0); opacity: 1;` : "")};
 
   header {
     margin-bottom: 20px;
