@@ -14,6 +14,7 @@ import OverlayPortal from "../../overlayPortal";
 import base from "../../styles/constants/base";
 import colors from "../../styles/constants/colors";
 import ClassContents from "./contents";
+import ClassSchedule from "./schedule";
 
 const VerticalLayout = styled.div`
   padding-bottom: ${base.height.bottomButton + 20}px;
@@ -76,9 +77,24 @@ const ClassDetailPage = () => {
                 />
               )}
 
+              {!contents && (
+                <ClassSchedule
+                  data={data}
+                  recommendationNoticeToggleHandler={
+                    recommendationNoticeToggleHandler
+                  }
+                />
+              )}
+
               <BottomButton
-                text="강습 수정하기"
-                clickHandler={() => navigate(`/class/${cid}/edit`)}
+                text={contents ? "강습 수정하기" : "일정 수정하기"}
+                clickHandler={() =>
+                  navigate(
+                    contents
+                      ? `/class/${cid}/edit/contents`
+                      : `/class/${cid}/edit/schedule`
+                  )
+                }
                 color={colors.blue}
               />
             </VerticalLayout>
