@@ -3,6 +3,7 @@ const base = {
     gnb: 85,
     header: 44,
     input: 60,
+    smallInput: 44,
     bottomButton: 66,
   },
 
