@@ -1,0 +1,107 @@
+import styled from "styled-components";
+import base from "../../styles/constants/base";
+import colors from "../../styles/constants/colors";
+import selectIcon from "../../assets/icon/input/select-chevron.svg";
+import responsive from "../../styles/constants/responsive";
+import AddButton from "../../modules/addButton";
+import flexbox from "../../styles/func/flexbox";
+
+const Box = styled.div`
+  margin-top: 20px;
+  ${flexbox()}
+
+  ${responsive.mediaQuery.mobile} {
+    margin-top: 0;
+  }
+`;
+
+const Div = styled.div`
+  position: relative;
+  width: 140px;
+  flex-shrink: 0;
+  margin-bottom: ${({ isBottom }) => (isBottom ? `30px` : "0")};
+
+  &:first-child {
+    margin-right: 10px;
+  }
+`;
+
+const Select = styled.select`
+  width: 100%;
+
+  height: ${base.height.input - 10}px;
+  box-shadow: ${base.boxShadow};
+  border-radius: ${base.borderRadius}px;
+  color: ${colors.mediumGray};
+  padding: 10px 20px;
+  padding-right: 40px;
+
+  -webkit-appearance: none; /* for chrome */
+  -moz-appearance: none; /*for firefox*/
+  appearance: none;
+
+  :focus {
+    box-shadow: ${base.boxShadow};
+  }
+
+  select::-ms-expand {
+    display: none; /*for IE10,11*/
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    padding-right: 20px;
+  }
+`;
+
+const Input = styled.input`
+  width: calc(100% - 140px - 60px);
+  height: ${base.height.smallInput - 10}px;
+  box-shadow: ${base.boxShadow};
+  border-radius: ${base.borderRadius}px;
+  color: ${colors.mediumGray};
+  padding: 10px 20px;
+  margin-right: 10px;
+
+  :focus {
+    box-shadow: ${base.boxShadow};
+  }
+`;
+
+const SelectIcon = styled.div`
+  position: absolute;
+  right: 20px;
+  bottom: 15px;
+  pointer-events: none;
+`;
+
+const DiscountInputField = () => {
+  return (
+    <Box>
+      <Div>
+        <Select name="discount-people">
+          <option>2인권</option>
+          <option>3인권</option>
+          <option>4인권</option>
+          <option>5인권</option>
+          <option>6인권</option>
+          <option>7인권</option>
+          <option>8인권</option>
+          <option>9인권</option>
+          <option>10인권</option>
+          <option>11인권</option>
+          <option>12인권</option>
+        </Select>
+
+        <SelectIcon>
+          <img src={selectIcon} />
+        </SelectIcon>
+      </Div>
+
+      <Input type="text" name="discount-price" placeholder="+90,000" />
+
+      <AddButton />
+    </Box>
+  );
+};
+
+export default DiscountInputField;
