@@ -1,0 +1,5 @@
+class AppleService {
+  login = () => {};
+
+  logout = () => {};
+}
