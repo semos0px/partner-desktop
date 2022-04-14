@@ -9,10 +9,14 @@ const ButtonBox = styled.div`
 
   button {
     width: calc(50% - 10px);
-    height: ${base.height.input}px;
+    height: ${base.height.smallInput}px;
     background-color: ${colors.white};
     box-shadow: ${base.boxShadow};
     border-radius: ${base.borderRadius}px;
+
+    &:focus {
+      box-shadow: ${base.boxShadow};
+    }
   }
 `;
 
