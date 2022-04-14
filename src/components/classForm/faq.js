@@ -44,7 +44,7 @@ const AnswerBox = styled.div`
   height: 90px;
   ${flexbox()};
   padding: 0 20px;
-  background-color: ${colors.lightBlue};
+  background-color: ${colors.vanilla};
   border-radius: ${base.borderRadius}px;
   max-height: ${({ open }) => (open ? "90px" : 0)};
   overflow: hidden;
