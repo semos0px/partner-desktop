@@ -14,6 +14,11 @@ import UncertainInputField from "../components/classForm/uncertainInputField";
 import MaterialsInputField from "../components/classForm/materialsInputField";
 import RecommendationStatusField from "../components/classForm/recommendationStatusField";
 import DiscountInputField from "../components/classForm/discountInputField";
+import OptionInputField from "../components/classForm/optionInputField";
+import LocationInputField from "../components/classForm/locationInputField";
+import BaseScheduleInputField from "../components/classForm/baseScheduleInputField";
+import typography from "../styles/constants/typography";
+import { useState } from "react";
 
 const Box = styled.div`
   width: 100%;
@@ -167,6 +172,50 @@ const DiscountDiv = styled.div`
   }
 `;
 
+const OptionDiv = styled.div`
+  margin-bottom: 30px;
+
+  label {
+    margin-bottom: 20px;
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    display: flex;
+
+    label {
+      width: 150px;
+      margin-bottom: 0;
+    }
+  }
+`;
+
+const LocationDiv = styled.div`
+  margin-bottom: 30px;
+
+  ${responsive.mediaQuery.mobile} {
+    display: flex;
+
+    label {
+      width: 150px;
+      margin-bottom: 0;
+    }
+  }
+`;
+
+const BaseScheduleDiv = styled.div`
+  margin-bottom: 30px;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  p {
+    font-size: ${typography.size.small}px;
+    color: ${colors.mediumGray};
+  }
+`;
+
 const ThumbnailDiv = styled.div`
   margin-bottom: 30px;
   display: flex;
@@ -223,18 +272,23 @@ const Uncertain = styled.div`
   }
 `;
 
-// const NoticeBox = styled.div`
-//   position: absolute;
-//   background-color: ${colors.vanilla};
-//   border-radius: ${base.borderRadius}px;
-//   ${flexbox("center", "flex-start", "column")}
-//   width: 420px;
-//   color: ${colors.mediumGray};
-//   padding: 10px 20px;
+const NoticeBox = styled.div`
+  position: absolute;
+  font-size: ${typography.size.micro}px;
+  background-color: ${colors.vanilla};
+  border-radius: ${base.borderRadius}px;
+  ${flexbox("center", "flex-start", "column")}
+  color: ${colors.mediumGray};
+  padding: 10px 10px;
+  top: -20px;
+  left: 130px;
 
-//   top: 0;
-//   right: 20px;
-// `;
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.base}px;
+    top: 40px;
+    left: 0;
+  }
+`;
 
 const MaterialsDiv = styled.div`
   margin-bottom: 30px;
@@ -299,6 +353,8 @@ const ClassInputField = ({
   recommendationCertainHandler,
   recommedationUncertainHandler,
 }) => {
+  const [example, setExample] = useState(false);
+
   return (
     <>
       <Box>
@@ -326,10 +382,9 @@ const ClassInputField = ({
           </Left>
 
           <RecommendationStatusField
-            status={classData}
+            status={classData.status}
             certainHandler={recommendationCertainHandler}
             uncertainHandler={recommedationUncertainHandler}
-            status={classData.status}
           />
         </RecommendationDiv>
 
@@ -375,6 +430,31 @@ const ClassInputField = ({
           <DiscountInputField />
         </DiscountDiv>
 
+        <OptionDiv>
+          <label>옵션</label>
+
+          <OptionInputField />
+        </OptionDiv>
+
+        <LocationDiv>
+          <label>강습 위치</label>
+
+          <LocationInputField />
+        </LocationDiv>
+
+        <BaseScheduleDiv>
+          <Top>
+            <div>
+              <label>기본 일정</label>
+              <p>매달 자동으로 입력되는 일정입니다.</p>
+            </div>
+
+            <AddButton />
+          </Top>
+
+          <BaseScheduleInputField />
+        </BaseScheduleDiv>
+
         <ThumbnailDiv>
           <label>대표 사진</label>
 
@@ -390,13 +470,15 @@ const ClassInputField = ({
         <Uncertain>
           <label>
             불포함사항
-            <img src={bangIcon} />
+            <img src={bangIcon} onClick={() => setExample(!example)} />
           </label>
 
-          {/* <NoticeBox>
-            <p>불포함사항은 금액을 함께 입력해 주세요.</p>
-            <p>예) 장비 렌탈비 +30,000원 / 해양실습비 가격 상이</p>
-          </NoticeBox> */}
+          {example && (
+            <NoticeBox>
+              <p>불포함사항은 금액을 함께 입력해 주세요.</p>
+              <p>예) 장비 렌탈비 +30,000원</p>
+            </NoticeBox>
+          )}
 
           <UncertainInputField />
         </Uncertain>
