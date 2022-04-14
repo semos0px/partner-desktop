@@ -7,6 +7,7 @@ import PageLayout from "../../layouts/pageLayout";
 import RowLayout from "../../layouts/rowLayout";
 import BottomButton from "../../modules/bottomButton";
 import ClassInputField from "../../modules/classInputField";
+import ToggleButton from "../../modules/toggleButton";
 import OverlayPortal from "../../overlayPortal";
 import base from "../../styles/constants/base";
 import colors from "../../styles/constants/colors";
@@ -15,7 +16,9 @@ const Wrapper = styled.div`
   padding-bottom: ${base.height.input + 20}px;
 `;
 
-const Form = styled.form``;
+const Form = styled.form`
+  position: relative;
+`;
 
 const ClassEditContentsPage = () => {
   const [openRecommendationInfo, setOpenRecommendationInfo] = useState(false);
@@ -39,21 +42,18 @@ const ClassEditContentsPage = () => {
     additional: null,
   });
 
-  console.log(classData.status);
-
   // TODO: data fetching - 강사 정보
 
   const recommendationNoticeToggleHandler = () => {
     setOpenRecommendationInfo(!openRecommendationInfo);
   };
 
-  const recommendationCertainHandler = (e) => {
-    e.preventDefault();
+  const recommendationCertainHandler = () => {
+    console.log("확정 예약");
     setClassData((prev) => ({ ...prev, status: true }));
   };
 
-  const recommendationUncertainHandler = (e) => {
-    e.preventDefault();
+  const recommendationUncertainHandler = () => {
     setClassData((prev) => ({ ...prev, status: false }));
   };
 
@@ -62,13 +62,23 @@ const ClassEditContentsPage = () => {
     console.log("강습 저장하기");
   };
 
+  const classToggleHandler = () => {
+    setOpenClass(!openClass);
+  };
+
   return (
     <>
       <PageLayout headerTitle="[프리다이빙] 고고다이브(백강사)" isGoBack={true}>
         <PaddingLayout>
           <RowLayout>
             <Wrapper>
-              <Form>
+              <Form onSubmit={submitHandler}>
+                <ToggleButton
+                  text="강습 열기"
+                  subText="강습 닫기"
+                  toggleHandler={classToggleHandler}
+                  status={openClass}
+                />
                 <ClassInputField
                   recommendationNoticeToggleHandler={
                     recommendationNoticeToggleHandler
@@ -79,6 +89,7 @@ const ClassEditContentsPage = () => {
                 />
               </Form>
             </Wrapper>
+
             <BottomButton
               color={colors.blue}
               text="강습 저장하기"
