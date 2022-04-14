@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import colors from "../styles/constants/colors";
 import deleteIcon from "../assets/icon/class/delete.svg";
+import deleteBlueIcon from "../assets/icon/class/delete-blue.svg";
 import flexbox from "../styles/func/flexbox";
 
 const Tag = styled.span`
@@ -14,6 +15,7 @@ const Tag = styled.span`
   padding: 5px 10px;
   margin-bottom: 10px;
   margin-right: 10px;
+  text-decoration: ${({ isLine }) => (isLine ? `underline` : null)};
 
   button {
     margin-left: 30px;
@@ -26,13 +28,13 @@ const Tag = styled.span`
   }
 `;
 
-const InfoTag = ({ text, color }) => {
+const InfoTag = ({ text, color, isLine = false, deleteHandler }) => {
   return (
-    <Tag color={color}>
+    <Tag color={color} isLine={isLine}>
       <span>{text}</span>
 
-      <button type="button">
-        <img src={deleteIcon} />
+      <button type="button" onClick={deleteHandler}>
+        <img src={color === "blue" ? deleteBlueIcon : deleteIcon} />
       </button>
     </Tag>
   );
