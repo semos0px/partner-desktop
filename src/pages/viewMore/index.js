@@ -48,7 +48,7 @@ const KakaoSection = styled.section`
 const FLink = styled(Link)``;
 
 const SLink = styled(Link)`
-  padding: 30px 0;
+  padding: 20px 0;
   ${flexbox("space-between")};
   width: 100%;
 
@@ -60,6 +60,10 @@ const SLink = styled(Link)`
       height: 20px;
       margin-right: 10px;
     }
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    padding: 30px 0;
   }
 `;
 
@@ -98,7 +102,7 @@ const Chevron = styled.img`
 `;
 
 const ALink = styled.a`
-  padding: 30px 0;
+  padding: 20px 0;
   ${flexbox("space-between")};
   width: 100%;
 
@@ -111,10 +115,14 @@ const ALink = styled.a`
       margin-right: 5px;
     }
   }
+
+  ${responsive.mediaQuery.mobile} {
+    padding: 30px 0;
+  }
 `;
 
 const Button = styled.button`
-  padding: 30px 0;
+  padding: 20px 0;
   ${flexbox("space-between")};
   width: 100%;
 
@@ -130,6 +138,10 @@ const Button = styled.button`
     span {
       font-size: ${typography.size.small}px;
     }
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    padding: 30px 0;
   }
 `;
 

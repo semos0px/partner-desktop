@@ -10,6 +10,10 @@ import BottomButton from "../../modules/bottomButton";
 import base from "../../styles/constants/base";
 import colors from "../../styles/constants/colors";
 
+const Wrapper = styled.div`
+  padding-bottom: ${base.height.input + 20}px;
+`;
+
 const Form = styled.form`
   color: ${colors.black};
 `;
@@ -112,49 +116,51 @@ const SignUpPage = () => {
     <PageLayout headerTitle="회원가입" isGoBack={true}>
       <PaddingLayout isBottomButton={true}>
         <RowLayout>
-          <Form onSubmit={signUpHandler}>
-            <InputField
-              label="이름"
-              placeholder="본명"
-              name="name"
-              value={inputValue.name}
-              changeHandler={infoChangeHandler}
-            />
+          <Wrapper>
+            <Form onSubmit={signUpHandler}>
+              <InputField
+                label="이름"
+                placeholder="본명"
+                name="name"
+                value={inputValue.name}
+                changeHandler={infoChangeHandler}
+              />
 
-            <SelectField
-              label="연령대"
-              name="ageGroup"
-              optionList={ageGroupOptionList}
-              value={inputValue.ageGroup}
-              changeHandler={infoChangeHandler}
-            />
+              <SelectField
+                label="연령대"
+                name="ageGroup"
+                optionList={ageGroupOptionList}
+                value={inputValue.ageGroup}
+                changeHandler={infoChangeHandler}
+              />
 
-            <SexField
-              isMale={inputValue.isMale}
-              maleCheckHandler={maleCheckHandler}
-              femaleCheckHandler={femaleCheckHandler}
-            />
+              <SexField
+                isMale={inputValue.isMale}
+                maleCheckHandler={maleCheckHandler}
+                femaleCheckHandler={femaleCheckHandler}
+              />
 
-            <MobileValidateBox>
-              <p>전화번호를 알려주세요.</p>
-              <InputField name="mobileNumber" placeholder="-없이 입력">
-                <Button
-                  type="button"
-                  onClick={sendCertificationNumHandler}
-                  isActive={sendCertificationNum}
-                >
-                  인증번호 전송
-                </Button>
-              </InputField>
-              <InputField name="mobileNumber" placeholder="6자리 입력">
-                {sendCertificationNum && (
-                  <Button type="button" onClick={verifiedHandler}>
-                    인증하기
+              <MobileValidateBox>
+                <p>전화번호를 알려주세요.</p>
+                <InputField name="mobileNumber" placeholder="-없이 입력">
+                  <Button
+                    type="button"
+                    onClick={sendCertificationNumHandler}
+                    isActive={sendCertificationNum}
+                  >
+                    인증번호 전송
                   </Button>
-                )}
-              </InputField>
-            </MobileValidateBox>
-          </Form>
+                </InputField>
+                <InputField name="mobileNumber" placeholder="6자리 입력">
+                  {sendCertificationNum && (
+                    <Button type="button" onClick={verifiedHandler}>
+                      인증하기
+                    </Button>
+                  )}
+                </InputField>
+              </MobileValidateBox>
+            </Form>
+          </Wrapper>
 
           <BottomButton
             text="회원가입 완료"

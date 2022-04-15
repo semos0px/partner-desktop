@@ -36,12 +36,16 @@ const RightData = styled.div`
 
   time {
     display: block;
-    font-size: ${typography.size.small}px;
+    font-size: ${typography.size.tiny}px;
     white-space: nowrap;
   }
 
   ${responsive.mediaQuery.mobile} {
     width: 100%;
+
+    time {
+      font-size: ${typography.size.small}px;
+    }
   }
 `;
 
@@ -52,20 +56,33 @@ const StatusIcon = styled.span`
   padding: 5px;
   border-radius: 5px;
   font-weight: ${typography.weight.regular};
-  font-size: ${typography.size.small}px;
+  font-size: ${typography.size.tiny}px;
   margin-bottom: 5px;
   white-space: nowrap;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.small}px;
+  }
 `;
 
 const Nickname = styled.p`
-  font-size: ${typography.size.medium}px;
+  font-size: ${typography.size.base}px;
   color: ${colors.black};
   font-weight: ${typography.weight.regular};
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.medium}px;
+  }
 `;
 
 const Title = styled.p`
+  font-size: ${typography.size.small}px;
   color: ${colors.black};
   margin: 10px 0;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.base}px;
+  }
 `;
 
 const Category = styled.p`

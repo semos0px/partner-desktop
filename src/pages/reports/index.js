@@ -8,7 +8,6 @@ import reportsList from "../../data/reports";
 import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
 import RowLayout from "../../layouts/rowLayout";
-import flexbox from "../../styles/func/flexbox";
 
 const List = styled.ul``;
 

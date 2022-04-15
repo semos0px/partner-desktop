@@ -28,7 +28,11 @@ const Button = styled.button`
   background-color: ${({ color }) => color};
   color: ${colors.white};
   border-radius: ${base.borderRadius}px;
-  font-size: ${typography.size.medium}px;
+  font-size: ${typography.size.base}px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.medium}px;
+  }
 `;
 
 const BottomButton = ({ text, color, clickHandler, notice }) => {
