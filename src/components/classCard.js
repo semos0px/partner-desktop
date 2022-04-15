@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../styles/constants/colors";
+import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
 
 const Card = styled.li`
@@ -20,13 +21,18 @@ const SLink = styled(Link)`
 `;
 
 const Thumbnail = styled.img`
-  width: 140px;
-  height: 140px;
+  width: 110px;
+  height: 110px;
   border-radius: 7px;
   background-color: ${colors.mediumGray};
   object-fit: cover;
   overflow: hidden;
   margin-right: 20px;
+
+  ${responsive.mediaQuery.mobile} {
+    width: 140px;
+    height: 140px;
+  }
 `;
 
 const MetaData = styled.div`

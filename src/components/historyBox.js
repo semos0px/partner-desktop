@@ -23,16 +23,45 @@ const BottomBox = styled.div`
 `;
 
 const SLink = styled(Link)`
+  display: none;
   color: ${colors.blue};
   background-color: ${colors.white};
   padding: 5px 10px;
   white-space: nowrap;
   border-radius: 5px;
+
+  ${responsive.mediaQuery.mobile} {
+    display: block;
+  }
+`;
+
+const Wrapper = styled.div`
+  width: 100%;
+  ${flexbox("flex-end")}
+`;
+
+const FLink = styled(Link)`
+  display: inline-block;
+  color: ${colors.blue};
+  background-color: ${colors.white};
+  padding: 5px 10px;
+  white-space: nowrap;
+  border-radius: 5px;
+  margin-top: 30px;
+  justify-self: flex-end;
+
+  ${responsive.mediaQuery.mobile} {
+    display: none;
+  }
 `;
 
 const Total = styled.div`
-  font-size: ${typography.size.large}px;
+  font-size: 22px;
   font-weight: 400;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.large}px;
+  }
 `;
 
 const Income = styled.div`
@@ -65,6 +94,10 @@ const HistoryBox = ({ changeHandler, cnt, income, value }) => {
           <span>원</span>
         </Income>
       </BottomBox>
+
+      <Wrapper>
+        <FLink to="/cancel">취소/환불 내역 &gt;</FLink>
+      </Wrapper>
     </Box>
   );
 };

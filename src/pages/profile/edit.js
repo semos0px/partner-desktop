@@ -16,6 +16,10 @@ import BaseInfoField from "../../components/baseInfoField";
 import CareerInputField from "../../components/careerInputField";
 import ClassImageField from "../../components/classImageField";
 
+const Wrapper = styled.div`
+  padding-bottom: ${base.height.input + 20}px;
+`;
+
 const Form = styled.form`
   fieldset {
     display: block;
@@ -27,10 +31,14 @@ const Form = styled.form`
     }
 
     p {
-      font-size: ${typography.size.small}px;
+      font-size: ${typography.size.tiny}px;
       color: ${colors.mediumGray};
       margin-bottom: 20px;
     }
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.small}px;
   }
 `;
 
@@ -187,88 +195,90 @@ const ProfileEditPage = () => {
     <PageLayout headerTitle="프로필 수정" isGoBack={true}>
       <PaddingLayout>
         <RowLayout>
-          <Form onSubmit={submitHandler}>
-            <fieldset>
-              <legend>기본 정보</legend>
+          <Wrapper>
+            <Form onSubmit={submitHandler}>
+              <fieldset>
+                <legend>기본 정보</legend>
 
-              <BaseBox>
-                <ImageFileField
-                  name="base"
+                <BaseBox>
+                  <ImageFileField
+                    name="base"
+                    changeHandler={imageChangeHandler}
+                    preview={baseInfo.image.base}
+                    isDelete={false}
+                  />
+
+                  <BaseInfoField />
+                </BaseBox>
+              </fieldset>
+
+              <fieldset>
+                <legend>배경사진 정보</legend>
+                <p>
+                  배경 사진은 최대 3장까지 선택할 수 있으며, 가로가 긴 사진을
+                  권장합니다.
+                </p>
+
+                <BackgroundImageBox>
+                  <ImageFileField
+                    name="background-1"
+                    changeHandler={imageChangeHandler}
+                    preview={backroundImage.one}
+                    isDelete={false}
+                    width={"31%"}
+                    height={"160px"}
+                    category="background"
+                  />
+
+                  <ImageFileField
+                    name="background-2"
+                    changeHandler={imageChangeHandler}
+                    preview={backroundImage.second}
+                    isDelete={false}
+                    width={"31%"}
+                    height={"160px"}
+                    category="background"
+                  />
+
+                  <ImageFileField
+                    name="background-3"
+                    changeHandler={imageChangeHandler}
+                    preview={backroundImage.third}
+                    isDelete={false}
+                    width={"31%"}
+                    height={"160px"}
+                    category="background"
+                  />
+                </BackgroundImageBox>
+              </fieldset>
+
+              <fieldset>
+                <ButtonBox>
+                  <legend>시설/강사 경력</legend>
+                  <span type="button" onClick={careerAddHandler}>
+                    + 추가하기
+                  </span>
+                </ButtonBox>
+
+                <CareerInputField />
+              </fieldset>
+
+              <fieldset>
+                <legend>강습 사진</legend>
+                <p>
+                  강사님 또는 수강생 사진이나 센터 사진을 자유롭게 등록할 수
+                  있어요.
+                </p>
+
+                <ClassImageField
+                  name="class"
                   changeHandler={imageChangeHandler}
-                  preview={baseInfo.image.base}
-                  isDelete={false}
+                  deleteHandler={deleteHandler}
+                  value={classImage}
                 />
-
-                <BaseInfoField />
-              </BaseBox>
-            </fieldset>
-
-            <fieldset>
-              <legend>배경사진 정보</legend>
-              <p>
-                배경 사진은 최대 3장까지 선택할 수 있으며, 가로가 긴 사진을
-                권장합니다.
-              </p>
-
-              <BackgroundImageBox>
-                <ImageFileField
-                  name="background-1"
-                  changeHandler={imageChangeHandler}
-                  preview={backroundImage.one}
-                  isDelete={false}
-                  width={"31%"}
-                  height={"160px"}
-                  category="background"
-                />
-
-                <ImageFileField
-                  name="background-2"
-                  changeHandler={imageChangeHandler}
-                  preview={backroundImage.second}
-                  isDelete={false}
-                  width={"31%"}
-                  height={"160px"}
-                  category="background"
-                />
-
-                <ImageFileField
-                  name="background-3"
-                  changeHandler={imageChangeHandler}
-                  preview={backroundImage.third}
-                  isDelete={false}
-                  width={"31%"}
-                  height={"160px"}
-                  category="background"
-                />
-              </BackgroundImageBox>
-            </fieldset>
-
-            <fieldset>
-              <ButtonBox>
-                <legend>시설/강사 경력</legend>
-                <span type="button" onClick={careerAddHandler}>
-                  + 추가하기
-                </span>
-              </ButtonBox>
-
-              <CareerInputField />
-            </fieldset>
-
-            <fieldset>
-              <legend>강습 사진</legend>
-              <p>
-                강사님 또는 수강생 사진이나 센터 사진을 자유롭게 등록할 수
-                있어요.
-              </p>
-
-              <ClassImageField
-                name="class"
-                changeHandler={imageChangeHandler}
-                deleteHandler={deleteHandler}
-                value={classImage}
-              />
-            </fieldset>
-          </Form>
+              </fieldset>
+            </Form>
+          </Wrapper>
 
           <BottomButton
             text="저장하기"

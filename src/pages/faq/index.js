@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import FAQItem from "../../components/faqItem";
-import InputField from "../../components/inputField";
 import Pagination from "../../components/pagination";
 import FAQList from "../../data/faq/faqList";
 import usePagination from "../../hooks/usePagination";

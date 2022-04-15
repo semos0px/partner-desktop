@@ -11,27 +11,53 @@ import typography from "../../styles/constants/typography";
 import flexbox from "../../styles/func/flexbox";
 import regionIcon from "../../assets/icon/region/region.png";
 import BottomLayout from "../../layouts/bottomLayout";
+import responsive from "../../styles/constants/responsive";
+import SelectField from "../../components/selectField";
 
 const ProfileSection = styled.section`
   width: 100%;
-  ${flexbox("flex-start")};
   margin-bottom: 50px;
+
+  ${responsive.mediaQuery.mobile} {
+    ${flexbox()}
+  }
+`;
+
+const Top = styled.div`
+  ${flexbox("flex-start")};
+  margin-bottom: 20px;
+
+  ${responsive.mediaQuery.mobile} {
+    width: 100%;
+    flex-shrink: 0.6;
+    margin-right: 50px;
+  }
 `;
 
 const Avatar = styled.img`
-  width: 90px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   background-color: ${colors.mediumGray};
   object-fit: cover;
   margin-right: 30px;
+
+  ${responsive.mediaQuery.mobile} {
+    width: 90px;
+    height: 90px;
+  }
 `;
 
 const MetaData = styled.div``;
 
 const Title = styled.p`
-  font-size: ${typography.size.medium}px;
+  font-size: ${typography.size.base}px;
   margin-bottom: 5px;
+  font-weight: ${typography.weight.regular};
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.medium}px;
+  }
 `;
 
 const RegionBox = styled.div`
@@ -55,13 +81,18 @@ const ClassSection = styled.section`
 
   ul {
     width: 100%;
+    margin-top: 30px;
   }
 `;
 
 const Description = styled.p`
   color: ${colors.mediumGray};
-  font-size: ${typography.size.small}px;
-  margin-bottom: 30px;
+  font-size: ${typography.size.tiny}px;
+  /* margin-bottom: 30px; */
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.small}px;
+  }
 `;
 
 const ClassPage = () => {
@@ -82,18 +113,22 @@ const ClassPage = () => {
         <BottomLayout>
           <RowLayout>
             <ProfileSection>
-              <Avatar />
+              <Top>
+                <Avatar />
 
-              <MetaData>
-                <Title>{`[${profile.category}] ${profile.nickname}(${profile.name})`}</Title>
+                <MetaData>
+                  <Title>{`[${profile.category}] ${profile.nickname}(${profile.name})`}</Title>
 
-                <RatingBox rating={profile.rating} like={profile.like} />
+                  <RatingBox rating={profile.rating} like={profile.like} />
 
-                <RegionBox>
-                  <img src={regionIcon} />
-                  {profile.region.join(" | ")}
-                </RegionBox>
-              </MetaData>
+                  <RegionBox>
+                    <img src={regionIcon} />
+                    {profile.region.join(" | ")}
+                  </RegionBox>
+                </MetaData>
+              </Top>
+
+              <SelectField optionList={[{ text: "프로필 선택" }]} />
             </ProfileSection>
 
             <Main>
@@ -112,9 +147,11 @@ const ClassPage = () => {
 
               <ClassSection>
                 <Title>세모스 크루 강습</Title>
-                {classList.crew.map((item, idx) => (
-                  <ClassCard key={idx} classItem={item} />
-                ))}
+                <ul>
+                  {classList.crew.map((item, idx) => (
+                    <ClassCard key={idx} classItem={item} />
+                  ))}
+                </ul>
               </ClassSection>
             </Main>
           </RowLayout>

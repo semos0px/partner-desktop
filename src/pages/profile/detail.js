@@ -31,12 +31,17 @@ const MainImage = styled.img`
   position: absolute;
   left: 15px;
   bottom: -60px;
-  width: 120px;
-  height: 120px;
+  width: 90px;
+  height: 90px;
   object-fit: cover;
   background-color: ${colors.white};
   border-radius: ${base.borderRadius}px;
   box-shadow: ${base.boxShadow};
+
+  ${responsive.mediaQuery.mobile} {
+    width: 120px;
+    height: 120px;
+  }
 `;
 
 const MetaDataBox = styled.div`
@@ -45,8 +50,12 @@ const MetaDataBox = styled.div`
 
 const Title = styled.p`
   font-weight: ${typography.weight.regular};
-  font-size: ${typography.size.large}px;
+  font-size: ${typography.size.medium}px;
   margin-bottom: 20px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.large}px;
+  }
 `;
 
 const CareerBox = styled.div`

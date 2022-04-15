@@ -86,7 +86,11 @@ const Title = styled.p`
 `;
 
 const Category = styled.p`
-  font-size: ${typography.size.small}px;
+  font-size: ${typography.size.tiny}px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.small}px;
+  }
 `;
 
 const CommonCard = ({ item, page }) => {
@@ -97,7 +101,13 @@ const CommonCard = ({ item, page }) => {
           <Nickname>{item.nickname}님</Nickname>
           <Title>{item.lesson}</Title>
           <Category>
-            {page === "reports" ? item.category : item.comment}
+            {page === "reports"
+              ? item.category
+              : `${
+                  item.comment.length > 15
+                    ? `${item.comment.slice(0, 15)}...`
+                    : item.comment
+                }`}
           </Category>
         </LeftData>
 

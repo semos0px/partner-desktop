@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
+import responsive from "../styles/constants/responsive";
 
 const Container = styled.div`
   width: 100%;
@@ -13,7 +14,7 @@ const Container = styled.div`
     overflow-x: scroll;
 
     &::-webkit-scrollbar {
-      height: 10px;
+      height: 7px;
       position: absolute;
       border-radius: 30px;
       background-color: ${colors.vanilla};
@@ -26,8 +27,8 @@ const Container = styled.div`
 
     li {
       flex-shrink: 0;
-      width: 140px;
-      height: 140px;
+      width: 90px;
+      height: 90px;
       margin-bottom: 20px;
       border-radius: ${base.borderRadius}px;
       overflow: hidden;
@@ -40,6 +41,15 @@ const Container = styled.div`
         width: 100%;
         height: 100%;
         object-fit: cover;
+      }
+    }
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    ul {
+      li {
+        width: 140px;
+        height: 140px;
       }
     }
   }

@@ -39,8 +39,12 @@ const MetaData = styled.div`
 `;
 
 const Title = styled.p`
-  font-size: ${typography.size.medium}px;
+  font-size: ${typography.size.base}px;
   margin-bottom: 5px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.medium}px;
+  }
 `;
 
 const RegionBox = styled.div`

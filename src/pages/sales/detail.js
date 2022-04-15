@@ -58,14 +58,22 @@ const Border = styled.div`
 const Section = styled.section``;
 
 const Title = styled.p`
-  font-size: ${typography.size.medium}px;
+  font-size: ${typography.size.base}px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.medium}px;
+  }
 `;
 
 const Comment = styled.p`
-  font-size: ${typography.size.small}px;
+  font-size: ${typography.size.tiny}px;
   color: ${colors.mediumGray};
   margin-top: 5px;
   margin-bottom: 30px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.small}px;
+  }
 `;
 
 const ServiceBox = styled.div`
@@ -73,12 +81,17 @@ const ServiceBox = styled.div`
   margin-top: 30px;
 
   img {
-    width: 120px;
-    height: 120px;
+    width: 94px;
+    height: 94px;
     margin-right: 20px;
     object-fit: cover;
     border-radius: ${base.borderRadius}px;
     background-color: ${colors.mediumGray};
+
+    ${responsive.mediaQuery.mobile} {
+      width: 120px;
+      height: 120px;
+    }
   }
 
   p:last-child {
@@ -119,7 +132,7 @@ const PaymentBox = styled.div`
 
   div:last-child {
     margin-top: 40px;
-    font-size: ${typography.size.medium}px;
+    font-size: ${typography.size.base}px;
 
     p:first-child {
       color: ${colors.black};
@@ -127,6 +140,12 @@ const PaymentBox = styled.div`
 
     p:last-child {
       color: ${colors.red};
+    }
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    div:last-child {
+      font-size: ${typography.size.medium}px;
     }
   }
 `;

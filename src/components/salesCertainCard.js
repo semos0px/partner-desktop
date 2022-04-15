@@ -49,15 +49,23 @@ const Status = styled.span`
   border-radius: 5px;
   border: 1px solid ${({ isDone }) => (isDone ? colors.mediumGray : colors.red)};
   font-weight: ${typography.weight.regular};
-  font-size: ${typography.size.small}px;
+  font-size: ${typography.size.tiny}px;
   margin-bottom: 5px;
   white-space: nowrap;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.small}px;
+  }
 `;
 
 const Title = styled.p`
-  font-size: ${typography.size.medium}px;
+  font-size: ${typography.size.base}px;
   color: ${colors.black};
   font-weight: ${typography.weight.regular};
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.medium}px;
+  }
 `;
 
 const Time = styled.p`

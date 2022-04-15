@@ -15,6 +15,7 @@ import RowLayout from "../../layouts/rowLayout";
 import SalesCertainCard from "../../components/salesCertainCard";
 import SalesUncertainCard from "../../components/salesUncertainCard";
 import BottomLayout from "../../layouts/bottomLayout";
+import selectIcon from "../../assets/icon/input/select-chevron.svg";
 
 const Header = styled.header`
   width: 100%;
@@ -39,7 +40,11 @@ const Header = styled.header`
 `;
 
 const WrapperLayout = styled.div`
-  padding-top: 210px;
+  padding-top: 250px;
+
+  ${responsive.mediaQuery.mobile} {
+    padding-top: 210px;
+  }
 `;
 
 const Section = styled.section`
@@ -61,11 +66,53 @@ const Title = styled.p`
 const Comment = styled.p`
   margin-top: 5px;
   color: ${colors.mediumGray};
-  font-size: ${typography.size.small}px;
+  font-size: ${typography.size.tiny}px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.small}px;
+  }
 `;
 
 const Top = styled.div`
   margin-bottom: 20px;
+  ${flexbox("space-between")}
+`;
+
+const SelectBox = styled.div`
+  position: relative;
+
+  select {
+    width: 100%;
+    height: ${base.height.smallInput}px;
+    box-shadow: ${base.boxShadow};
+    border-radius: 10px;
+    color: ${colors.mediumGray};
+    padding: 10px 20px;
+    padding-right: 40px;
+
+    -webkit-appearance: none; /* for chrome */
+    -moz-appearance: none; /*for firefox*/
+    appearance: none;
+
+    :focus {
+      box-shadow: ${base.boxShadow};
+    }
+
+    select::-ms-expand {
+      display: none; /*for IE10,11*/
+    }
+
+    ${responsive.mediaQuery.mobile} {
+      padding-right: 20px;
+    }
+  }
+`;
+
+const SelectIcon = styled.div`
+  position: absolute;
+  right: 20px;
+  bottom: 15px;
+  pointer-events: none;
 `;
 
 const SalesPage = () => {
@@ -99,11 +146,15 @@ const SalesPage = () => {
             <RowLayout>
               <Section>
                 <Top>
-                  <Title>
-                    일정 확인이 필요해요!{" "}
-                    <span>({data.uncertain.length}건)</span>
-                  </Title>
-                  <Comment>아래 강습을 클릭해서 일정을 확정해 주세요.</Comment>
+                  <div>
+                    <Title>
+                      일정 확인이 필요해요!{" "}
+                      <span>({data.uncertain.length}건)</span>
+                    </Title>
+                    <Comment>
+                      아래 강습을 클릭해서 일정을 확정해 주세요.
+                    </Comment>
+                  </div>
                 </Top>
 
                 <List>
@@ -123,6 +174,18 @@ const SalesPage = () => {
                   <Title>
                     일정이 확인 된 강습이에요. ({data.certain.length}건)
                   </Title>
+
+                  <SelectBox>
+                    <select>
+                      <option>전체</option>
+                      <option>강습 예정</option>
+                      <option>강습 완료</option>
+                    </select>
+
+                    <SelectIcon>
+                      <img src={selectIcon} />
+                    </SelectIcon>
+                  </SelectBox>
                 </Top>
 
                 <ul>

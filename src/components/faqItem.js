@@ -30,12 +30,12 @@ const QuestionBox = styled.div`
 
 const AnswerBox = styled.div`
   width: 100%;
-  height: 90px;
+  height: 100px;
   ${flexbox()};
   padding: 0 20px;
   background-color: ${colors.lightBlue};
   border-radius: ${base.borderRadius}px;
-  max-height: ${({ open }) => (open ? "90px" : 0)};
+  max-height: ${({ open }) => (open ? "100px" : 0)};
   overflow: hidden;
   transition: ${transition("max-height")};
 

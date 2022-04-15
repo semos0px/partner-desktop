@@ -55,7 +55,11 @@ const Date = styled.span`
   background-color: rgba(0, 0, 0, 0.2);
   padding: 5px;
   border-radius: 5px;
-  font-size: ${typography.size.small}px;
+  font-size: ${typography.size.tiny}px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.small}px;
+  }
 `;
 
 const Footer = styled.div`
@@ -71,13 +75,21 @@ const NoticeIcon = styled.span`
   padding: 5px;
   border-radius: 5px;
   font-weight: ${typography.weight.regular};
-  font-size: ${typography.size.small}px;
+  font-size: ${typography.size.tiny}px;
   margin-bottom: 5px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.small}px;
+  }
 `;
 
 const Title = styled.p`
-  font-size: ${typography.size.medium}px;
+  font-size: ${typography.size.base}px;
   color: ${colors.white};
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.medium}px;
+  }
 `;
 
 const NoticeCard = ({ notice }) => {

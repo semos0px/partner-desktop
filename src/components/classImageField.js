@@ -4,6 +4,7 @@ import cameraIcon from "../assets/icon/profile/camera-default.svg";
 import deleteIcon from "../assets/icon/profile/image-delete.svg";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
+import responsive from "../styles/constants/responsive";
 import flexbox from "../styles/func/flexbox";
 
 const Box = styled.div`
@@ -12,8 +13,8 @@ const Box = styled.div`
 `;
 
 const InputFileBox = styled.div`
-  width: 120px;
-  height: 120px;
+  width: 90px;
+  height: 90px;
   overflow: hidden;
   border-radius: ${base.borderRadius}px;
   border: 1px solid ${colors.blue};
@@ -23,6 +24,11 @@ const InputFileBox = styled.div`
     width: 100%;
     height: 100%;
     display: none;
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    width: 120px;
+    height: 120px;
   }
 `;
 
@@ -35,7 +41,7 @@ const InputIcon = styled.div`
 `;
 
 const ImageListBox = styled.div`
-  width: calc(100% - 120px - 10px);
+  width: calc(100% - 90px - 10px);
   height: 170px;
 
   ul {
@@ -45,7 +51,7 @@ const ImageListBox = styled.div`
     overflow-x: scroll;
 
     &::-webkit-scrollbar {
-      height: 10px;
+      height: 7px;
       position: absolute;
       border-radius: 30px;
       background-color: ${colors.vanilla};
@@ -56,19 +62,28 @@ const ImageListBox = styled.div`
       border-radius: 30px;
     }
   }
+
+  ${responsive.mediaQuery.mobile} {
+    width: calc(100% - 120px - 10px);
+  }
 `;
 
 const ImageItem = styled.li`
   position: relative;
   flex-shrink: 0;
-  width: 120px;
-  height: 120px;
+  width: 90px;
+  height: 90px;
   margin-bottom: 20px;
   border-radius: ${base.borderRadius}px;
   background-color: ${colors.mediumGray};
 
   &:not(:last-child) {
     margin-right: 10px;
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    width: 120px;
+    height: 120px;
   }
 `;
 

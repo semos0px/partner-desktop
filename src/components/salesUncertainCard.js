@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
-import fonts from "../styles/constants/fonts";
 import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
 import flexbox from "../styles/func/flexbox";
@@ -40,9 +39,13 @@ const Chevron = styled.img`
 `;
 
 const Title = styled.p`
-  font-size: ${typography.size.medium}px;
+  font-size: ${typography.size.base}px;
   color: ${colors.black};
   font-weight: ${typography.weight.regular};
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.medium}px;
+  }
 `;
 
 const Time = styled.p`

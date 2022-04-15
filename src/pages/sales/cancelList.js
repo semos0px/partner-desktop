@@ -5,11 +5,16 @@ import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
 import RowLayout from "../../layouts/rowLayout";
 import fonts from "../../styles/constants/fonts";
+import responsive from "../../styles/constants/responsive";
 import typography from "../../styles/constants/typography";
 
 const Title = styled.p`
-  font-size: ${typography.size.medium}px;
+  font-size: ${typography.size.small}px;
   margin-bottom: 30px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.base}px;
+  }
 `;
 
 const List = styled.ul`
