@@ -2,6 +2,7 @@ import InputField from "./inputField";
 import searchIcon from "../assets/icon/input/search.svg";
 import styled from "styled-components";
 import base from "../styles/constants/base";
+import responsive from "../styles/constants/responsive";
 
 const Box = styled.div`
   position: relative;
@@ -9,8 +10,14 @@ const Box = styled.div`
 
   img {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 12px;
+    right: 15px;
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    img {
+      top: 20px;
+    }
   }
 `;
 

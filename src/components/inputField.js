@@ -18,7 +18,7 @@ const Label = styled.label`
 
 const Input = styled.input`
   width: 100%;
-  height: ${base.height.input}px;
+  height: ${base.height.smallInput}px;
   box-shadow: ${base.boxShadow};
   border-radius: ${base.borderRadius}px;
   color: ${colors.mediumGray};
@@ -27,6 +27,10 @@ const Input = styled.input`
 
   :focus {
     box-shadow: ${base.boxShadow};
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    height: ${base.height.input}px;
   }
 `;
 
