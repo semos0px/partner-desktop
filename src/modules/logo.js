@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logo from "../assets/logo/semos-b.png";
+import logo from "../assets/logo/logo.svg";
 
 const Img = styled.img``;
 
