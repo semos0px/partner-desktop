@@ -2,6 +2,7 @@ import styled from "styled-components";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
 import selectIcon from "../assets/icon/input/select-chevron.svg";
+import responsive from "../styles/constants/responsive";
 
 const Div = styled.div`
   position: relative;
@@ -16,7 +17,7 @@ const Label = styled.label`
 
 const Select = styled.select`
   width: 100%;
-  height: ${base.height.input}px;
+  height: ${base.height.smallInput}px;
   box-shadow: ${base.boxShadow};
   border-radius: ${base.borderRadius}px;
   color: ${colors.mediumGray};
@@ -33,6 +34,10 @@ const Select = styled.select`
   select::-ms-expand {
     display: none; /*for IE10,11*/
   }
+
+  ${responsive.mediaQuery.mobile} {
+    height: ${base.height.input}px;
+  }
 `;
 
 const Option = styled.option``;
@@ -40,8 +45,12 @@ const Option = styled.option``;
 const SelectIcon = styled.div`
   position: absolute;
   right: 20px;
-  bottom: 20px;
+  bottom: 15px;
   pointer-events: none;
+
+  ${responsive.mediaQuery.mobile} {
+    bottom: 20px;
+  }
 `;
 
 const SelectField = ({
