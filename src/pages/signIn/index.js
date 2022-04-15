@@ -2,12 +2,12 @@ import styled from "styled-components";
 import LoginBox from "../../components/loginBox";
 import SNSBox from "../../components/snsBox";
 import Footer from "../../layouts/footer";
-import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
 import RowLayout from "../../layouts/rowLayout";
 import AddChannelButton from "../../modules/addChannelButton";
 import Logo from "../../modules/logo";
 import colors from "../../styles/constants/colors";
+import responsive from "../../styles/constants/responsive";
 import typography from "../../styles/constants/typography";
 import flexbox from "../../styles/func/flexbox";
 
@@ -25,8 +25,22 @@ const Greeting = styled.div`
 
   strong {
     display: inline-block;
-    font-size: 20px;
+    font-size: ${typography.size.base}px;
     margin-bottom: 10px;
+  }
+
+  p {
+    font-size: ${typography.size.tiny}px;
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    strong {
+      font-size: 20px;
+    }
+
+    p {
+      font-size: ${typography.size.base}px;
+    }
   }
 `;
 
@@ -35,10 +49,20 @@ const Box = styled.div`
   ${flexbox("center", "center", "column")};
   text-align: center;
 
+  font-size: ${typography.size.small}px;
+
   time {
-    font-size: ${typography.size.small}px;
+    font-size: ${typography.size.tiny}px;
     color: ${colors.darkGray};
     margin-top: 10px;
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.base}px;
+
+    time {
+      font-size: ${typography.size.small}px;
+    }
   }
 `;
 

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
-import fonts from "../styles/constants/fonts";
 import responsive from "../styles/constants/responsive";
 import typography from "../styles/constants/typography";
 import flexbox from "../styles/func/flexbox";
@@ -18,14 +17,23 @@ const Box = styled.div`
   border-radius: ${base.borderRadius}px;
   box-shadow: ${base.boxShadow};
   text-align: center;
+  font-size: ${typography.size.tiny}px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.base}px;
+  }
 `;
 
 const Title = styled.p`
   text-transform: uppercase;
 
-  font-size: ${typography.size.large}px;
+  font-size: ${typography.size.medium}px;
   font-weight: ${typography.weight.bold};
   margin-bottom: 10px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.large}px;
+  }
 `;
 
 const ButtonBox = styled.div`
@@ -39,7 +47,7 @@ const ButtonBox = styled.div`
     padding: 10px 20px;
     border-radius: 40px;
     transition: ${transition("opacity")};
-    font-size: ${typography.size.medium}px;
+    font-size: ${typography.size.small}px;
     font-weight: ${typography.weight.regular};
 
     img {
@@ -53,6 +61,10 @@ const ButtonBox = styled.div`
     &:hover,
     &:active {
       opacity: 0.8;
+    }
+
+    ${responsive.mediaQuery.mobile} {
+      font-size: ${typography.size.medium}px;
     }
   }
 
