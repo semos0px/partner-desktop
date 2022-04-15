@@ -7,6 +7,7 @@ import questionIcon from "../../assets/icon/class/question.svg";
 import typography from "../../styles/constants/typography";
 import { getDay } from "../../func";
 import { useState } from "react";
+import Calendar from "../../components/calendar";
 
 const Main = styled.main`
   width: 100%;
@@ -223,6 +224,7 @@ const ClassSchedule = ({ data, recommendationNoticeToggleHandler }) => {
           <p>등록 완료 일정</p>
           <p>날짜를 클릭하면 일정을 확인할 수 있어요.</p>
           {/* 달력 */}
+          <Calendar />
 
           <TargetScheduleBox>
             <time>{`${datetime.year}년 ${datetime.month + 1}월 ${
