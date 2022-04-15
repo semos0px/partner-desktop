@@ -20,9 +20,9 @@ const Right = styled.div`
   height: 100%;
   align-self: flex-start;
 
-  /* input {
-    width: 30px;
-  } */
+  input[type="checkbox"] {
+    transform: scale(1.5);
+  }
 `;
 
 const SelectBox = styled.div`
@@ -62,7 +62,7 @@ const SelectIcon = styled.div`
 `;
 
 const LocationBox = styled.div`
-  ${flexbox()}
+  ${flexbox("flex-start")}
   margin-bottom: 10px;
 
   label {
@@ -86,7 +86,82 @@ const LocationBox = styled.div`
   }
 `;
 
-const TimeBox = styled.div``;
+const TimeBox = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+
+  label {
+    white-space: nowrap;
+    width: 100px;
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    label {
+      width: 150px;
+    }
+  }
+`;
+
+const ClockBox = styled.div`
+  position: relative;
+  width: 50px;
+
+  select {
+    padding: 5px !important;
+    width: 100%;
+    font-size: ${typography.size.small}px;
+    height: ${base.height.smallInput - 10}px;
+    box-shadow: ${base.boxShadow};
+    border-radius: ${base.borderRadius}px;
+    color: ${colors.mediumGray};
+    padding-right: 40px;
+
+    -webkit-appearance: none; /* for chrome */
+    -moz-appearance: none; /*for firefox*/
+    appearance: none;
+
+    :focus {
+      box-shadow: ${base.boxShadow};
+    }
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    width: 84px;
+
+    select {
+      padding: 10px;
+      font-size: ${typography.size.base}px;
+    }
+  }
+`;
+
+const ClockSelectIcon = styled.div`
+  position: absolute;
+  right: 5px;
+  bottom: 10px;
+  pointer-events: none;
+
+  ${responsive.mediaQuery.mobile} {
+    right: 10px;
+  }
+`;
+
+const MiddleIcon = styled.span`
+  margin: 0 10px;
+`;
+
+const Time = styled.div`
+  ${flexbox("flex-start")}
+
+  span {
+    margin: 0 10px;
+  }
+`;
+
+const Clock = styled.div`
+  ${flexbox("flex-start")}
+  margin-right: 10px;
+`;
 
 const MaximumBox = styled.div`
   ${flexbox()}
@@ -102,16 +177,18 @@ const MaximumBox = styled.div`
     box-shadow: ${base.boxShadow};
     border-radius: ${base.borderRadius}px;
     color: ${colors.mediumGray};
-    padding: 10px 20px;
-    padding-right: 40px;
     margin-right: 10px;
-
-    -webkit-appearance: none; /* for chrome */
-    -moz-appearance: none; /*for firefox*/
-    appearance: none;
+    border: 1px solid ${colors.blue};
+    padding: 5px 18px;
 
     :focus {
       box-shadow: ${base.boxShadow};
+    }
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    label {
+      width: 150px;
     }
   }
 `;
@@ -120,6 +197,30 @@ const TargetDayCard = ({ targetDayData }) => {
   const checkAddressHandler = () => {
     console.log("주소 확인하기");
   };
+
+  const mockChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    e.preventDefault();
+
+    // setClockData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const hour = Array.from({ length: 18 }, (_, i) => {
+    if (i + 6 < 10) {
+      return `0${i + 6}`;
+    } else {
+      return i + 6;
+    }
+  });
+
+  const minute = Array.from({ length: 60 }, (_, i) => {
+    if (i < 10) {
+      return `0${i}`;
+    } else {
+      return i;
+    }
+  });
 
   return (
     <Card>
@@ -142,7 +243,77 @@ const TargetDayCard = ({ targetDayData }) => {
           </button>
         </LocationBox>
 
-        <TimeBox></TimeBox>
+        <TimeBox>
+          <label>강습 시간</label>
+
+          <Clock>
+            <Time>
+              <ClockBox>
+                <select name="start-hour" onChange={mockChangeHandler}>
+                  {hour.map((item, idx) => (
+                    <option key={idx} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+
+                <ClockSelectIcon>
+                  <img src={selectIcon} />
+                </ClockSelectIcon>
+              </ClockBox>
+
+              <span>:</span>
+
+              <ClockBox>
+                <select name="start-minute" onChange={mockChangeHandler}>
+                  {minute.map((item, idx) => (
+                    <option key={idx} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+
+                <ClockSelectIcon>
+                  <img src={selectIcon} />
+                </ClockSelectIcon>
+              </ClockBox>
+            </Time>
+
+            <MiddleIcon>~</MiddleIcon>
+
+            <Time>
+              <ClockBox>
+                <select name="finish-hour" onChange={mockChangeHandler}>
+                  {hour.map((item, idx) => (
+                    <option key={idx} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+
+                <ClockSelectIcon>
+                  <img src={selectIcon} />
+                </ClockSelectIcon>
+              </ClockBox>
+
+              <span>:</span>
+
+              <ClockBox>
+                <select name="finish-minute" onChange={mockChangeHandler}>
+                  {minute.map((item, idx) => (
+                    <option key={idx} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
+
+                <ClockSelectIcon>
+                  <img src={selectIcon} />
+                </ClockSelectIcon>
+              </ClockBox>
+            </Time>
+          </Clock>
+        </TimeBox>
 
         <MaximumBox>
           <label>강습 인원</label>

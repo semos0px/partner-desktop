@@ -13,6 +13,7 @@ import questionIcon from "../../assets/icon/class/question.svg";
 import typography from "../../styles/constants/typography";
 import flexbox from "../../styles/func/flexbox";
 import TargetDayCard from "../../components/classForm/targetDayCard";
+import SchedulePanel from "../../layouts/schedulePanel";
 
 const LEFT_RIGHT_PADDING = 20;
 
@@ -58,6 +59,10 @@ const BottomButtonBox = styled.div`
     border-radius: ${base.borderRadius}px;
     box-shadow: ${base.boxShadow};
     height: ${base.height.bottomButton}px;
+
+    &:focus {
+      box-shadow: ${base.boxShadow};
+    }
   }
 `;
 
@@ -128,7 +133,7 @@ const TargetDayDiv = styled.div`
 
 const ClassEditSchedulePage = ({ recommendation = true }) => {
   const [date, setDate] = useState(new Date());
-
+  const [panel, setPanel] = useState(false);
   const [openRecommendationInfo, setOpenRecommendationInfo] = useState(false);
 
   const recommendationNoticeToggleHandler = () => {
@@ -144,7 +149,7 @@ const ClassEditSchedulePage = ({ recommendation = true }) => {
   };
 
   const addScheduleHandler = () => {
-    console.log("일정 추가하기");
+    setPanel(!panel);
   };
 
   return (
@@ -212,11 +217,15 @@ const ClassEditSchedulePage = ({ recommendation = true }) => {
         {openRecommendationInfo && (
           <Overlay toggleHandler={recommendationNoticeToggleHandler} />
         )}
+
+        {panel && <Overlay toggleHandler={addScheduleHandler} />}
       </OverlayPortal>
 
       {openRecommendationInfo && (
         <RecommendationBox open={openRecommendationInfo} />
       )}
+
+      {panel && <SchedulePanel open={addScheduleHandler} />}
     </PageLayout>
   );
 };
