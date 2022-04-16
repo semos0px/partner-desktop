@@ -15,6 +15,9 @@ import reviewIcon from "../../assets/icon/viewmore/review.png";
 import kakaoIcon from "../../assets/icon/login/kakao.svg";
 import responsive from "../../styles/constants/responsive";
 import BottomLayout from "../../layouts/bottomLayout";
+import { useKakao } from "../../context/kakao";
+
+const KAKAO_CHANNEL_PUBLIC_ID = "_YxfVxfK";
 
 const Section = styled.section`
   padding: 0px 20px;
@@ -146,6 +149,8 @@ const Button = styled.button`
 `;
 
 const ViewMore = () => {
+  const { kakaoService } = useKakao();
+
   // data fetching
   const partnerInfo = {
     id: "20200902",
@@ -153,14 +158,18 @@ const ViewMore = () => {
     mobile: "010-3305-3419",
   };
 
-  const kakaoInquiryHandler = () => {};
+  const kakaoInquiryHandler = () => {
+    kakaoService.chat(KAKAO_CHANNEL_PUBLIC_ID);
+  };
 
   const logoutHandler = () => {
     // TODO: auth context에서 logout 구현한거 가져올 것
     // login 페이지로 redirect
   };
 
-  const shareHandler = () => {};
+  const shareHandler = () => {
+    kakaoService.share();
+  };
 
   return (
     <PageLayout headerTitle="더보기" backgroundColor={colors.darkWhite}>

@@ -9,6 +9,7 @@ import BottomButton from "../../modules/bottomButton";
 import ClassInputField from "../../modules/classInputField";
 import ToggleButton from "../../modules/toggleButton";
 import OverlayPortal from "../../overlayPortal";
+import MapService from "../../service/map";
 import base from "../../styles/constants/base";
 import colors from "../../styles/constants/colors";
 
@@ -31,7 +32,7 @@ const ClassEditContentsPage = () => {
     maximum: null,
     discount: [{}],
     option: [{}],
-    location: [{}],
+    location: [{ main: null, detail: null }],
     mainImage: null,
     schedule: [],
     certain: [],
@@ -41,6 +42,17 @@ const ClassEditContentsPage = () => {
     detail: null,
     additional: null,
   });
+
+  const putAddress = (data) => {
+    const { address } = data;
+
+    setClassData((prev) => ({
+      ...prev,
+      location: [...prev.location, { main: address, text: null }],
+    }));
+  };
+
+  const mapService = new MapService(putAddress);
 
   // TODO: data fetching - 강사 정보
 
@@ -66,6 +78,10 @@ const ClassEditContentsPage = () => {
     setOpenClass(!openClass);
   };
 
+  const searchAddressHandler = () => {
+    mapService.open();
+  };
+
   return (
     <>
       <PageLayout headerTitle="[프리다이빙] 고고다이브(백강사)" isGoBack={true}>
@@ -86,6 +102,7 @@ const ClassEditContentsPage = () => {
                   certainHandler={recommendationCertainHandler}
                   uncertainHandler={recommendationUncertainHandler}
                   classData={classData}
+                  searchAddressHandler={searchAddressHandler}
                 />
               </Form>
             </Wrapper>

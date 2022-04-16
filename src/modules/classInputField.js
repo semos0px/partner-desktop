@@ -352,6 +352,7 @@ const ClassInputField = ({
   recommendationNoticeToggleHandler,
   recommendationCertainHandler,
   recommedationUncertainHandler,
+  searchAddressHandler,
 }) => {
   const [example, setExample] = useState(false);
 
@@ -439,7 +440,7 @@ const ClassInputField = ({
         <LocationDiv>
           <label>강습 위치</label>
 
-          <LocationInputField />
+          <LocationInputField searchAddressHandler={searchAddressHandler} />
         </LocationDiv>
 
         <BaseScheduleDiv>

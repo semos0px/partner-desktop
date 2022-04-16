@@ -1,5 +1,8 @@
 import styled from "styled-components";
+import { useKakao } from "../context/kakao";
 import colors from "../styles/constants/colors";
+
+const KAKAO_CHANNEL_PUBLIC_ID = "_YxfVxfK";
 
 const Button = styled.button`
   text-decoration: underline;
@@ -7,10 +10,10 @@ const Button = styled.button`
 `;
 
 const AddChannelButton = () => {
+  const { kakaoService } = useKakao();
+
   const addChannelHandler = () => {
-    window.Kakao.Channel.chat({
-      channelPublicId: "_YxfVxfK",
-    });
+    kakaoService.chat(KAKAO_CHANNEL_PUBLIC_ID);
   };
 
   return (
