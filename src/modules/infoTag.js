@@ -17,6 +17,10 @@ const Tag = styled.span`
   margin-right: 10px;
   text-decoration: ${({ isLine }) => (isLine ? `underline` : null)};
 
+  span {
+    cursor: ${({ ispointer }) => (ispointer === "true" ? "pointer" : null)};
+  }
+
   button {
     margin-left: 30px;
     ${flexbox()}
@@ -28,10 +32,19 @@ const Tag = styled.span`
   }
 `;
 
-const InfoTag = ({ text, color, isLine = false, deleteHandler }) => {
+const InfoTag = ({
+  text,
+  color,
+  isLine = false,
+  deleteHandler,
+  clickHandler = null,
+  ispointer = "false",
+}) => {
   return (
     <Tag color={color} isLine={isLine}>
-      <span>{text}</span>
+      <span onClick={clickHandler} ispointer={ispointer}>
+        {text}
+      </span>
 
       <button type="button" onClick={deleteHandler}>
         <img src={color === "blue" ? deleteBlueIcon : deleteIcon} />
