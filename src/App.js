@@ -27,8 +27,13 @@ import SalesDetailPage from "./pages/sales/detail";
 import ReviewPage from "./pages/review";
 import ClassEditContentsPage from "./pages/class/editContents";
 import ClassEditSchedulePage from "./pages/class/editSchedule";
+import { useKakao } from "./context/kakao";
 
 const App = () => {
+  const { kakaoService } = useKakao();
+
+  kakaoService.init();
+
   return (
     <div className="App">
       <AuthProvider>
