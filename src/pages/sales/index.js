@@ -116,6 +116,20 @@ const SelectIcon = styled.div`
 `;
 
 const SalesPage = () => {
+  const [inputValue, setInputValue] = useState({
+    datetime: "2022-04",
+    filter: "all",
+  });
+
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    setInputValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   // const [data, setData] = useState({});
   // let data = [];
   let data = salesData;
@@ -129,6 +143,8 @@ const SalesPage = () => {
           <HistoryBox
             cnt={data ? data.certain.length + data.uncertain.length : 0}
             income={data ? data.income : 0}
+            changeHandler={inputChangeHandler}
+            value={inputValue.datetime}
           />
         </Header>
 
@@ -176,10 +192,14 @@ const SalesPage = () => {
                   </Title>
 
                   <SelectBox>
-                    <select>
-                      <option>전체</option>
-                      <option>강습 예정</option>
-                      <option>강습 완료</option>
+                    <select
+                      defaultValue={"all"}
+                      name="filter"
+                      onChange={inputChangeHandler}
+                    >
+                      <option value="all">전체</option>
+                      <option value="f">강습 예정</option>
+                      <option value="t">강습 완료</option>
                     </select>
 
                     <SelectIcon>

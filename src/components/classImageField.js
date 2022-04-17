@@ -47,6 +47,7 @@ const ImageListBox = styled.div`
   ul {
     position: relative;
     width: 100%;
+    min-height: 110px;
     display: flex;
     overflow-x: scroll;
 
@@ -65,6 +66,10 @@ const ImageListBox = styled.div`
 
   ${responsive.mediaQuery.mobile} {
     width: calc(100% - 120px - 10px);
+
+    ul {
+      min-height: 140px;
+    }
   }
 `;
 
@@ -132,9 +137,9 @@ const ClassImageField = ({ changeHandler, deleteHandler, value, name }) => {
         <ul>
           {value.map((item, idx) => (
             <ImageItem key={idx}>
-              <Image src={item} />
+              <Image src={item.base} />
               <DeleteButton type="button">
-                <img src={deleteIcon} onClick={deleteHandler} />
+                <img src={deleteIcon} onClick={() => deleteHandler(item.id)} />
               </DeleteButton>
             </ImageItem>
           ))}

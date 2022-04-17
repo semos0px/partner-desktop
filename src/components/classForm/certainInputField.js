@@ -3,12 +3,14 @@ import AddButton from "../../modules/addButton";
 import InfoTag from "../../modules/infoTag";
 import responsive from "../../styles/constants/responsive";
 import colors from "../../styles/constants/colors";
+import { useRef } from "react";
 
 const Box = styled.div`
   width: 100%;
 
   ul {
     display: flex;
+    flex-wrap: wrap;
   }
 
   ${responsive.mediaQuery.mobile} {
@@ -32,7 +34,13 @@ const DeleteButton = styled.button`
   color: ${colors.red};
 `;
 
-const CertainInputField = ({ changeHandler, addHandler, deleteHandler }) => {
+const CertainInputField = ({ data, addHandler, deleteHandler }) => {
+  const inputRef = useRef();
+
+  const clearFunc = () => {
+    inputRef.current.value = "";
+  };
+
   return (
     <Box>
       <InputBox>
@@ -40,27 +48,25 @@ const CertainInputField = ({ changeHandler, addHandler, deleteHandler }) => {
           type="text"
           name="certain"
           placeholder="포함된 사항을 적어주세요."
+          ref={inputRef}
         />
 
-        <AddButton addHandler={addHandler} />
+        <AddButton
+          addHandler={() =>
+            addHandler("certain", inputRef.current.value, clearFunc)
+          }
+        />
       </InputBox>
 
       <ul>
-        <li>
-          <InfoTag text="풀장 입장료">
-            <DeleteButton type="button" onClick={deleteHandler}>
-              x
-            </DeleteButton>
-          </InfoTag>
-        </li>
-
-        <li>
-          <InfoTag text="장비 렌탈비">
-            <DeleteButton type="button" onClick={deleteHandler}>
-              x
-            </DeleteButton>
-          </InfoTag>
-        </li>
+        {data.map((item) => (
+          <li>
+            <InfoTag
+              text={item.text}
+              deleteHandler={() => deleteHandler("certain", item.id)}
+            ></InfoTag>
+          </li>
+        ))}
       </ul>
     </Box>
   );

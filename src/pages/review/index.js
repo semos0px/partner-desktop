@@ -139,8 +139,44 @@ const RegionBox = styled.div`
 `;
 
 const ReviewPage = () => {
-  const [profileOption, setProfileOption] = useState("");
-  const [sortOption, setSortOption] = useState("low");
+  const reviewData = reviewList;
+
+  const reviews = Object.keys(reviewData).map((key) => reviewData[key]);
+
+  const [inputValue, setInputValue] = useState({
+    profile: "",
+    sort: "",
+  });
+
+  const [reviewValue, setReviewValue] = useState(
+    Object.keys(reviewData).map((key) => ({
+      id: key,
+      answer: reviewData[key].answer,
+    }))
+  );
+
+  console.log(reviewValue);
+
+  console.log(inputValue);
+
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    setInputValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const reviewChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    setReviewValue((prev) => {
+      const data = prev.filter((item) => name.includes(item.id));
+
+      return [...prev];
+    });
+  };
 
   // profileOption을 통해 필터된 프로필이 선택되어야 함(쿼리 사용)
   const profile = {
@@ -153,8 +189,6 @@ const ReviewPage = () => {
     region: ["서울 송파/강동", "경기 수원"],
     thumbnail: profileThumbnail,
   };
-
-  const reviewData = reviewList;
 
   return (
     <PageLayout headerTitle="후기 답변 관리" isGoBack={true}>
@@ -177,8 +211,13 @@ const ReviewPage = () => {
             </ProfileSection>
 
             <ProfileBox>
-              <ProfileSelectField name="profile-select">
-                <option>프로필 선택</option>
+              <ProfileSelectField
+                name="profile"
+                defaultValue={inputValue.profile}
+                onChange={inputChangeHandler}
+              >
+                <option value="">프로필 선택</option>
+                <option value="1">핸강사[김현주]</option>
                 {/* 파트너의 프로필 수에 따라서 달라질 것 */}
               </ProfileSelectField>
 
@@ -191,20 +230,23 @@ const ReviewPage = () => {
           <Main>
             <header>
               <div>
-                <Title>후기({reviewData.length}개)</Title>
+                <Title>후기({reviews.length}개)</Title>
 
                 <StarBox
                   rating={
-                    reviewData.reduce((a, b) => a + b.rating, 0) /
-                    reviewData.length
+                    reviews.reduce((a, b) => a + b.rating, 0) / reviews.length
                   }
                 />
               </div>
 
               <SortBox>
-                <SortSelectField name="profile-select">
-                  <option>별점 낮은 순</option>
-                  {/* 파트너의 프로필 수에 따라서 달라질 것 */}
+                <SortSelectField
+                  name="sort"
+                  defaultValue={inputValue.sort}
+                  onChange={inputChangeHandler}
+                >
+                  <option value="">별점 낮은 순</option>
+                  <option value="1">별점 높은 순</option>
                 </SortSelectField>
 
                 <SelectIcon>
@@ -214,8 +256,13 @@ const ReviewPage = () => {
             </header>
 
             <ul>
-              {reviewData.map((item, idx) => (
-                <ReviewCard key={idx} review={item} />
+              {reviews.map((item, idx) => (
+                <ReviewCard
+                  key={idx}
+                  review={item}
+                  changeHandler={inputChangeHandler}
+                  inputValue={inputValue}
+                />
               ))}
             </ul>
           </Main>

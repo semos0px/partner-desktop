@@ -1,7 +1,6 @@
 import InputField from "./inputField";
 import searchIcon from "../assets/icon/input/search.svg";
 import styled from "styled-components";
-import base from "../styles/constants/base";
 import responsive from "../styles/constants/responsive";
 
 const Box = styled.div`
@@ -12,6 +11,7 @@ const Box = styled.div`
     position: absolute;
     top: 12px;
     right: 15px;
+    cursor: pointer;
   }
 
   ${responsive.mediaQuery.mobile} {
@@ -21,16 +21,23 @@ const Box = styled.div`
   }
 `;
 
-const SearchBar = ({ value, changeHandler, placeholder = "" }) => {
+const SearchBar = ({
+  name,
+  value,
+  changeHandler,
+  placeholder = "",
+  clickHandler,
+}) => {
   return (
     <Box>
       <InputField
+        name={name}
         placeholder={placeholder}
         value={value}
         changeHandler={changeHandler}
         isIcon={true}
       />
-      <img src={searchIcon} />
+      <img src={searchIcon} onClick={clickHandler} />
     </Box>
   );
 };

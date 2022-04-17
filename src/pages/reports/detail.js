@@ -19,9 +19,15 @@ const Wrapper = styled.div`
 `;
 
 const ReportsDetailPage = () => {
+  const { nickname, date, report, category } = reportsDetailData[0];
+
   const { sid } = useParams();
 
-  const { nickname, date, report, category } = reportsDetailData[0];
+  const [inputValue, setInputValue] = useState({
+    progress: report.length > 0 ? report[0].progressRate : 0,
+    content: report.length > 0 ? report[0].content : "",
+    feedback: report.length > 0 ? report[0].feedback.me : "",
+  });
 
   //   const { nickname, date, report, category } = reportsDetailData.filter(
   //     (r) => r.id === parseInt(sid)
@@ -45,7 +51,9 @@ const ReportsDetailPage = () => {
   //       });
   //   }, []);
 
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
+
     if (report) {
       // REST API: patch or put
       console.log("수정하기");
@@ -55,14 +63,15 @@ const ReportsDetailPage = () => {
     }
   };
 
-  const inputHandler = (e) => {
+  const formChangeHandler = (e) => {
     const { name, value } = e.target;
 
     console.log(name, value);
-  };
 
-  const changeHandler = () => {
-    // textarea event
+    setInputValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
@@ -73,11 +82,11 @@ const ReportsDetailPage = () => {
             <time>{date}</time>
 
             <ReportsFillOut
+              inputValue={inputValue}
               report={report}
               category={category}
               submitHandler={submitHandler}
-              inputHandler={inputHandler}
-              changeHandler={changeHandler}
+              changeHandler={formChangeHandler}
             />
           </Wrapper>
         </RowLayout>

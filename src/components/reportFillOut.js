@@ -59,35 +59,37 @@ const FeedbackBox = styled.div`
 const ReportsFillOut = ({
   category,
   report,
+  inputValue,
   submitHandler,
-  inputHandler,
   changeHandler,
 }) => {
+  const isEditable = !report[0]?.feedback.student ? true : false;
+
   return (
     <Box>
       <Header>
         <p>{category}</p>
-        {!report[0].feedback.student && (
-          <button onClick={submitHandler}>
-            {report ? "수정하기" : "등록하기"}
-          </button>
-        )}
+
+        <button onClick={submitHandler}>
+          {report.length > 0 ? "수정하기" : "등록하기"}
+        </button>
       </Header>
 
       <Form>
         <RangeField
           label="진도율"
           name="progress"
-          inputHandler={inputHandler}
-          value={report[0].progressRate}
+          changeHandler={changeHandler}
+          value={inputValue.progress}
         />
 
         <TextBox>
           <TextareaField
             label="강습 내용을 적어주세요."
             name="content"
-            value={report[0].content}
+            value={inputValue.content}
             changeHandler={changeHandler}
+            isEditable={isEditable}
           />
         </TextBox>
 
@@ -95,18 +97,21 @@ const ReportsFillOut = ({
           <TextareaField
             label="피드백을 적어주세요."
             name="feedback"
-            value={report[0].feedback.me}
+            value={inputValue.feedback}
             changeHandler={changeHandler}
+            isEditable={isEditable}
           />
         </TextBox>
       </Form>
 
-      <FeedbackBox>
-        <p>수강생 피드백</p>
-        <div>
-          <p>{report[0].feedback.student}</p>
-        </div>
-      </FeedbackBox>
+      {report.length > 0 && report[0].feedback.student && (
+        <FeedbackBox>
+          <p>수강생 피드백</p>
+          <div>
+            <p>{report[0].feedback.student}</p>
+          </div>
+        </FeedbackBox>
+      )}
     </Box>
   );
 };

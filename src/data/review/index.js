@@ -1,7 +1,7 @@
 import thumbnailImage from "../../assets/images/profile/thumbnail.png";
 
-const reviewList = [
-  {
+const reviewList = {
+  0: {
     id: 0,
     rating: 2,
     member: {
@@ -15,7 +15,7 @@ const reviewList = [
     answer:
       "일단 갈비 사건은 죄송합니다. 다음번에는 더 즐거운 강습 되게 노력하겠습니다. ^^",
   },
-  {
+  1: {
     id: 1,
     rating: 4,
     member: {
@@ -28,6 +28,6 @@ const reviewList = [
       "아이랑 함께 받아봤는데 아이가 너무 좋아했어요!! 다음에또 받고 싶네요 ~ 감사합니다~~",
     answer: null,
   },
-];
+};
 
 export default reviewList;

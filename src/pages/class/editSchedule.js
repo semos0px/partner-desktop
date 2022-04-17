@@ -14,6 +14,7 @@ import typography from "../../styles/constants/typography";
 import flexbox from "../../styles/func/flexbox";
 import TargetDayCard from "../../components/classForm/targetDayCard";
 import SchedulePanel from "../../layouts/schedulePanel";
+import Calendar from "../../components/calendar";
 
 const LEFT_RIGHT_PADDING = 20;
 
@@ -190,6 +191,8 @@ const ClassEditSchedulePage = ({ recommendation = true }) => {
                     일정 추가하기
                   </button>
                 </Top>
+
+                <Calendar />
               </CalendarDiv>
 
               <TargetDayDiv>

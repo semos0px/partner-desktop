@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
+import responsive from "../styles/constants/responsive";
 import flexbox from "../styles/func/flexbox";
 
 const Div = styled.div`
@@ -18,10 +19,16 @@ const ButtonBox = styled.div`
 
   button {
     width: calc(50% - 10px);
-    height: ${base.height.input}px;
+    height: ${base.height.smallInput}px;
     background-color: ${colors.white};
     box-shadow: ${base.boxShadow};
     border-radius: ${base.borderRadius}px;
+  }
+
+  ${responsive.mediaQuery.mobile} {
+    button {
+      height: ${base.height.input}px;
+    }
   }
 `;
 
@@ -35,15 +42,16 @@ const FemaleButton = styled.button`
   color: ${({ isMale }) => (isMale ? colors.mediumGray : colors.blue)};
 `;
 
-const SexField = ({ isMale, maleCheckHandler, femaleCheckHandler }) => {
+const SexField = ({ isMale, changeHandler }) => {
   return (
     <Div>
       <Label>성별을 알려주세요.</Label>
+
       <ButtonBox>
-        <MaleButton onClick={maleCheckHandler} isMale={isMale}>
+        <MaleButton onClick={changeHandler} isMale={isMale} name="male">
           남성
         </MaleButton>
-        <FemaleButton onClick={femaleCheckHandler} isMale={isMale}>
+        <FemaleButton onClick={changeHandler} isMale={isMale} name="female">
           여성
         </FemaleButton>
       </ButtonBox>

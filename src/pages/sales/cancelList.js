@@ -7,6 +7,10 @@ import RowLayout from "../../layouts/rowLayout";
 import fonts from "../../styles/constants/fonts";
 import responsive from "../../styles/constants/responsive";
 import typography from "../../styles/constants/typography";
+import salesImage from "../../assets/images/sale/sale-default.png";
+import NotExistBox from "../../components/notExistBox";
+
+const Wrapper = styled.div``;
 
 const Title = styled.p`
   font-size: ${typography.size.small}px;
@@ -30,11 +34,20 @@ const CancelPage = () => {
         <RowLayout>
           <Title>취소 또는 환불 된 내역이에요.</Title>
 
-          <List>
-            {data.map((item, idx) => (
-              <CancelCard key={idx} cancel={item} />
-            ))}
-          </List>
+          <Wrapper>
+            {data.length === 0 && (
+              <NotExistBox
+                imgURL={salesImage}
+                comment="취소/환불내역이 없습니다."
+              />
+            )}
+
+            <List>
+              {data.map((item, idx) => (
+                <CancelCard key={idx} cancel={item} />
+              ))}
+            </List>
+          </Wrapper>
         </RowLayout>
       </PaddingLayout>
     </PageLayout>

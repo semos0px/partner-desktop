@@ -26,22 +26,82 @@ const ClassEditContentsPage = () => {
   const [openClass, setOpenClass] = useState(false);
 
   const [classData, setClassData] = useState({
-    title: null,
+    title: "",
     status: true,
-    price: null,
-    maximum: null,
-    discount: [{}],
-    option: [{}],
+    price: "",
+    maximum: 4,
+    discount: [],
+    option: [],
     location: [{ main: null, detail: null }],
-    mainImage: null,
+    mainImage: {
+      base: "",
+      files: "",
+    },
     schedule: [],
     certain: [],
-    except: [],
+    uncertain: [],
     material: [],
     faq: [],
     detail: null,
     additional: null,
   });
+
+  console.log(classData);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log("강습 저장하기");
+  };
+
+  const formChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    setClassData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const addHandler = (name, value, clearFunc) => {
+    let newData;
+
+    switch (name) {
+      case "discount":
+        newData = {
+          id: new Date(),
+          personnel: value.personnel,
+          price: value.price,
+        };
+        break;
+
+      case "option":
+        newData = {
+          id: new Date(),
+          text: value.text,
+          price: value.price,
+        };
+        break;
+      default:
+        newData = { id: new Date(), text: value };
+    }
+
+    setClassData((prev) => ({
+      ...prev,
+      [name]: [...prev[name], newData],
+    }));
+
+    clearFunc();
+  };
+
+  const deleteHandler = (name, id) => {
+    console.log(name, id);
+    const filteredData = classData[name].filter((item) => item.id !== id);
+
+    setClassData((prev) => ({
+      ...prev,
+      [name]: filteredData,
+    }));
+  };
 
   const putAddress = (data) => {
     const { address } = data;
@@ -61,17 +121,11 @@ const ClassEditContentsPage = () => {
   };
 
   const recommendationCertainHandler = () => {
-    console.log("확정 예약");
     setClassData((prev) => ({ ...prev, status: true }));
   };
 
   const recommendationUncertainHandler = () => {
     setClassData((prev) => ({ ...prev, status: false }));
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log("강습 저장하기");
   };
 
   const classToggleHandler = () => {
@@ -80,6 +134,28 @@ const ClassEditContentsPage = () => {
 
   const searchAddressHandler = () => {
     mapService.open();
+  };
+
+  const imageChangeHandler = (e) => {
+    const { name, files } = e.target;
+
+    let reader = new FileReader();
+
+    if (files[0]) {
+      reader.readAsDataURL(files[0]);
+    }
+
+    reader.onloadend = () => {
+      const previewImgUrl = reader.result;
+
+      setClassData((prev) => ({
+        ...prev,
+        mainImage: {
+          base: previewImgUrl,
+          files,
+        },
+      }));
+    };
   };
 
   return (
@@ -103,6 +179,10 @@ const ClassEditContentsPage = () => {
                   uncertainHandler={recommendationUncertainHandler}
                   classData={classData}
                   searchAddressHandler={searchAddressHandler}
+                  changeHandler={formChangeHandler}
+                  imageChangeHandler={imageChangeHandler}
+                  addHandler={addHandler}
+                  deleteHandler={deleteHandler}
                 />
               </Form>
             </Wrapper>

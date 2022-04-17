@@ -96,6 +96,10 @@ const Description = styled.p`
 `;
 
 const ClassPage = () => {
+  const [inputValue, setInputValue] = useState({
+    filter: "",
+  });
+
   const [profile, setProfile] = useState({
     id: "123",
     category: "스쿠버다이빙",
@@ -106,6 +110,17 @@ const ClassPage = () => {
     region: ["서울 송파/강동", "경기 수원"],
     // thumbnail: profileThumbnail,
   });
+
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    setInputValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  console.log(inputValue);
 
   return (
     <PageLayout headerTitle="강습">
@@ -128,7 +143,13 @@ const ClassPage = () => {
                 </MetaData>
               </Top>
 
-              <SelectField optionList={[{ text: "프로필 선택" }]} />
+              <SelectField
+                name="filter"
+                defaultText="프로필 선택"
+                value={inputValue.filter}
+                optionList={[{ text: "핸강사(김현주)", value: "1" }]}
+                changeHandler={inputChangeHandler}
+              />
             </ProfileSection>
 
             <Main>

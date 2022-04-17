@@ -2,6 +2,7 @@ import styled from "styled-components";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
 import typography from "../styles/constants/typography";
+import flexbox from "../styles/func/flexbox";
 
 const Box = styled.div`
   margin-bottom: 20px;
@@ -53,29 +54,45 @@ const Input = styled.input`
   }
 `;
 
-const Text = styled.span`
-  position: absolute;
-  left: ${({ value }) => `calc(110px + ${value}px)`};
-  top: 2px;
-  color: ${colors.white};
-  font-size: ${typography.size.tiny}px;
+const InputBox = styled.div`
+  width: 100%;
+  position: relative;
 `;
 
-const RangeField = ({ label, name, value, inputHandler }) => {
-  // TODO: rangeField
+const ValueBox = styled.div`
+  position: absolute;
+  top: -2px;
+  width: ${({ value }) => value}%;
+  height: 100%;
+  ${flexbox()}
+  pointer-events: none;
+
+  span {
+    left: ${({ value }) => `calc(110px + ${value}px)`};
+    top: 2px;
+    color: ${colors.white};
+    font-size: ${typography.size.tiny}px;
+  }
+`;
+
+const RangeField = ({ label, name, value, changeHandler }) => {
   return (
     <Box>
       <Label>{label}</Label>
-      <Input
-        type="range"
-        min="0"
-        max="100"
-        step="5"
-        value={value}
-        name={name}
-        onInput={inputHandler}
-      />
-      {value >= 5 && <Text value={value}>{value}%</Text>}
+      <InputBox>
+        <Input
+          type="range"
+          min="0"
+          max="100"
+          step="5"
+          value={value}
+          name={name}
+          onChange={changeHandler}
+        />
+        <ValueBox value={value}>
+          {value >= 10 && <span value={value}>{value}%</span>}
+        </ValueBox>
+      </InputBox>
     </Box>
   );
 };

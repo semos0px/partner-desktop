@@ -71,15 +71,20 @@ const SelectIcon = styled.div`
   pointer-events: none;
 `;
 
-const BaseInfoField = () => {
+const BaseInfoField = ({ inputData, changeHandler }) => {
   return (
     <Box>
       <Top>
         <Div>
-          <Select name="base-main">
-            <option>워터스포츠</option>
-            <option>야외스포츠</option>
-            <option>실내스포츠</option>
+          <Select
+            name="base-category-main"
+            defaultValue={inputData.base.category.main}
+            onChange={changeHandler}
+          >
+            <option value="">대분류</option>
+            <option value="w">워터스포츠</option>
+            <option value="o">야외스포츠</option>
+            <option value="i">실내스포츠</option>
           </Select>
 
           <SelectIcon>
@@ -88,17 +93,21 @@ const BaseInfoField = () => {
         </Div>
 
         <Div>
-          <Select name="base-sub">
-            <option>소분류</option>
-            <option>스쿠버다이빙</option>
-            <option>프리다이빙</option>
-            <option>서핑</option>
-            <option>수영</option>
-            <option>웨이크보드</option>
-            <option>수상스키</option>
-            <option>조정</option>
-            <option>카누/카약</option>
-            <option>수상레저</option>
+          <Select
+            name="base-category-sub"
+            defaultValue={inputData.base.category.sub}
+            onChange={changeHandler}
+          >
+            <option value="">소분류</option>
+            <option value="s">스쿠버다이빙</option>
+            <option value="f">프리다이빙</option>
+            <option value="">서핑</option>
+            <option value="">수영</option>
+            <option value="">웨이크보드</option>
+            <option value="">수상스키</option>
+            <option value="">조정</option>
+            <option value="">카누/카약</option>
+            <option value="">수상레저</option>
           </Select>
 
           <SelectIcon>
@@ -107,7 +116,13 @@ const BaseInfoField = () => {
         </Div>
       </Top>
 
-      <Input type="text" placeholder="강사명/센터명" />
+      <Input
+        name="base-name"
+        type="text"
+        placeholder="강사명/센터명"
+        value={inputData.base.name}
+        onChange={changeHandler}
+      />
     </Box>
   );
 };

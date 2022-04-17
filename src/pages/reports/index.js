@@ -17,19 +17,35 @@ const FilterBox = styled.div`
 `;
 
 const ReportsPage = () => {
-  const [searchInput, setSearchInput] = useState("");
-  const [written, setWritten] = useState(false);
-  const [category, setCategory] = useState("all");
+  const [inputValue, setInputValue] = useState({
+    word: "",
+    filter: "all",
+    status: false,
+  });
 
   const optionList = [
-    { text: "강습종목", value: "c" },
     { text: "전체", value: "all" },
     { text: "스쿠버다이빙", value: "s" },
   ];
 
-  const searchInputChangeHandler = (e) => {
-    const { value } = e.target;
-    setSearchInput(value);
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "status") {
+      setInputValue((prev) => ({
+        ...prev,
+        status: !prev.status,
+      }));
+    } else {
+      setInputValue((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const searchHandler = () => {
+    console.log("search");
   };
 
   // TODO: Data Fetching
@@ -41,18 +57,26 @@ const ReportsPage = () => {
       <PaddingLayout>
         <RowLayout>
           <SearchBar
-            value={searchInput}
-            changeHandler={searchInputChangeHandler}
+            name="word"
+            value={inputValue.word}
+            changeHandler={inputChangeHandler}
             placeholder="닉네임/강습명/리포트 내용을 검색해 보세요!"
+            clickHandler={searchHandler}
           />
 
           <FilterBox>
-            <SelectField optionList={optionList} isBottom={false} />
+            <SelectField
+              name="filter"
+              changeHandler={inputChangeHandler}
+              optionList={optionList}
+              isBottom={false}
+            />
+
             <CheckBox
               label="미작성"
-              name="written"
-              value={written}
-              checkHandler={() => setWritten(!written)}
+              name="status"
+              value={inputValue.status}
+              changeHandler={inputChangeHandler}
             />
           </FilterBox>
 

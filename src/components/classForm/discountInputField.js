@@ -5,6 +5,8 @@ import selectIcon from "../../assets/icon/input/select-chevron.svg";
 import responsive from "../../styles/constants/responsive";
 import AddButton from "../../modules/addButton";
 import flexbox from "../../styles/func/flexbox";
+import { useRef } from "react";
+import deleteIcon from "../../assets/icon/class/delete-circle.svg";
 
 const Box = styled.div`
   margin-top: 20px;
@@ -74,33 +76,91 @@ const SelectIcon = styled.div`
   pointer-events: none;
 `;
 
-const DiscountInputField = () => {
+const List = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+
+  li {
+    height: 100%;
+    ${flexbox("flex-start")}
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+
+    p {
+      height: 100%;
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    button {
+      transform: translateY(2px);
+    }
+  }
+`;
+
+const DiscountInputField = ({ data, addHandler, deleteHandler }) => {
+  const selectRef = useRef();
+  const inputRef = useRef();
+
+  const clearFunc = () => {
+    inputRef.current.value = "";
+    selectRef.current.value = "";
+  };
+
+  console.log(data);
+
   return (
-    <Box>
-      <Div>
-        <Select name="discount-people">
-          <option>2인권</option>
-          <option>3인권</option>
-          <option>4인권</option>
-          <option>5인권</option>
-          <option>6인권</option>
-          <option>7인권</option>
-          <option>8인권</option>
-          <option>9인권</option>
-          <option>10인권</option>
-          <option>11인권</option>
-          <option>12인권</option>
-        </Select>
+    <>
+      <Box>
+        <Div>
+          <Select ref={selectRef}>
+            <option>2인권</option>
+            <option>3인권</option>
+            <option>4인권</option>
+            <option>5인권</option>
+            <option>6인권</option>
+            <option>7인권</option>
+            <option>8인권</option>
+            <option>9인권</option>
+            <option>10인권</option>
+            <option>11인권</option>
+            <option>12인권</option>
+          </Select>
 
-        <SelectIcon>
-          <img src={selectIcon} />
-        </SelectIcon>
-      </Div>
+          <SelectIcon>
+            <img src={selectIcon} />
+          </SelectIcon>
+        </Div>
 
-      <Input type="text" name="discount-price" placeholder="+90,000" />
+        <Input type="text" placeholder="+90,000" ref={inputRef} />
 
-      <AddButton />
-    </Box>
+        <AddButton
+          addHandler={() =>
+            addHandler(
+              "discount",
+              {
+                personnel: selectRef.current.value,
+                price: inputRef.current.value,
+              },
+              clearFunc
+            )
+          }
+        />
+      </Box>
+
+      <List>
+        {data.map((item, idx) => (
+          <li key={idx}>
+            <p>{`${item.personnel} +${item.price}`}</p>
+
+            <button onClick={() => deleteHandler("discount", item.id)}>
+              <img src={deleteIcon} />
+            </button>
+          </li>
+        ))}
+      </List>
+    </>
   );
 };
 

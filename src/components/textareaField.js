@@ -20,6 +20,10 @@ const Textarea = styled.textarea`
   border-radius: ${base.borderRadius}px;
   resize: none;
   padding-bottom: ${({ isPadding }) => (isPadding ? "50px" : "20px")};
+
+  &:disabled {
+    color: ${colors.black};
+  }
 `;
 
 const TextareaField = ({
@@ -29,6 +33,7 @@ const TextareaField = ({
   changeHandler,
   color = "base",
   isPadding = false,
+  isEditable = true,
 }) => {
   return (
     <Box>
@@ -39,6 +44,7 @@ const TextareaField = ({
         onChange={changeHandler}
         color={color}
         isPadding={isPadding}
+        disabled={!isEditable}
       />
     </Box>
   );

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import BottomButton from "../modules/bottomButton";
 import base from "../styles/constants/base";
 import colors from "../styles/constants/colors";
 import responsive from "../styles/constants/responsive";
@@ -10,6 +9,15 @@ import transition from "../styles/func/transition";
 import RowLayout from "./rowLayout";
 import bangIcon from "../assets/icon/class/bang-blue.svg";
 import { useState } from "react";
+import Calendar from "../components/calendar";
+
+const LEFT_RIGHT_PADDING = 20;
+
+const ButtonBox = styled.div`
+  position: fixed;
+  bottom: 10px;
+  z-index: 500;
+`;
 
 const Box = styled.div`
   width: 100%;
@@ -31,13 +39,13 @@ const Box = styled.div`
 
   header {
     margin-bottom: 20px;
-
-    img {
-      width: 25px;
-      cursor: pointer;
-      margin-left: 10px;
-    }
   }
+`;
+
+const Bang = styled.img`
+  width: 25px;
+  cursor: pointer;
+  margin-left: 10px;
 `;
 
 const Wrapper = styled.div`
@@ -70,17 +78,31 @@ const Popup = styled.div`
   left: 170px;
 `;
 
-const Section = styled.section`
-  header {
-    ${flexbox("space-between", "flex-start")}
-  }
+const AddButton = styled.button`
+  background-color: ${colors.blue};
+  color: ${colors.white};
+  padding: 5px 10px;
+  border-radius: 40px;
+  font-size: ${typography.size.small}px;
+`;
 
-  button {
-    background-color: ${colors.blue};
-    color: ${colors.white};
-    padding: 5px 10px;
-    border-radius: 40px;
-    font-size: ${typography.size.small}px;
+const CalendarHeader = styled.header`
+  ${flexbox("space-between", "flex-start")}
+`;
+
+const Section = styled.section``;
+
+const BottomButton = styled.button`
+  max-width: ${responsive.maxWidth.sm - LEFT_RIGHT_PADDING}px;
+  width: calc(100% - ${LEFT_RIGHT_PADDING}px);
+  height: 66px;
+  background-color: ${colors.blue};
+  color: ${colors.white};
+  border-radius: ${base.borderRadius}px;
+  font-size: ${typography.size.base}px;
+
+  ${responsive.mediaQuery.mobile} {
+    font-size: ${typography.size.medium}px;
   }
 `;
 
@@ -95,7 +117,7 @@ const SchedulePanel = ({ open }) => {
           <header>
             <Title>
               날짜 선택하기{" "}
-              <img
+              <Bang
                 src={bangIcon}
                 onMouseOver={() => setNotice(true)}
                 onMouseOut={() => setNotice(false)}
@@ -114,22 +136,26 @@ const SchedulePanel = ({ open }) => {
           </header>
 
           <Section>
-            <header>
+            <CalendarHeader>
               <div>
                 <Title>일정 입력하기</Title>
                 <Comment>추가하기로 여러개의 강습을 등록할 수 있어요.</Comment>
               </div>
 
-              <button type="button" onClick={addHandler}>
+              <AddButton type="button" onClick={addHandler}>
                 추가하기
-              </button>
-            </header>
+              </AddButton>
+            </CalendarHeader>
+
+            <Calendar />
           </Section>
         </Wrapper>
 
-        <RowLayout>
-          <BottomButton text="일정 저장하기" color={colors.blue} />
-        </RowLayout>
+        <ButtonBox>
+          <BottomButton type="button" onClick={addHandler}>
+            일정 저장하기
+          </BottomButton>
+        </ButtonBox>
       </Box>
     </>
   );

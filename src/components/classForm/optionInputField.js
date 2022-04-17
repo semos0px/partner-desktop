@@ -3,6 +3,7 @@ import AddButton from "../../modules/addButton";
 import flexbox from "../../styles/func/flexbox";
 import deleteIcon from "../../assets/icon/class/delete-circle.svg";
 import responsive from "../../styles/constants/responsive";
+import { useRef } from "react";
 
 const Box = styled.div`
   width: 100%;
@@ -55,28 +56,46 @@ const Input = styled.input`
   margin-bottom: 10px;
 `;
 
-const OptionInputField = ({ addHandler, deleteHandler }) => {
+const OptionInputField = ({ data, addHandler, deleteHandler }) => {
+  const nameRef = useRef();
+  const priceRef = useRef();
+
+  const clearFunc = () => {
+    nameRef.current.value = "";
+    priceRef.current.value = "";
+  };
+
   return (
     <Box>
       <InputName>
-        <Input type="text" placeholder="장비 렌탈" name="option-name" />
+        <Input type="text" placeholder="장비 렌탈" ref={nameRef} />
 
         <div>
-          <Input type="text" placeholder="+30,000원" name="option-price" />
+          <Input type="text" placeholder="+30,000원" ref={priceRef} />
 
-          <AddButton addHandler={addHandler} />
+          <AddButton
+            addHandler={() =>
+              addHandler(
+                "option",
+                { text: nameRef.current.value, price: priceRef.current.value },
+                clearFunc
+              )
+            }
+          />
         </div>
       </InputName>
 
       {/* data 가져와서 넣는 부분 */}
       <ul>
-        <li>
-          <p>풀장 입장료 33,000원</p>
+        {data.map((item, idx) => (
+          <li key={idx}>
+            <p>{`${item.text} ${item.price}원`}</p>
 
-          <button onClick={deleteHandler}>
-            <img src={deleteIcon} />
-          </button>
-        </li>
+            <button onClick={() => deleteHandler("option", item.id)}>
+              <img src={deleteIcon} />
+            </button>
+          </li>
+        ))}
       </ul>
     </Box>
   );

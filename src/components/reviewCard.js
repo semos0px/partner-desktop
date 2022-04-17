@@ -110,6 +110,7 @@ const SaveButton = styled.button``;
 
 const ReviewCard = ({
   review,
+  inputValue,
   changeHandler,
   submitHandler,
   deleteHandler,

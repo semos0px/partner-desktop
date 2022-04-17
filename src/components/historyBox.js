@@ -79,7 +79,7 @@ const HistoryBox = ({ changeHandler, cnt, income, value }) => {
       <TopBox>
         <DateField
           label="판매 금액을 확인해 보세요!"
-          name="date"
+          name="datetime"
           value={value}
           changeHandler={changeHandler}
         />

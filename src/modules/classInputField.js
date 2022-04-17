@@ -348,11 +348,14 @@ const Top = styled.div`
 const ClassInputField = ({
   classData,
   openClassHandler,
-  dataChangeHandler,
+  changeHandler,
   recommendationNoticeToggleHandler,
-  recommendationCertainHandler,
-  recommedationUncertainHandler,
+  certainHandler,
+  uncertainHandler,
   searchAddressHandler,
+  imageChangeHandler,
+  addHandler,
+  deleteHandler,
 }) => {
   const [example, setExample] = useState(false);
 
@@ -364,9 +367,10 @@ const ClassInputField = ({
 
           <input
             type="text"
-            placeholder="체험 다이빙"
+            placeholder="강습명"
             name="title"
-            onChange={dataChangeHandler}
+            value={classData.title}
+            onChange={changeHandler}
           />
         </TitleDiv>
 
@@ -384,8 +388,8 @@ const ClassInputField = ({
 
           <RecommendationStatusField
             status={classData.status}
-            certainHandler={recommendationCertainHandler}
-            uncertainHandler={recommedationUncertainHandler}
+            certainHandler={certainHandler}
+            uncertainHandler={uncertainHandler}
           />
         </RecommendationDiv>
 
@@ -394,9 +398,10 @@ const ClassInputField = ({
 
           <input
             type="text"
-            placeholder="80,000원"
+            placeholder="가격 입력"
             name="price"
-            onChange={dataChangeHandler}
+            value={classData.price}
+            onChange={changeHandler}
           />
         </PriceDiv>
 
@@ -404,7 +409,7 @@ const ClassInputField = ({
           <label>최대 인원</label>
 
           <SelectBox>
-            <select name="maximum">
+            <select name="maximum" defaultValue={4} onChange={changeHandler}>
               <option value={1}>1인</option>
               <option value={2}>2인</option>
               <option value={3}>3인</option>
@@ -428,13 +433,21 @@ const ClassInputField = ({
         <DiscountDiv>
           <label>동반 할인가격</label>
 
-          <DiscountInputField />
+          <DiscountInputField
+            addHandler={addHandler}
+            deleteHandler={deleteHandler}
+            data={classData.discount}
+          />
         </DiscountDiv>
 
         <OptionDiv>
           <label>옵션</label>
 
-          <OptionInputField />
+          <OptionInputField
+            addHandler={addHandler}
+            deleteHandler={deleteHandler}
+            data={classData.option}
+          />
         </OptionDiv>
 
         <LocationDiv>
@@ -459,13 +472,20 @@ const ClassInputField = ({
         <ThumbnailDiv>
           <label>대표 사진</label>
 
-          <ClassThumbnail />
+          <ClassThumbnail
+            changeHandler={imageChangeHandler}
+            preview={classData.mainImage.base}
+          />
         </ThumbnailDiv>
 
         <CertainDiv>
           <label>포함사항</label>
 
-          <CertainInputField />
+          <CertainInputField
+            addHandler={addHandler}
+            deleteHandler={deleteHandler}
+            data={classData.certain}
+          />
         </CertainDiv>
 
         <Uncertain>
@@ -481,18 +501,27 @@ const ClassInputField = ({
             </NoticeBox>
           )}
 
-          <UncertainInputField />
+          <UncertainInputField
+            addHandler={addHandler}
+            deleteHandler={deleteHandler}
+            data={classData.uncertain}
+          />
         </Uncertain>
 
         <MaterialsDiv>
           <label>준비물</label>
 
-          <MaterialsInputField />
+          <MaterialsInputField
+            addHandler={addHandler}
+            deleteHandler={deleteHandler}
+            data={classData.material}
+          />
         </MaterialsDiv>
 
         <FAQDiv>
           <Top>
             <label>자주 묻는 질문</label>
+
             <AddButton />
           </Top>
 
@@ -501,12 +530,20 @@ const ClassInputField = ({
 
         <DetailDiv>
           <label>이용 상세 정보</label>
-          <textarea name="detail" />
+          <textarea
+            name="detail"
+            value={classData.detail}
+            onChange={changeHandler}
+          />
         </DetailDiv>
 
         <AdditionalDiv>
           <label>이용 추가 정보</label>
-          <textarea name="additional" />
+          <textarea
+            name="additional"
+            value={classData.additional}
+            onChange={changeHandler}
+          />
         </AdditionalDiv>
       </Box>
     </>

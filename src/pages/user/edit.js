@@ -10,6 +10,7 @@ import SelectField from "../../components/selectField";
 import base from "../../styles/constants/base";
 import RowLayout from "../../layouts/rowLayout";
 import responsive from "../../styles/constants/responsive";
+import { ageGroupOptionList } from "../../data/signup";
 
 const Form = styled.form`
   color: ${colors.black};
@@ -40,7 +41,9 @@ const EditPartnerInfoPage = () => {
 
   const [inputValue, setInputValue] = useState({
     name: "세모링",
-    ageGroup: 20,
+    "age-group": 20,
+    mobile: "",
+    "certification-number": "",
   });
 
   const [validated, setValidated] = useState(false);
@@ -52,45 +55,24 @@ const EditPartnerInfoPage = () => {
     console.log("인증번호 전송");
   };
 
-  const ageGroupOptionList = [
-    {
-      text: "20대(20 ~ 29)",
-      value: 20,
-    },
-    {
-      text: "30대(30 ~ 39)",
-      value: 30,
-    },
-    {
-      text: "40대(40 ~ 49)",
-      value: 40,
-    },
-    {
-      text: "50대(50 ~ 59)",
-      value: 50,
-    },
-    {
-      text: "60대 이상(60 ~)",
-      value: 60,
-    },
-  ];
-
   // TODO: data fetching - pid를 통해 name, age group 정보 가져오기
   // 가져온 데이터 input의 default value로 넣어주기
 
-  const partnerInfoSubmitHandler = () => {
-    console.log("수정완료");
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    if (validated) {
+      console.log("수정완료");
+    }
   };
 
-  const infoChangeHandler = (e) => {
+  const formChangeHandler = (e) => {
     const { name, value } = e.target;
 
     setInputValue((prev) => ({
       ...prev,
       [name]: value,
     }));
-
-    console.log(inputValue);
   };
 
   const verifiedHandler = () => {
@@ -104,25 +86,31 @@ const EditPartnerInfoPage = () => {
       <PageLayout headerTitle="개인정보 수정" isGoBack={true}>
         <PaddingLayout isBottomButton={true}>
           <RowLayout>
-            <Form onSubmit={partnerInfoSubmitHandler}>
+            <Form onSubmit={submitHandler}>
               <InputField
                 label="이름"
                 placeholder="본명"
                 name="name"
                 value={inputValue.name}
-                changeHandler={infoChangeHandler}
+                changeHandler={formChangeHandler}
               />
 
               <SelectField
                 label="연령대"
-                name="ageGroup"
+                name="age-group"
+                defaultText="연령대 선택"
                 optionList={ageGroupOptionList}
-                value={inputValue.ageGroup}
+                value={inputValue["age-group"]}
+                changeHandler={formChangeHandler}
               />
 
               <MobileValidateBox>
                 <p>전화번호를 알려주세요.</p>
-                <InputField name="mobileNumber" placeholder="-없이 입력">
+                <InputField
+                  name="mobile"
+                  placeholder="-없이 입력"
+                  changeHandler={formChangeHandler}
+                >
                   <Button
                     type="button"
                     onClick={sendCertificationNumHandler}
@@ -131,7 +119,12 @@ const EditPartnerInfoPage = () => {
                     인증번호 전송
                   </Button>
                 </InputField>
-                <InputField name="mobileNumber" placeholder="6자리 입력">
+
+                <InputField
+                  name="certification-number"
+                  placeholder="6자리 입력"
+                  changeHandler={formChangeHandler}
+                >
                   {sendCertificationNum && (
                     <Button type="button" onClick={verifiedHandler}>
                       인증하기
@@ -144,7 +137,7 @@ const EditPartnerInfoPage = () => {
             <BottomButton
               text="수정완료"
               color={validated ? colors.blue : colors.mediumGray}
-              clickHandler={partnerInfoSubmitHandler}
+              clickHandler={submitHandler}
             />
           </RowLayout>
         </PaddingLayout>

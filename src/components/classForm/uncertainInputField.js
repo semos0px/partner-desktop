@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import styled from "styled-components";
 import AddButton from "../../modules/addButton";
 import InfoTag from "../../modules/infoTag";
@@ -9,6 +10,7 @@ const Box = styled.div`
 
   ul {
     display: flex;
+    flex-wrap: wrap;
   }
 
   ${responsive.mediaQuery.mobile} {
@@ -32,7 +34,13 @@ const DeleteButton = styled.button`
   color: ${colors.red};
 `;
 
-const UncertainInputField = ({ addHandler, deleteHandler }) => {
+const UncertainInputField = ({ addHandler, deleteHandler, data }) => {
+  const inputRef = useRef();
+
+  const clearFunc = () => {
+    inputRef.current.value = "";
+  };
+
   return (
     <Box>
       <InputBox>
@@ -40,19 +48,25 @@ const UncertainInputField = ({ addHandler, deleteHandler }) => {
           type="text"
           name="uncertain"
           placeholder="포함되지 않은 사항을 금액과 함께 적어주세요."
+          ref={inputRef}
         />
 
-        <AddButton addHandler={addHandler} />
+        <AddButton
+          addHandler={() =>
+            addHandler("uncertain", inputRef.current.value, clearFunc)
+          }
+        />
       </InputBox>
 
       <ul>
-        <li>
-          <InfoTag text="해양 실습비 가격 상이">
-            <DeleteButton type="button" onClick={deleteHandler}>
-              x
-            </DeleteButton>
-          </InfoTag>
-        </li>
+        {data.map((item, idx) => (
+          <li key={idx}>
+            <InfoTag
+              text={item.text}
+              deleteHandler={() => deleteHandler("uncertain", item.id)}
+            ></InfoTag>
+          </li>
+        ))}
       </ul>
     </Box>
   );

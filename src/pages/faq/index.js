@@ -25,13 +25,24 @@ const Footer = styled.footer`
 `;
 
 const FAQPage = () => {
-  const [searchInput, setSearchInput] = useState("");
+  const [inputValue, setInputValue] = useState({
+    word: "",
+  });
+
   const { offset, faqList, limit, currentPage, setCurrentPage } =
     usePagination();
 
-  const searchInputChangeHandler = (e) => {
-    const { value } = e.target;
-    setSearchInput(value);
+  const inputChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    setInputValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const searchHandler = () => {
+    console.log("search");
   };
 
   return (
@@ -39,9 +50,11 @@ const FAQPage = () => {
       <PaddingLayout>
         <RowLayout>
           <SearchBar
+            name="word"
             placeholder="어떤 내용이 궁금한가요?"
-            value={searchInput}
-            changeHandler={searchInputChangeHandler}
+            value={inputValue.word}
+            changeHandler={inputChangeHandler}
+            clickHandler={searchHandler}
           />
 
           <Main>

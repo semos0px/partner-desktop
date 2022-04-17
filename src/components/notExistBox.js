@@ -34,23 +34,27 @@ const SLink = styled(Link)`
   font-size: ${typography.size.medium}px;
 `;
 
-const NotExistBox = ({ page, imgURL, redirectPath, comment }) => {
+const NotExistBox = ({ page = "", imgURL, redirectPath = "", comment }) => {
   return (
     <Box>
       <img src={imgURL} />
 
       <CommentBox>
-        <p>
-          {page === "inquiry" && "문의 내역이 없어요."}
-          {page === "sales" && "판매 내역이 없어요."}
-        </p>
+        {page && (
+          <p>
+            {page === "inquiry" && "문의 내역이 없어요."}
+            {page === "sales" && "판매 내역이 없어요."}
+          </p>
+        )}
         <p>{comment}</p>
       </CommentBox>
 
-      <SLink to={redirectPath}>
-        {page === "inquiry" && "프로필 수정하기"}
-        {page === "sales" && "강습 확인하기"}
-      </SLink>
+      {page && (
+        <SLink to={redirectPath}>
+          {page === "inquiry" && "프로필 수정하기"}
+          {page === "sales" && "강습 확인하기"}
+        </SLink>
+      )}
     </Box>
   );
 };

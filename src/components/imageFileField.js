@@ -77,7 +77,7 @@ const ImageFileField = ({
         type="file"
         accept="image/*"
         onChange={changeHandler}
-        name={`image-${name}`}
+        name={`${name}`}
         ref={inputRef}
       />
 

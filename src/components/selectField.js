@@ -57,6 +57,7 @@ const SelectField = ({
   name,
   value,
   label,
+  defaultText,
   optionList = [],
   changeHandler,
   isBottom = true,
@@ -64,8 +65,14 @@ const SelectField = ({
   return (
     <Div isBottom={isBottom}>
       {label && <Label htmlFor={`select-${name}`}>{label}</Label>}
-      <Select name={name} id={`select-${name}`} onChange={changeHandler}>
-        {/* <Option value={value}>연령대 선택</Option> */}
+
+      <Select
+        name={name}
+        id={`select-${name}`}
+        onChange={changeHandler}
+        defaultValue={value}
+      >
+        {defaultText && <Option value="">{defaultText}</Option>}
 
         {optionList.map((option, idx) => (
           <Option key={idx} value={option.value}>

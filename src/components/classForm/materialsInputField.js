@@ -4,12 +4,14 @@ import colors from "../../styles/constants/colors";
 import responsive from "../../styles/constants/responsive";
 import flexbox from "../../styles/func/flexbox";
 import deleteIcon from "../../assets/icon/class/delete-b.svg";
+import { useRef } from "react";
 
 const Box = styled.div`
   width: 100%;
 
   ul {
     display: flex;
+    flex-wrap: wrap;
   }
 
   ${responsive.mediaQuery.mobile} {
@@ -51,25 +53,45 @@ const InfoTag = styled.span`
   }
 `;
 
-const MaterialsInputField = ({ addHandler, deleteHandler }) => {
+const MaterialsInputField = ({ addHandler, deleteHandler, data }) => {
+  const inputRef = useRef();
+
+  const clearFunc = () => {
+    inputRef.current.value = "";
+  };
+
   return (
     <Box>
       <InputBox>
-        <input type="text" name="material" placeholder="준비물을 적어주세요." />
+        <input
+          type="text"
+          name="material"
+          placeholder="준비물을 적어주세요."
+          ref={inputRef}
+        />
 
-        <AddButton addHandler={addHandler} />
+        <AddButton
+          addHandler={() =>
+            addHandler("material", inputRef.current.value, clearFunc)
+          }
+        />
       </InputBox>
 
       <ul>
-        <li>
-          <InfoTag>
-            <span>수영복(레쉬가드 가능)</span>
+        {data.map((item, idx) => (
+          <li key={idx}>
+            <InfoTag>
+              <span>{item.text}</span>
 
-            <button type="button">
-              <img src={deleteIcon} />
-            </button>
-          </InfoTag>
-        </li>
+              <button
+                type="button"
+                onClick={() => deleteHandler("material", item.id)}
+              >
+                <img src={deleteIcon} />
+              </button>
+            </InfoTag>
+          </li>
+        ))}
       </ul>
     </Box>
   );

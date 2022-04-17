@@ -3,6 +3,7 @@ import styled from "styled-components";
 import InputField from "../../components/inputField";
 import SelectField from "../../components/selectField";
 import SexField from "../../components/sexField";
+import { ageGroupOptionList } from "../../data/signup";
 import PaddingLayout from "../../layouts/paddingLayout";
 import PageLayout from "../../layouts/pageLayout";
 import RowLayout from "../../layouts/rowLayout";
@@ -34,14 +35,19 @@ const Button = styled.button`
 `;
 
 const SignUpPage = () => {
+  // form data
   const [inputValue, setInputValue] = useState({
     name: "",
-    ageGroup: "",
+    "age-group": "",
     isMale: true,
+    mobile: "",
+    "certification-number": "",
   });
 
+  // 번호 인증 완료 여부
   const [validated, setValidated] = useState(false);
 
+  // 인증 번호 전송 여부
   const [sendCertificationNum, setSendCertificationNum] = useState(false);
 
   const sendCertificationNumHandler = () => {
@@ -49,22 +55,28 @@ const SignUpPage = () => {
     console.log("인증번호 전송");
   };
 
-  const signUpHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
+
     if (validated) {
       console.log("회원가입 완료");
     }
   };
 
-  const infoChangeHandler = (e) => {
+  const formChangeHandler = (e) => {
     const { name, value } = e.target;
-    console.log(name);
 
-    setInputValue((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    console.log(inputValue);
+    if (name === "male" || name === "female") {
+      setInputValue((prev) => ({
+        ...prev,
+        isMale: name === "male" ? true : false,
+      }));
+    } else {
+      setInputValue((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const verifiedHandler = () => {
@@ -73,76 +85,41 @@ const SignUpPage = () => {
     setValidated(true);
   };
 
-  const maleCheckHandler = (e) => {
-    e.preventDefault();
-    setInputValue((prev) => ({
-      ...prev,
-      isMale: true,
-    }));
-  };
-
-  const femaleCheckHandler = (e) => {
-    e.preventDefault();
-    setInputValue((prev) => ({
-      ...prev,
-      isMale: false,
-    }));
-  };
-
-  const ageGroupOptionList = [
-    {
-      text: "20대(20 ~ 29)",
-      value: 20,
-    },
-    {
-      text: "30대(30 ~ 39)",
-      value: 30,
-    },
-    {
-      text: "40대(40 ~ 49)",
-      value: 40,
-    },
-    {
-      text: "50대(50 ~ 59)",
-      value: 50,
-    },
-    {
-      text: "60대 이상(60 ~)",
-      value: 60,
-    },
-  ];
-
   return (
     <PageLayout headerTitle="회원가입" isGoBack={true}>
       <PaddingLayout isBottomButton={true}>
         <RowLayout>
           <Wrapper>
-            <Form onSubmit={signUpHandler}>
+            <Form onSubmit={submitHandler}>
               <InputField
                 label="이름"
                 placeholder="본명"
                 name="name"
                 value={inputValue.name}
-                changeHandler={infoChangeHandler}
+                changeHandler={formChangeHandler}
               />
 
               <SelectField
                 label="연령대"
-                name="ageGroup"
+                name="age-group"
+                defaultText="연령대 선택"
                 optionList={ageGroupOptionList}
-                value={inputValue.ageGroup}
-                changeHandler={infoChangeHandler}
+                value={inputValue["age-group"]}
+                changeHandler={formChangeHandler}
               />
 
               <SexField
                 isMale={inputValue.isMale}
-                maleCheckHandler={maleCheckHandler}
-                femaleCheckHandler={femaleCheckHandler}
+                changeHandler={formChangeHandler}
               />
 
               <MobileValidateBox>
                 <p>전화번호를 알려주세요.</p>
-                <InputField name="mobileNumber" placeholder="-없이 입력">
+                <InputField
+                  name="mobile"
+                  placeholder="-없이 입력"
+                  changeHandler={formChangeHandler}
+                >
                   <Button
                     type="button"
                     onClick={sendCertificationNumHandler}
@@ -151,7 +128,12 @@ const SignUpPage = () => {
                     인증번호 전송
                   </Button>
                 </InputField>
-                <InputField name="mobileNumber" placeholder="6자리 입력">
+
+                <InputField
+                  name="certification-number"
+                  placeholder="6자리 입력"
+                  changeHandler={formChangeHandler}
+                >
                   {sendCertificationNum && (
                     <Button type="button" onClick={verifiedHandler}>
                       인증하기
@@ -165,7 +147,7 @@ const SignUpPage = () => {
           <BottomButton
             text="회원가입 완료"
             color={validated ? colors.blue : colors.mediumGray}
-            clickHandler={signUpHandler}
+            clickHandler={submitHandler}
           />
         </RowLayout>
       </PaddingLayout>

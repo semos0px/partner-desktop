@@ -50,12 +50,12 @@ const BackgroundImageBox = styled.div`
   }
 `;
 
-const ButtonBox = styled.button`
+const ButtonBox = styled.div`
   width: 100%;
   ${flexbox("space-between", "center")}
   margin-bottom: 20px;
 
-  span {
+  button {
     color: ${colors.white};
     background-color: ${colors.blue};
     padding: 5px 10px;
@@ -77,70 +77,47 @@ const BaseBox = styled.div`
 `;
 
 const ProfileEditPage = () => {
-  const [open, setOpen] = useState(false);
-
-  const [baseInfo, setBaseInfo] = useState({
-    image: {
-      base: null,
-      files: null,
+  const [inputValue, setInputValue] = useState({
+    base: {
+      image: {
+        base: "",
+        files: "",
+      },
+      category: {
+        main: "w",
+        sub: "f",
+      },
+      name: "",
     },
-    category: {
-      main: "워터스포츠",
-      sub: "프리다이빙",
+    background: {
+      first: {
+        base: "",
+        files: "",
+      },
+      second: {
+        base: "",
+        files: "",
+      },
+      third: {
+        base: "",
+        files: "",
+      },
     },
-    name: "",
+    career: [],
+    lesson: [],
   });
 
-  const [backroundImage, setBackgroundImage] = useState({
-    first: {
-      base: null,
-      files: null,
-    },
-    second: {
-      base: null,
-      files: null,
-    },
-    third: {
-      base: null,
-      files: null,
-    },
+  const [career, setCareer] = useState("");
+
+  const [lessonImage, setLessonImage] = useState({
+    id: "",
+    base: "",
+    files: "",
   });
 
-  const [career, setCareer] = useState([
-    "SDI 스쿠버다이빙 강사",
-    "수중 사진 작가",
-    "SDI 스쿠버다이빙 강사",
-  ]);
+  const submitHandler = (e) => {
+    e.preventDefault();
 
-  const [classImage, setClassImage] = useState([
-    {
-      id: 0,
-      base: null,
-      files: null,
-    },
-    {
-      id: 1,
-      base: null,
-      files: null,
-    },
-    {
-      id: 2,
-      base: null,
-      files: null,
-    },
-    {
-      id: 3,
-      base: null,
-      files: null,
-    },
-    {
-      id: 3,
-      base: null,
-      files: null,
-    },
-  ]);
-
-  const submitHandler = () => {
     console.log("저장하기");
 
     // 이미지 폼 데이터
@@ -148,9 +125,61 @@ const ProfileEditPage = () => {
     // PATCH: base, background, career, class state 한번에 묶어서 저장
   };
 
-  // Image 관련 로직: preview,
+  const formChangeHandler = (e) => {
+    const { name, value } = e.target;
+    const [section, index, secondary] = name.split("-");
 
-  const imagePreview = (e) => {
+    // 리덕스를 사용해야하는 이유를 느낌.....
+    setInputValue((prev) => {
+      if (!secondary) {
+        return {
+          ...prev,
+          [section]: {
+            ...prev[section],
+            [index]: value,
+          },
+        };
+      } else {
+        return {
+          ...prev,
+          [section]: {
+            ...prev[section],
+            [index]: {
+              ...prev[section][index],
+              [secondary]: value,
+            },
+          },
+        };
+      }
+    });
+  };
+
+  // Career
+  const careerChangeHandler = (e) => {
+    const { value } = e.target;
+
+    setCareer(value);
+  };
+
+  const careerAddHandler = (e) => {
+    setInputValue((prev) => ({
+      ...prev,
+      career: [...prev.career, { id: new Date(), text: career }],
+    }));
+
+    setCareer("");
+  };
+
+  const careerDeleteHandler = (id) => {
+    const filterdCareer = inputValue.career.filter((item) => item.id !== id);
+    setInputValue((prev) => ({
+      ...prev,
+      career: filterdCareer,
+    }));
+  };
+
+  // Image 관련 로직: preview
+  const imageChangeHandler = (e) => {
     const { name, files } = e.target;
 
     let reader = new FileReader();
@@ -162,33 +191,69 @@ const ProfileEditPage = () => {
     reader.onloadend = () => {
       const previewImgUrl = reader.result;
 
-      setBaseInfo((prev) => ({
+      if (name.includes("base")) {
+        setInputValue((prev) => ({
+          ...prev,
+          base: {
+            ...prev.base,
+            image: {
+              files,
+              base: previewImgUrl,
+            },
+          },
+        }));
+      } else if (name.includes("background")) {
+        const [category, num] = name.split("-");
+        console.log(num, name);
+
+        setInputValue((prev) => ({
+          ...prev,
+          background: {
+            ...prev.background,
+            [num]: {
+              base: previewImgUrl,
+              files,
+            },
+          },
+        }));
+      }
+    };
+  };
+
+  const setLessonImageChangeHandler = (e) => {
+    const { name, files } = e.target;
+
+    let reader = new FileReader();
+
+    if (files[0]) {
+      reader.readAsDataURL(files[0]);
+    }
+
+    reader.onloadend = () => {
+      const previewImgUrl = reader.result;
+
+      setInputValue((prev) => ({
         ...prev,
-        image: { ...prev.image, base: previewImgUrl },
+        lesson: [
+          ...prev.lesson,
+          {
+            id: new Date(),
+            base: previewImgUrl,
+            files,
+          },
+        ],
       }));
     };
   };
 
-  const imageChangeHandler = (e) => {
-    const { name, files } = e.target;
-
-    imagePreview(e);
-
-    if (name.includes("base")) {
-      setBaseInfo((prev) => ({ ...prev, image: { ...prev.image, files } }));
-    }
-  };
-
-  const deleteHandler = (e) => {
-    const { name } = e.target;
-
-    if (name.includes("base")) {
-      setBaseInfo((prev) => ({ ...prev, image: { files: null, base: null } }));
-    }
-  };
-
-  const careerAddHandler = (e) => {
-    e.preventDefault();
+  const deleteLessonImageHandler = (id) => {
+    const filteredLessonImage = inputValue.lesson.filter(
+      (item) => item.id !== id
+    );
+    setInputValue((prev) => ({
+      ...prev,
+      lesson: filteredLessonImage,
+    }));
   };
 
   return (
@@ -204,11 +269,14 @@ const ProfileEditPage = () => {
                   <ImageFileField
                     name="base"
                     changeHandler={imageChangeHandler}
-                    preview={baseInfo.image.base}
+                    preview={inputValue.base.image.base}
                     isDelete={false}
                   />
 
-                  <BaseInfoField />
+                  <BaseInfoField
+                    inputData={inputValue}
+                    changeHandler={formChangeHandler}
+                  />
                 </BaseBox>
               </fieldset>
 
@@ -221,9 +289,9 @@ const ProfileEditPage = () => {
 
                 <BackgroundImageBox>
                   <ImageFileField
-                    name="background-1"
+                    name="background-first"
                     changeHandler={imageChangeHandler}
-                    preview={backroundImage.one}
+                    preview={inputValue.background.first.base}
                     isDelete={false}
                     width={"31%"}
                     height={"160px"}
@@ -231,9 +299,9 @@ const ProfileEditPage = () => {
                   />
 
                   <ImageFileField
-                    name="background-2"
+                    name="background-second"
                     changeHandler={imageChangeHandler}
-                    preview={backroundImage.second}
+                    preview={inputValue.background.second.base}
                     isDelete={false}
                     width={"31%"}
                     height={"160px"}
@@ -241,9 +309,9 @@ const ProfileEditPage = () => {
                   />
 
                   <ImageFileField
-                    name="background-3"
+                    name="background-third"
                     changeHandler={imageChangeHandler}
-                    preview={backroundImage.third}
+                    preview={inputValue.background.third.base}
                     isDelete={false}
                     width={"31%"}
                     height={"160px"}
@@ -255,12 +323,24 @@ const ProfileEditPage = () => {
               <fieldset>
                 <ButtonBox>
                   <legend>시설/강사 경력</legend>
-                  <span type="button" onClick={careerAddHandler}>
+                  <button type="button" onClick={careerAddHandler}>
                     + 추가하기
-                  </span>
+                  </button>
                 </ButtonBox>
 
-                <CareerInputField />
+                <CareerInputField
+                  deleteHandler={careerDeleteHandler}
+                  changeHandler={careerChangeHandler}
+                  value={career}
+                />
+
+                <ul>
+                  {inputValue.career.map((item, idx) => (
+                    <li key={idx} onClick={() => careerDeleteHandler(item.id)}>
+                      {item.text}
+                    </li>
+                  ))}
+                </ul>
               </fieldset>
 
               <fieldset>
@@ -271,10 +351,10 @@ const ProfileEditPage = () => {
                 </p>
 
                 <ClassImageField
-                  name="class"
-                  changeHandler={imageChangeHandler}
-                  deleteHandler={deleteHandler}
-                  value={classImage}
+                  name="lesson"
+                  changeHandler={setLessonImageChangeHandler}
+                  deleteHandler={deleteLessonImageHandler}
+                  value={inputValue.lesson}
                 />
               </fieldset>
             </Form>

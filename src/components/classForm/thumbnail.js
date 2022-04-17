@@ -32,6 +32,7 @@ const Preview = styled.div`
   background-color: ${colors.white};
   background-image: url(${({ url }) => url});
   background-size: cover;
+  background-repeat: no-repeat;
   border-radius: ${base.borderRadius}px;
 `;
 
@@ -72,10 +73,12 @@ const ClassThumbnail = ({ changeHandler, preview }) => {
       />
 
       <Preview url={preview} onClick={fileHandler}>
-        <IconBox>
-          <Camera src={cameraIcon} />
-          <p>업로드하기</p>
-        </IconBox>
+        {!preview && (
+          <IconBox>
+            <Camera src={cameraIcon} />
+            <p>업로드하기</p>
+          </IconBox>
+        )}
       </Preview>
     </Box>
   );
