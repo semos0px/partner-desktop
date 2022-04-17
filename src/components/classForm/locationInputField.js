@@ -7,7 +7,7 @@ import flexbox from "../../styles/func/flexbox";
 import responsive from "../../styles/constants/responsive";
 import typography from "../../styles/constants/typography";
 import base from "../../styles/constants/base";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import OverlayPortal from "../../overlayPortal";
 import Overlay from "../../layouts/overlay";
 import Popup from "../../layouts/popup";
@@ -36,6 +36,11 @@ const Box = styled.div`
   ${responsive.mediaQuery.mobile} {
     width: calc(100% - 150px);
     margin-top: 0px;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
   }
 `;
 
@@ -78,11 +83,25 @@ const LocationInputField = ({
   searchAddressHandler,
   addHandler,
   deleteHandler,
+  data,
+  targetLocation,
+  setTargetLocation,
 }) => {
+  const detailRef = useRef();
   const [open, setOpen] = useState(false);
+  const [targetAddress, setTargetAddress] = useState("");
 
-  const showDetailAddressHandler = () => {
+  const showDetailAddressHandler = (address) => {
+    setTargetAddress({
+      main: address.main,
+      detail: address.detail,
+    });
     setOpen(true);
+  };
+
+  const clearFunc = () => {
+    detailRef.current.value = "";
+    setTargetLocation("");
   };
 
   return (
@@ -94,35 +113,45 @@ const LocationInputField = ({
             <span>주소 검색</span>
           </button>
 
-          <p>인천 연수구 새말로 693-1</p>
+          <p>{targetLocation}</p>
         </MainAddress>
 
         <SubAddress>
-          <input type="text" placeholder="상세주소 입력" name="location-sub" />
+          <input type="text" placeholder="상세주소 입력" ref={detailRef} />
 
-          <AddButton addHandler={addHandler} />
+          <AddButton
+            addHandler={() =>
+              addHandler(
+                "location",
+                { detail: detailRef.current.value },
+                clearFunc
+              )
+            }
+          />
         </SubAddress>
 
         {/* 데이터 가져오기 */}
         <ul>
-          <li>
-            <InfoTag
-              text="서울 송파 잠실"
-              color="blue"
-              isLine={true}
-              deleteHandler={deleteHandler}
-              clickHandler={showDetailAddressHandler}
-              ispointer="true"
-            />
-          </li>
+          {data.map((item, idx) => (
+            <li key={idx}>
+              <InfoTag
+                text={shortenAddress(item.main)}
+                color="blue"
+                isLine={true}
+                deleteHandler={() => deleteHandler("location", item.id)}
+                clickHandler={() => showDetailAddressHandler(item)}
+                ispointer="true"
+              />
+            </li>
+          ))}
         </ul>
       </Box>
 
       {open && (
         <Popup>
           <Modal>
-            <p>인천 연수구 송도문화로 123-1</p>
-            <p>송도풀장 203호</p>
+            <p>{targetAddress.main}</p>
+            <p>{targetAddress.detail}</p>
 
             <button onClick={() => setOpen(false)}>x</button>
           </Modal>
@@ -137,3 +166,9 @@ const LocationInputField = ({
 };
 
 export default LocationInputField;
+
+export const shortenAddress = (address) => {
+  const [first, second, third] = address.split(" ");
+
+  return `${first.slice(0, 2)} ${second.slice(0, 2)} ${third.slice(0, 2)}`;
+};

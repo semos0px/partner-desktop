@@ -28,17 +28,19 @@ import ReviewPage from "./pages/review";
 import ClassEditContentsPage from "./pages/class/editContents";
 import ClassEditSchedulePage from "./pages/class/editSchedule";
 import { useKakao } from "./context/kakao";
+import Chat from "./service/chat";
 
 const App = () => {
   const { kakaoService } = useKakao();
+  const chatService = new Chat();
 
   kakaoService.init();
 
   return (
     <div className="App">
-      <AuthProvider>
-        <GlobalLayout>
-          <BrowserRouter>
+      <GlobalLayout>
+        <BrowserRouter>
+          <AuthProvider>
             <ProtectRouter>
               <Routes>
                 <Route index element={<SignInPage />} />
@@ -61,8 +63,14 @@ const App = () => {
                   element={<ClassEditSchedulePage />}
                 />
 
-                <Route path="inquiry" element={<InquiryPage />} />
-                <Route path="inquiry/:mid" element={<InquiryMessage />} />
+                <Route
+                  path="inquiry"
+                  element={<InquiryPage chatService={chatService} />}
+                />
+                <Route
+                  path="inquiry/:mid"
+                  element={<InquiryMessage chatService={chatService} />}
+                />
 
                 <Route path="sales" element={<SalesPage />} />
                 <Route path="sales/:sid" element={<SalesDetailPage />} />
@@ -86,11 +94,11 @@ const App = () => {
                 <Route path="/*" element={<NotFound />} />
               </Routes>
             </ProtectRouter>
+          </AuthProvider>
 
-            <GNB />
-          </BrowserRouter>
-        </GlobalLayout>
-      </AuthProvider>
+          <GNB />
+        </BrowserRouter>
+      </GlobalLayout>
     </div>
   );
 };

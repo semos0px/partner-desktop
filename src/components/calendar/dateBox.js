@@ -4,6 +4,7 @@ import responsive from "../../styles/constants/responsive";
 import typography from "../../styles/constants/typography";
 import flexbox from "../../styles/func/flexbox";
 import checkIcon from "../../assets/icon/calendar/check-red.svg";
+import { useState } from "react";
 
 const Box = styled.div`
   font-size: ${typography.size.tiny}px;
@@ -52,7 +53,7 @@ const Month = styled.ol`
 const Day = styled.li`
   ${({ selectable }) =>
     !selectable
-      ? `color: ${colors.mediumGray} !important; ; pointer-events: none;`
+      ? `color: ${colors.lightGray} !important; ; pointer-events: none;`
       : null}
 
   p {
@@ -63,6 +64,9 @@ const Day = styled.li`
     ${flexbox()}
     ${({ isactive }) =>
       isactive && `color: ${colors.white}; background-color: ${colors.blue}; `}
+    
+      ${({ check }) =>
+      check && `color: ${colors.white}; background-color: ${colors.blue}; `} 
 
     &::before {
       position: absolute;
@@ -82,7 +86,9 @@ const DateBox = ({
   lastDate,
   datetime,
   targetDay,
+  targetDayList = "",
   setTargetDay,
+  addTargetDayListHandler = "",
   data,
 }) => {
   // 선택한 날은 파란색 동그라미
@@ -110,6 +116,12 @@ const DateBox = ({
     return result;
   };
 
+  const getDateIndex = (year, month, date) => {
+    return `${year}-${parseInt(month) < 10 ? `0${month}` : month}-${
+      parseInt(date) < 10 ? `0${date}` : date
+    }`;
+  };
+
   return (
     <Box>
       <Weekdays>
@@ -123,7 +135,21 @@ const DateBox = ({
           <Day
             key={idx}
             selectable={day >= datetime.date ? true : false}
-            onClick={() => setTargetDay(day)}
+            onClick={() => {
+              setTargetDay(day);
+              addTargetDayListHandler({
+                year: datetime.year,
+                month: datetime.month + 1,
+                date: day,
+              });
+            }}
+            check={
+              targetDayList[
+                getDateIndex(datetime.year, datetime.month + 1, day)
+              ]
+                ? true
+                : false
+            }
             isactive={targetDay === day ? true : false}
             isData={isData(day)}
           >

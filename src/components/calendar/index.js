@@ -63,21 +63,20 @@ const NextButton = styled.button`
   }
 `;
 
-const Calendar = () => {
-  const currentDate = new Date();
-
-  const [targetDatetime, setTargetDatetime] = useState({
-    year: currentDate.getFullYear(),
-    month: currentDate.getMonth(),
-    date: currentDate.getDate(),
-  });
-
+const Calendar = ({
+  allData,
+  targetDay,
+  targetDayList = "",
+  currentDate,
+  targetDatetime,
+  setTargetDatetime,
+  setTargetDay,
+  addTargetDayListHandler = "",
+}) => {
   const [targetLastDate, setTargetLastDate] = useState({
     date: new Date(targetDatetime.year, targetDatetime.month + 1, 0).getDate(),
     day: new Date(targetDatetime.year, targetDatetime.month, 1).getDay(),
   });
-
-  const [targetDay, setTargetDay] = useState(currentDate.getDate());
 
   // TODO: data fetching 필요
   const data = calendarData;
@@ -177,6 +176,8 @@ const Calendar = () => {
     setTargetDay(null);
   };
 
+  console.log(targetDayList);
+
   return (
     <Container>
       <header>
@@ -199,12 +200,14 @@ const Calendar = () => {
       </header>
 
       <DateBox
+        targetDayList={targetDayList}
         lastDay={targetLastDate.day}
         lastDate={targetLastDate.date}
         datetime={targetDatetime}
         targetDay={targetDay}
         setTargetDay={setTargetDay}
-        data={["2022-04-20", "2022-05-05"]}
+        data={allData ? Object.keys(allData).map((key) => key) : []}
+        addTargetDayListHandler={addTargetDayListHandler}
       />
     </Container>
   );

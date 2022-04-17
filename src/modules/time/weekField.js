@@ -33,19 +33,19 @@ const Day = styled.li`
   }
 `;
 
-const WeekField = ({ addHandler, data }) => {
-  const [mockData, setMockData] = useState([1, 2, 3]);
+const WeekField = ({ addHandler, daysData, toggleHandler }) => {
+  // const [mockData, setMockData] = useState([1, 2, 3]);
 
-  const mockToggleHandler = (idx) => {
-    // 중복 체크
-    if (mockData.includes(idx)) {
-      const list = mockData.filter((item) => item !== idx);
+  // const mockToggleHandler = (idx) => {
+  //   // 중복 체크
+  //   if (mockData.includes(idx)) {
+  //     const list = mockData.filter((item) => item !== idx);
 
-      setMockData(list);
-    } else {
-      setMockData((prev) => [...prev, idx]);
-    }
-  };
+  //     setMockData(list);
+  //   } else {
+  //     setMockData((prev) => [...prev, idx]);
+  //   }
+  // };
 
   const week = [
     {
@@ -88,8 +88,8 @@ const WeekField = ({ addHandler, data }) => {
         <Day
           key={day.idx}
           idx={day.idx}
-          isCheck={mockData.includes(day.idx)}
-          onClick={() => mockToggleHandler(day.idx)}
+          isCheck={daysData.includes(day.idx)}
+          onClick={() => toggleHandler(day.idx)}
         >
           {day.text}
         </Day>

@@ -8,6 +8,17 @@ import typography from "../../styles/constants/typography";
 import { getDay } from "../../func";
 import { useState } from "react";
 import Calendar from "../../components/calendar";
+import { shortenAddress } from "../../components/classForm/locationInputField";
+
+const getFilteredData = (scheduleData, targetDatetime) => {
+  const { year, month, date } = targetDatetime;
+
+  const index = `${year}-${
+    parseInt(month) + 1 < 10 ? `0${month + 1}` : month + 1
+  }-${parseInt(date) < 10 ? `0${date}` : date}`;
+
+  return scheduleData[index];
+};
 
 const Main = styled.main`
   width: 100%;
@@ -148,6 +159,43 @@ const TargetScheduleBox = styled.div`
 `;
 
 const ClassSchedule = ({ data, recommendationNoticeToggleHandler }) => {
+  const scheduleData = {
+    "2022-04-25": {
+      0: {
+        location: "인천 연수구 송도국제대로 157 세모스",
+        time: {
+          "start-hour": "08",
+          "start-minute": "00",
+          "finish-hour": "11",
+          "finish-minute": "00",
+        },
+        personnel: "1",
+      },
+      1: {
+        location: "인천 연수구 송도국제대로 157 세모스",
+        time: {
+          "start-hour": "08",
+          "start-minute": "00",
+          "finish-hour": "11",
+          "finish-minute": "00",
+        },
+        personnel: "0",
+      },
+    },
+    "2022-05-05": {
+      0: {
+        location: "인천 연수구 송도국제대로 157 세모스",
+        time: {
+          "start-hour": "08",
+          "start-minute": "00",
+          "finish-hour": "11",
+          "finish-minute": "00",
+        },
+        personnel: "1",
+      },
+    },
+  };
+
   const week = ["일", "월", "화", "수", "목", "금", "토"];
 
   const currentDate = new Date();
@@ -158,6 +206,34 @@ const ClassSchedule = ({ data, recommendationNoticeToggleHandler }) => {
     date: currentDate.getDate(),
     day: currentDate.getDay(),
   });
+
+  const [targetDatetime, setTargetDatetime] = useState({
+    year: currentDate.getFullYear(),
+    month: currentDate.getMonth(),
+    date: currentDate.getDate(),
+  });
+
+  const [targetDay, setTargetDay] = useState(currentDate.getDate());
+
+  const [targetDayData, setTargetDayData] = useState(
+    getFilteredData(scheduleData, {
+      year: targetDatetime.year,
+      month: targetDatetime.month,
+      date: targetDay,
+    })
+  );
+
+  const targetDayDataChangeHandler = (day) => {
+    setTargetDay(day);
+
+    setTargetDayData(
+      getFilteredData(scheduleData, {
+        year: targetDatetime.year,
+        month: targetDatetime.month,
+        date: day,
+      })
+    );
+  };
 
   const {
     lesson,
@@ -223,45 +299,52 @@ const ClassSchedule = ({ data, recommendationNoticeToggleHandler }) => {
         <FinishBox>
           <p>등록 완료 일정</p>
           <p>날짜를 클릭하면 일정을 확인할 수 있어요.</p>
-          {/* 달력 */}
-          <Calendar />
+
+          <Calendar
+            allData={scheduleData}
+            targetDay={targetDay}
+            currentDate={currentDate}
+            targetDatetime={targetDatetime}
+            setTargetDatetime={setTargetDatetime}
+            setTargetDay={targetDayDataChangeHandler}
+          />
 
           <TargetScheduleBox>
-            <time>{`${datetime.year}년 ${datetime.month + 1}월 ${
-              datetime.date
-            }일 (${week[datetime.day]}요일)`}</time>
+            {targetDay && (
+              <time>{`${targetDatetime.year}년 ${
+                targetDatetime.month + 1
+              }월 ${targetDay}일 (${
+                week[
+                  new Date(
+                    targetDatetime.year,
+                    targetDatetime.month,
+                    targetDay
+                  ).getDay()
+                ]
+              }요일)`}</time>
+            )}
 
             {/* 해당 날짜의 data 가져왔다고 가정하고 */}
             <ul>
-              <li>
-                <InfoTag color="blue">서울 송파 잠실</InfoTag>
-                <div>
-                  <p>강습 시간</p>
-                  <p>13:00 - 14:00</p>
-                </div>
+              {targetDayData &&
+                Object.keys(targetDayData).map((key) => (
+                  <li key={key}>
+                    <InfoTag color="blue">
+                      {shortenAddress(targetDayData[key].location)}
+                    </InfoTag>
+                    <div>
+                      <p>강습 시간</p>
+                      <p>13:00 - 14:00</p>
+                    </div>
 
-                <div>
-                  <p>강습 인원</p>
-                  <p>
-                    <span>1</span> / 4
-                  </p>
-                </div>
-              </li>
-
-              <li>
-                <InfoTag color="blue">인천 연수 송도</InfoTag>
-                <div>
-                  <p>강습 시간</p>
-                  <p>13:00 - 14:00</p>
-                </div>
-
-                <div>
-                  <p>강습 인원</p>
-                  <p>
-                    <span>1</span> / 4
-                  </p>
-                </div>
-              </li>
+                    <div>
+                      <p>강습 인원</p>
+                      <p>
+                        <span>{targetDayData[key].personnel}</span> / 4
+                      </p>
+                    </div>
+                  </li>
+                ))}
             </ul>
           </TargetScheduleBox>
         </FinishBox>

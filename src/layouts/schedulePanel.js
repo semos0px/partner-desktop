@@ -10,14 +10,20 @@ import RowLayout from "./rowLayout";
 import bangIcon from "../assets/icon/class/bang-blue.svg";
 import { useState } from "react";
 import Calendar from "../components/calendar";
+import ScheduleInputCard from "../components/classForm/scheduleInputCard";
+import TargetDayCard from "../components/classForm/targetDayCard";
+
+const getFilteredData = (scheduleData, targetDatetime) => {
+  const { year, month, date } = targetDatetime;
+
+  const index = `${year}-${
+    parseInt(month) + 1 < 10 ? `0${month + 1}` : month + 1
+  }-${parseInt(date) < 10 ? `0${date}` : date}`;
+
+  return scheduleData[index];
+};
 
 const LEFT_RIGHT_PADDING = 20;
-
-const ButtonBox = styled.div`
-  position: fixed;
-  bottom: 10px;
-  z-index: 500;
-`;
 
 const Box = styled.div`
   width: 100%;
@@ -49,7 +55,7 @@ const Bang = styled.img`
 `;
 
 const Wrapper = styled.div`
-  position: relative;
+  /* position: relative; */
   padding: 20px;
 `;
 
@@ -69,10 +75,10 @@ const Comment = styled.p`
 const Popup = styled.div`
   position: absolute;
   background-color: ${colors.vanilla};
-  width: 340px;
+  width: 300px;
   padding: 10px;
   border-radius: ${base.borderRadius}px;
-  font-size: ${typography.size.small}px;
+  font-size: ${typography.size.micro}px;
   ${flexbox()}
   top: 10px;
   left: 170px;
@@ -92,9 +98,14 @@ const CalendarHeader = styled.header`
 
 const Section = styled.section``;
 
+const ButtonBox = styled.div`
+  width: 100%;
+  padding: 0 10px;
+  margin-bottom: 10px;
+`;
+
 const BottomButton = styled.button`
-  max-width: ${responsive.maxWidth.sm - LEFT_RIGHT_PADDING}px;
-  width: calc(100% - ${LEFT_RIGHT_PADDING}px);
+  width: 100%;
   height: 66px;
   background-color: ${colors.blue};
   color: ${colors.white};
@@ -107,8 +118,163 @@ const BottomButton = styled.button`
 `;
 
 const SchedulePanel = ({ open }) => {
+  const scheduleData = {
+    "2022-04-25": {
+      0: {
+        location: "인천 연수구 송도국제대로 157 세모스",
+        time: {
+          "start-hour": "08",
+          "start-minute": "00",
+          "finish-hour": "11",
+          "finish-minute": "00",
+        },
+        personnel: "1",
+      },
+      1: {
+        location: "인천 연수구 송도국제대로 157 세모스",
+        time: {
+          "start-hour": "08",
+          "start-minute": "00",
+          "finish-hour": "11",
+          "finish-minute": "00",
+        },
+        personnel: "0",
+      },
+    },
+    "2022-05-05": {
+      0: {
+        location: "인천 연수구 송도국제대로 157 세모스",
+        time: {
+          "start-hour": "08",
+          "start-minute": "00",
+          "finish-hour": "11",
+          "finish-minute": "00",
+        },
+        personnel: "1",
+      },
+    },
+  };
+
   const [notice, setNotice] = useState(false);
+
+  const [newScheduleList, setNewScheduleList] = useState({});
+  const [newSchedule, setNewSchedule] = useState({
+    location: "",
+    time: {
+      "start-hour": "",
+      "start-minute": "",
+      "finish-hour": "",
+      "finish-minute": "",
+    },
+    personnel: "",
+  });
+
   const addHandler = () => {};
+
+  const week = ["일", "월", "화", "수", "목", "금", "토"];
+
+  const currentDate = new Date();
+
+  const [datetime, setDatetime] = useState({
+    year: currentDate.getFullYear(),
+    month: currentDate.getMonth(),
+    date: currentDate.getDate(),
+    day: currentDate.getDay(),
+  });
+
+  const [targetDatetime, setTargetDatetime] = useState({
+    year: currentDate.getFullYear(),
+    month: currentDate.getMonth(),
+    date: currentDate.getDate(),
+  });
+
+  const [targetDay, setTargetDay] = useState(currentDate.getDate());
+
+  const [targetDayList, setTargetDayList] = useState([]);
+
+  const [targetDayData, setTargetDayData] = useState(
+    getFilteredData(scheduleData, {
+      year: targetDatetime.year,
+      month: targetDatetime.month,
+      date: targetDay,
+    })
+  );
+
+  const targetDayDataChangeHandler = (day) => {
+    setTargetDay(day);
+
+    setTargetDayData(
+      getFilteredData(scheduleData, {
+        year: targetDatetime.year,
+        month: targetDatetime.month,
+        date: day,
+      })
+    );
+  };
+
+  const addTargetDayListHandler = (datetime) => {
+    const index = `${datetime.year}-${
+      parseInt(datetime.month) < 10 ? `0${datetime.month}` : datetime.month
+    }-${parseInt(datetime.date) < 10 ? `0${datetime.date}` : datetime.date}`;
+
+    if (targetDayList[index]) {
+      setTargetDayList((prev) => {
+        const updated = { ...prev };
+        delete updated[index];
+        return updated;
+      });
+    } else {
+      setTargetDayList((prev) => ({
+        ...prev,
+        [index]: datetime,
+      }));
+    }
+  };
+
+  const newScheduleChangeHandler = (e) => {
+    const { name, value } = e.target;
+
+    if (name.includes("hour") || name.includes("minute")) {
+      setNewSchedule((prev) => ({
+        ...prev,
+        time: {
+          ...prev.time,
+          [name]: value,
+        },
+      }));
+    } else {
+      setNewSchedule((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
+
+  const newScheduleSaveHandler = () => {
+    setNewScheduleList((prev) => ({
+      ...prev,
+      [new Date()]: newSchedule,
+    }));
+
+    setNewSchedule({
+      location: "",
+      time: {
+        "start-hour": "",
+        "start-minute": "",
+        "finish-hour": "",
+        "finish-minute": "",
+      },
+      personnel: "",
+    });
+  };
+
+  const newScheduleDeleteHandler = (id) => {
+    setNewScheduleList((prev) => {
+      const updated = { ...prev };
+      delete updated[id];
+      return updated;
+    });
+  };
 
   return (
     <>
@@ -136,19 +302,42 @@ const SchedulePanel = ({ open }) => {
           </header>
 
           <Section>
+            <Calendar
+              allData={scheduleData}
+              targetDay={null}
+              targetDayList={targetDayList}
+              currentDate={currentDate}
+              targetDatetime={targetDatetime}
+              setTargetDatetime={setTargetDatetime}
+              setTargetDay={targetDayDataChangeHandler}
+              addTargetDayListHandler={addTargetDayListHandler}
+            />
+
             <CalendarHeader>
               <div>
                 <Title>일정 입력하기</Title>
                 <Comment>추가하기로 여러개의 강습을 등록할 수 있어요.</Comment>
               </div>
 
-              <AddButton type="button" onClick={addHandler}>
+              <AddButton type="button" onClick={newScheduleSaveHandler}>
                 추가하기
               </AddButton>
             </CalendarHeader>
-
-            <Calendar />
           </Section>
+
+          <ScheduleInputCard
+            data={newSchedule}
+            targetDayData={targetDayData}
+            changeHandler={newScheduleChangeHandler}
+            saveHandler={newScheduleSaveHandler}
+            deleteHandler={newScheduleDeleteHandler}
+          />
+
+          <ul>
+            {Object.keys(newScheduleList).map((key) => (
+              <ScheduleInputCard key={key} />
+            ))}
+          </ul>
         </Wrapper>
 
         <ButtonBox>

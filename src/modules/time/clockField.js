@@ -49,6 +49,7 @@ const SelectBox = styled.div`
   width: 50px;
 
   select {
+    height: ${base.height.smallInput}px;
     padding: 5px !important;
     width: 100%;
     font-size: ${typography.size.small}px;
@@ -79,63 +80,14 @@ const MiddleIcon = styled.span`
   margin: 0 10px;
 `;
 
-const ClockField = ({ addHandler, deleteHandler }) => {
-  const [clockData, setClockData] = useState({
-    "start-hour": null,
-    "start-minute": null,
-    "finish-hour": null,
-    "finish-minute": null,
-  });
-
-  const [mockData, setMockData] = useState({
-    0: {
-      "start-hour": "13",
-      "start-minute": "00",
-      "finish-hour": "14",
-      "finish-minute": "00",
-    },
-  });
-
-  const mockAddHandler = (key) => {
-    if (Object.values(clockData).some((data) => data === null)) {
-      // TODO - NOTICE: 시간을 입력해주세요
-      return;
-    } else {
-      setMockData((prev) => ({ [key]: clockData, ...prev }));
-
-      setClockData({
-        "start-hour": null,
-        "start-minute": null,
-        "finish-hour": null,
-        "finish-minute": null,
-      });
-    }
-  };
-
-  const mockChangeHandler = (e) => {
-    const { name, value } = e.target;
-
-    e.preventDefault();
-
-    setClockData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const mockDeleteHandler = (key) => {
-    const data = Object.keys(mockData).filter((k) => k !== key);
-
-    setMockData(data);
-  };
-
-  const mockEditHandler = (key, e) => {
-    const { name, value } = e.target;
-    console.log(key, value, name);
-
-    setMockData((prev) => ({
-      ...prev,
-      [key]: { ...prev[key], [name]: value },
-    }));
-  };
-
+const ClockField = ({
+  targetData,
+  data,
+  addHandler,
+  deleteHandler,
+  changeHandler,
+  editHandler,
+}) => {
   const hour = Array.from({ length: 18 }, (_, i) => {
     if (i + 6 < 10) {
       return `0${i + 6}`;
@@ -158,7 +110,11 @@ const ClockField = ({ addHandler, deleteHandler }) => {
         <Clock>
           <Time>
             <SelectBox>
-              <select name="start-hour" onChange={mockChangeHandler}>
+              <select
+                name="start-hour"
+                onChange={changeHandler}
+                defaultValue={targetData["start-hour"]}
+              >
                 {hour.map((item, idx) => (
                   <option key={idx} value={item}>
                     {item}
@@ -174,7 +130,11 @@ const ClockField = ({ addHandler, deleteHandler }) => {
             <span>:</span>
 
             <SelectBox>
-              <select name="start-minute" onChange={mockChangeHandler}>
+              <select
+                name="start-minute"
+                onChange={changeHandler}
+                defaultValue={targetData["start-minute"]}
+              >
                 {minute.map((item, idx) => (
                   <option key={idx} value={item}>
                     {item}
@@ -192,7 +152,11 @@ const ClockField = ({ addHandler, deleteHandler }) => {
 
           <Time>
             <SelectBox>
-              <select name="finish-hour" onChange={mockChangeHandler}>
+              <select
+                name="finish-hour"
+                onChange={changeHandler}
+                defaultValue={targetData["finish-hour"]}
+              >
                 {hour.map((item, idx) => (
                   <option key={idx} value={item}>
                     {item}
@@ -208,7 +172,11 @@ const ClockField = ({ addHandler, deleteHandler }) => {
             <span>:</span>
 
             <SelectBox>
-              <select name="finish-minute" onChange={mockChangeHandler}>
+              <select
+                name="finish-minute"
+                onChange={changeHandler}
+                defaultValue={targetData["finish-minute"]}
+              >
                 {minute.map((item, idx) => (
                   <option key={idx} value={item}>
                     {item}
@@ -223,13 +191,13 @@ const ClockField = ({ addHandler, deleteHandler }) => {
           </Time>
         </Clock>
 
-        <AddButton type="button" onClick={() => mockAddHandler(new Date())}>
+        <AddButton type="button" onClick={() => addHandler(new Date())}>
           <img src={addIcon} />
         </AddButton>
       </ClockBox>
 
       <List>
-        {Object.keys(mockData).map((key, idx) => (
+        {Object.keys(data).map((key, idx) => (
           <Item key={idx}>
             <ClockBox>
               <Clock>
@@ -237,8 +205,8 @@ const ClockField = ({ addHandler, deleteHandler }) => {
                   <SelectBox>
                     <select
                       name="start-hour"
-                      onChange={(e) => mockEditHandler(key, e)}
-                      defaultValue={mockData[key]["start-hour"]}
+                      onChange={(e) => editHandler(key, e)}
+                      defaultValue={data[key]["start-hour"]}
                     >
                       {hour.map((item, idx) => (
                         <option key={idx} value={item}>
@@ -257,8 +225,8 @@ const ClockField = ({ addHandler, deleteHandler }) => {
                   <SelectBox>
                     <select
                       name="start-minute"
-                      onChange={(e) => mockEditHandler(key, e)}
-                      defaultValue={mockData[key]["start-minute"]}
+                      onChange={(e) => editHandler(key, e)}
+                      defaultValue={data[key]["start-minute"]}
                     >
                       {minute.map((item, idx) => (
                         <option key={idx} value={item}>
@@ -279,8 +247,8 @@ const ClockField = ({ addHandler, deleteHandler }) => {
                   <SelectBox>
                     <select
                       name="finish-hour"
-                      onChange={(e) => mockEditHandler(key, e)}
-                      defaultValue={mockData[key]["finish-hour"]}
+                      onChange={(e) => editHandler(key, e)}
+                      defaultValue={data[key]["finish-hour"]}
                     >
                       {hour.map((item, idx) => (
                         <option key={idx} value={item}>
@@ -299,8 +267,8 @@ const ClockField = ({ addHandler, deleteHandler }) => {
                   <SelectBox>
                     <select
                       name="finish-minute"
-                      onChange={(e) => mockEditHandler(key, e)}
-                      defaultValue={mockData[key]["finish-minute"]}
+                      onChange={(e) => editHandler(key, e)}
+                      defaultValue={data[key]["finish-minute"]}
                     >
                       {minute.map((item, idx) => (
                         <option key={idx} value={item}>
@@ -316,10 +284,7 @@ const ClockField = ({ addHandler, deleteHandler }) => {
                 </Time>
               </Clock>
 
-              <DeleteButton
-                type="button"
-                onClick={() => mockDeleteHandler(key)}
-              >
+              <DeleteButton type="button" onClick={() => deleteHandler(key)}>
                 <img src={deleteIcon} />
               </DeleteButton>
             </ClockBox>

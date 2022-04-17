@@ -347,6 +347,8 @@ const Top = styled.div`
 
 const ClassInputField = ({
   classData,
+  targetLocation,
+  setTargetLocation,
   openClassHandler,
   changeHandler,
   recommendationNoticeToggleHandler,
@@ -453,20 +455,22 @@ const ClassInputField = ({
         <LocationDiv>
           <label>강습 위치</label>
 
-          <LocationInputField searchAddressHandler={searchAddressHandler} />
+          <LocationInputField
+            addHandler={addHandler}
+            deleteHandler={deleteHandler}
+            searchAddressHandler={searchAddressHandler}
+            data={classData.location}
+            targetLocation={targetLocation}
+            setTargetLocation={setTargetLocation}
+          />
         </LocationDiv>
 
         <BaseScheduleDiv>
-          <Top>
-            <div>
-              <label>기본 일정</label>
-              <p>매달 자동으로 입력되는 일정입니다.</p>
-            </div>
-
-            <AddButton />
-          </Top>
-
-          <BaseScheduleInputField />
+          <BaseScheduleInputField
+            addHandler={addHandler}
+            deleteHandler={deleteHandler}
+            data={classData}
+          />
         </BaseScheduleDiv>
 
         <ThumbnailDiv>

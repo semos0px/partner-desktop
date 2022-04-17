@@ -11,6 +11,7 @@ import PageLayout from "../../layouts/pageLayout";
 import RowLayout from "../../layouts/rowLayout";
 import inquiryImage from "../../assets/images/inquiry/inquiry-default.png";
 import BottomLayout from "../../layouts/bottomLayout";
+import Chat from "../../service/chat";
 
 const List = styled.ul``;
 
@@ -19,7 +20,7 @@ const FilterBox = styled.div`
   margin-bottom: 20px;
 `;
 
-const InquiryPage = () => {
+const InquiryPage = ({ chatService }) => {
   const [inputValue, setInputValue] = useState({
     word: "",
     filter: "all",
@@ -49,6 +50,10 @@ const InquiryPage = () => {
 
   const searchHandler = () => {
     console.log("search");
+  };
+
+  const enterRoomHandler = (roomName) => {
+    chatService.enter(roomName);
   };
 
   // TODO: Data Fetching
@@ -95,7 +100,12 @@ const InquiryPage = () => {
             ) : (
               <List>
                 {filterdList.map((item, idx) => (
-                  <CommonCard key={idx} item={item} page="inquiry" />
+                  <CommonCard
+                    key={idx}
+                    item={item}
+                    page="inquiry"
+                    enterRoomHandler={enterRoomHandler}
+                  />
                 ))}
               </List>
             )}

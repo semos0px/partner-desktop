@@ -32,7 +32,7 @@ const ClassEditContentsPage = () => {
     maximum: 4,
     discount: [],
     option: [],
-    location: [{ main: null, detail: null }],
+    location: [],
     mainImage: {
       base: "",
       files: "",
@@ -45,6 +45,8 @@ const ClassEditContentsPage = () => {
     detail: null,
     additional: null,
   });
+
+  const [targetLocation, setTargetLocation] = useState("");
 
   console.log(classData);
 
@@ -81,6 +83,22 @@ const ClassEditContentsPage = () => {
           price: value.price,
         };
         break;
+
+      case "location":
+        newData = {
+          id: new Date(),
+          main: targetLocation ? targetLocation : "상세 정보 입력",
+          detail: value.detail,
+        };
+        break;
+      case "schedule":
+        newData = {
+          id: new Date(),
+          location: value.location,
+          days: value.days,
+          time: value.time,
+        };
+        break;
       default:
         newData = { id: new Date(), text: value };
     }
@@ -103,16 +121,13 @@ const ClassEditContentsPage = () => {
     }));
   };
 
-  const putAddress = (data) => {
+  const targetLocationChangeHandler = (data) => {
     const { address } = data;
 
-    setClassData((prev) => ({
-      ...prev,
-      location: [...prev.location, { main: address, text: null }],
-    }));
+    setTargetLocation(address);
   };
 
-  const mapService = new MapService(putAddress);
+  const mapService = new MapService(targetLocationChangeHandler);
 
   // TODO: data fetching - 강사 정보
 
@@ -158,6 +173,23 @@ const ClassEditContentsPage = () => {
     };
   };
 
+  const targetScheduleEditHandler = (id, name, value) => {
+    setClassData((prev) => {
+      const targetData = prev.schedule.filter((item) => item.id === id);
+
+      let updatedData;
+
+      // if (name === "location") {
+      //   updatedData = { ...targetData, location: [...targetData[location]] };
+      // }
+
+      const newData = {
+        ...targetData,
+        [name]: updatedData,
+      };
+    });
+  };
+
   return (
     <>
       <PageLayout headerTitle="[프리다이빙] 고고다이브(백강사)" isGoBack={true}>
@@ -175,6 +207,8 @@ const ClassEditContentsPage = () => {
                   recommendationNoticeToggleHandler={
                     recommendationNoticeToggleHandler
                   }
+                  targetLocation={targetLocation}
+                  setTargetLocation={setTargetLocation}
                   certainHandler={recommendationCertainHandler}
                   uncertainHandler={recommendationUncertainHandler}
                   classData={classData}

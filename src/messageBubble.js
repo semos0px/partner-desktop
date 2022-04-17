@@ -35,18 +35,21 @@ const BubbleBox = styled.div`
 `;
 
 const Bubble = styled.div`
-  width: 270px;
+  max-width: 200px;
   padding: 10px;
   height: 100%;
   border-radius: ${base.borderRadius}px;
   background-color: ${({ isMe }) => (isMe ? colors.white : colors.lightBlue)};
   margin-left: ${({ isMe }) => isMe && "10px"};
+  text-align: left;
 
   ${responsive.mediaQuery.mobile} {
     width: 360px;
   }
 
   p {
+    padding: 0 5px;
+    width: 100%;
   }
 `;
 

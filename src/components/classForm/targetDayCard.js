@@ -5,10 +5,13 @@ import selectIcon from "../../assets/icon/input/select-chevron.svg";
 import flexbox from "../../styles/func/flexbox";
 import responsive from "../../styles/constants/responsive";
 import typography from "../../styles/constants/typography";
+import { shortenAddress } from "./locationInputField";
+import { useState } from "react";
 
 const Card = styled.li`
   width: 100%;
   ${flexbox("space-between")}
+  margin-bottom: 30px;
 `;
 
 const Left = styled.div`
@@ -41,7 +44,7 @@ const SelectBox = styled.div`
     box-shadow: ${base.boxShadow};
     border-radius: ${base.borderRadius}px;
     color: ${colors.mediumGray};
-    padding: 10px 20px;
+    padding: 5px 20px;
     padding-right: 40px;
 
     -webkit-appearance: none; /* for chrome */
@@ -194,16 +197,39 @@ const MaximumBox = styled.div`
 `;
 
 const TargetDayCard = ({ targetDayData }) => {
+  const { location, time, personnel } = targetDayData;
+
+  const [updatedData, setUpdatedData] = useState({
+    location,
+    time: {
+      "start-hour": time["start-hour"],
+      "start-minute": time["start-minute"],
+      "finish-hour": time["finish-hour"],
+      "finish-minute": time["finish-minute"],
+    },
+    personnel,
+  });
+
   const checkAddressHandler = () => {
     console.log("주소 확인하기");
   };
 
-  const mockChangeHandler = (e) => {
+  const updatedDataChangeHandler = (e) => {
     const { name, value } = e.target;
 
     e.preventDefault();
 
-    // setClockData((prev) => ({ ...prev, [name]: value }));
+    if (name.includes("hour") || name.includes("minute")) {
+      setUpdatedData((prev) => ({
+        ...prev,
+        time: {
+          ...prev.time,
+          [name]: value,
+        },
+      }));
+    } else {
+      setUpdatedData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const hour = Array.from({ length: 18 }, (_, i) => {
@@ -229,8 +255,8 @@ const TargetDayCard = ({ targetDayData }) => {
           <label>위치</label>
 
           <SelectBox width="150">
-            <select defaultValue={"인천 연수 선학"}>
-              <option></option>
+            <select defaultValue={shortenAddress(targetDayData.location)}>
+              <option>{shortenAddress(targetDayData.location)}</option>
             </select>
 
             <SelectIcon>
@@ -249,7 +275,11 @@ const TargetDayCard = ({ targetDayData }) => {
           <Clock>
             <Time>
               <ClockBox>
-                <select name="start-hour" onChange={mockChangeHandler}>
+                <select
+                  name="start-hour"
+                  defaultValue={targetDayData.time["start-hour"]}
+                  onChange={updatedDataChangeHandler}
+                >
                   {hour.map((item, idx) => (
                     <option key={idx} value={item}>
                       {item}
@@ -265,7 +295,11 @@ const TargetDayCard = ({ targetDayData }) => {
               <span>:</span>
 
               <ClockBox>
-                <select name="start-minute" onChange={mockChangeHandler}>
+                <select
+                  name="start-minute"
+                  defaultValue={targetDayData.time["start-hour"]}
+                  onChange={updatedDataChangeHandler}
+                >
                   {minute.map((item, idx) => (
                     <option key={idx} value={item}>
                       {item}
@@ -283,7 +317,11 @@ const TargetDayCard = ({ targetDayData }) => {
 
             <Time>
               <ClockBox>
-                <select name="finish-hour" onChange={mockChangeHandler}>
+                <select
+                  name="finish-hour"
+                  defaultValue={targetDayData.time["start-hour"]}
+                  onChange={updatedDataChangeHandler}
+                >
                   {hour.map((item, idx) => (
                     <option key={idx} value={item}>
                       {item}
@@ -299,7 +337,11 @@ const TargetDayCard = ({ targetDayData }) => {
               <span>:</span>
 
               <ClockBox>
-                <select name="finish-minute" onChange={mockChangeHandler}>
+                <select
+                  name="finish-minute"
+                  defaultValue={targetDayData.time["start-hour"]}
+                  onChange={updatedDataChangeHandler}
+                >
                   {minute.map((item, idx) => (
                     <option key={idx} value={item}>
                       {item}
@@ -319,7 +361,13 @@ const TargetDayCard = ({ targetDayData }) => {
           <label>강습 인원</label>
 
           <div>
-            <input type="text" />
+            <input
+              type="text"
+              value={updatedData.personnel}
+              name="personnel"
+              onChange={updatedDataChangeHandler}
+              max={4}
+            />
             <span>/ 4</span>
           </div>
         </MaximumBox>

@@ -7,6 +7,8 @@ import flexbox from "../styles/func/flexbox";
 import transition from "../styles/func/transition";
 import appleIcon from "../assets/icon/login/apple.svg";
 import kakaoIcon from "../assets/icon/login/kakao.svg";
+import { useKakao } from "../context/kakao";
+import { useAuth } from "../context/auth";
 
 const Box = styled.div`
   width: 100%;
@@ -87,7 +89,7 @@ const AppleButton = styled.button`
 `;
 
 const LoginBox = () => {
-  const loginHandler = () => {};
+  const { loginHandler } = useAuth();
 
   return (
     <Box>
@@ -99,7 +101,7 @@ const LoginBox = () => {
           <img src={kakaoIcon} />
           카카오톡으로 로그인하기
         </KakaoButton>
-        <AppleButton type="button" onClick={loginHandler}>
+        <AppleButton type="button" onClick={() => {}}>
           <img src={appleIcon} />
           Apple로 로그인하기
         </AppleButton>

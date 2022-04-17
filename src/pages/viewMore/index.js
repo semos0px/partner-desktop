@@ -16,6 +16,7 @@ import kakaoIcon from "../../assets/icon/login/kakao.svg";
 import responsive from "../../styles/constants/responsive";
 import BottomLayout from "../../layouts/bottomLayout";
 import { useKakao } from "../../context/kakao";
+import { useAuth } from "../../context/auth";
 
 const KAKAO_CHANNEL_PUBLIC_ID = "_YxfVxfK";
 
@@ -150,6 +151,7 @@ const Button = styled.button`
 
 const ViewMore = () => {
   const { kakaoService } = useKakao();
+  const { logoutHandler } = useAuth();
 
   // data fetching
   const partnerInfo = {
@@ -160,11 +162,6 @@ const ViewMore = () => {
 
   const kakaoInquiryHandler = () => {
     kakaoService.chat(KAKAO_CHANNEL_PUBLIC_ID);
-  };
-
-  const logoutHandler = () => {
-    // TODO: auth context에서 logout 구현한거 가져올 것
-    // login 페이지로 redirect
   };
 
   const shareHandler = () => {

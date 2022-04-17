@@ -16,6 +16,16 @@ import TargetDayCard from "../../components/classForm/targetDayCard";
 import SchedulePanel from "../../layouts/schedulePanel";
 import Calendar from "../../components/calendar";
 
+const getFilteredData = (scheduleData, targetDatetime) => {
+  const { year, month, date } = targetDatetime;
+
+  const index = `${year}-${
+    parseInt(month) + 1 < 10 ? `0${month + 1}` : month + 1
+  }-${parseInt(date) < 10 ? `0${date}` : date}`;
+
+  return scheduleData[index];
+};
+
 const LEFT_RIGHT_PADDING = 20;
 
 const Wrapper = styled.div`
@@ -133,7 +143,74 @@ const TargetDayDiv = styled.div`
 `;
 
 const ClassEditSchedulePage = ({ recommendation = true }) => {
-  const [date, setDate] = useState(new Date());
+  // Data fetching
+  const scheduleData = {
+    "2022-04-25": {
+      0: {
+        location: "인천 연수구 송도국제대로 157 세모스",
+        time: {
+          "start-hour": "08",
+          "start-minute": "00",
+          "finish-hour": "11",
+          "finish-minute": "00",
+        },
+        personnel: "1",
+      },
+      1: {
+        location: "인천 연수구 송도국제대로 157 세모스",
+        time: {
+          "start-hour": "08",
+          "start-minute": "00",
+          "finish-hour": "11",
+          "finish-minute": "00",
+        },
+        personnel: "0",
+      },
+    },
+    "2022-05-05": {
+      0: {
+        location: "인천 연수구 송도국제대로 157 세모스",
+        time: {
+          "start-hour": "08",
+          "start-minute": "00",
+          "finish-hour": "11",
+          "finish-minute": "00",
+        },
+        personnel: "1",
+      },
+    },
+  };
+
+  const currentDate = new Date();
+
+  const [targetDatetime, setTargetDatetime] = useState({
+    year: currentDate.getFullYear(),
+    month: currentDate.getMonth(),
+    date: currentDate.getDate(),
+  });
+
+  const [targetDay, setTargetDay] = useState(currentDate.getDate());
+
+  const [targetDayData, setTargetDayData] = useState(
+    getFilteredData(scheduleData, {
+      year: targetDatetime.year,
+      month: targetDatetime.month,
+      date: targetDay,
+    })
+  );
+
+  const targetDayDataChangeHandler = (day) => {
+    setTargetDay(day);
+
+    setTargetDayData(
+      getFilteredData(scheduleData, {
+        year: targetDatetime.year,
+        month: targetDatetime.month,
+        date: day,
+      })
+    );
+  };
+
   const [panel, setPanel] = useState(false);
   const [openRecommendationInfo, setOpenRecommendationInfo] = useState(false);
 
@@ -152,6 +229,8 @@ const ClassEditSchedulePage = ({ recommendation = true }) => {
   const addScheduleHandler = () => {
     setPanel(!panel);
   };
+
+  const week = ["일", "월", "화", "수", "목", "금", "토"];
 
   return (
     <PageLayout headerTitle="[프리다이빙] 고고다이브(백강사)" isGoBack={true}>
@@ -192,16 +271,40 @@ const ClassEditSchedulePage = ({ recommendation = true }) => {
                   </button>
                 </Top>
 
-                <Calendar />
+                <Calendar
+                  allData={scheduleData}
+                  targetDay={targetDay}
+                  currentDate={currentDate}
+                  targetDatetime={targetDatetime}
+                  setTargetDatetime={setTargetDatetime}
+                  setTargetDay={targetDayDataChangeHandler}
+                />
               </CalendarDiv>
 
-              <TargetDayDiv>
-                <p>2022년 2월 11일 (금요일)</p>
+              {targetDayData && (
+                <TargetDayDiv>
+                  <p>{`${targetDatetime.year}년 ${
+                    targetDatetime.month + 1
+                  }월 ${targetDay}일 (${
+                    week[
+                      new Date(
+                        targetDatetime.year,
+                        targetDatetime.month,
+                        targetDay
+                      ).getDay()
+                    ]
+                  }요일)`}</p>
 
-                <ul>
-                  <TargetDayCard />
-                </ul>
-              </TargetDayDiv>
+                  <ul>
+                    {Object.keys(targetDayData).map((key) => (
+                      <TargetDayCard
+                        key={key}
+                        targetDayData={targetDayData[key]}
+                      />
+                    ))}
+                  </ul>
+                </TargetDayDiv>
+              )}
             </Section>
           </Wrapper>
 

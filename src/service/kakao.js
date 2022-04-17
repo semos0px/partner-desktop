@@ -9,9 +9,21 @@ class KakaoService {
     }
   };
 
-  login = () => {};
+  login = (success, fail) => {
+    return window.Kakao.Auth.login({
+      success,
+      fail,
+    });
+  };
 
-  logout = () => {};
+  logout = (callback) => {
+    if (!window.Kakao.Auth.getAccessToken()) {
+      console.log("Not logged in.");
+      return;
+    }
+
+    window.Kakao.Auth.logout(callback);
+  };
 
   chat = (publicId) => {
     window.Kakao.Channel.chat({

@@ -9,6 +9,9 @@ import colors from "../../styles/constants/colors";
 import typography from "../../styles/constants/typography";
 import MessageBubble from "../../messageBubble";
 import RowLayout from "../../layouts/rowLayout";
+import base from "../../styles/constants/base";
+import responsive from "../../styles/constants/responsive";
+import { useLocation } from "react-router-dom";
 
 const ENDPOINT = "http://localhost:8080";
 
@@ -24,27 +27,33 @@ const Section = styled.section`
   }
 `;
 
-const InquiryMessage = () => {
-  const [state, setState] = useState({ message: "", name: "" });
+const Wrapper = styled.div`
+  padding-bottom: ${80 + 20}px;
+
+  ${responsive.mediaQuery.mobile} {
+    padding-bottom: ${200 + 20}px;
+  }
+`;
+
+const InquiryMessage = ({ chatService }) => {
+  // 유저 정보 가져오기
+  const { pathname } = useLocation();
+  const [category, uid] = pathname.slice(1, pathname.length).split("/");
+  const [socketId, setSocketId] = useState("");
+
+  const [roomName, setRooName] = useState(uid);
+
+  const date = new Date();
+
+  const [state, setState] = useState({
+    message: "",
+    name: "",
+    time: "",
+  });
+
   const [chat, setChat] = useState([]);
 
-  console.log(chat);
-
-  // const [response, setResponse] = useState("");
-
-  // const [message, setMessage] = useState("");
-
-  const nickname = "마늘쫑이야님";
-
-  // const messageChangeHandler = (e) => {
-  //   const { value } = e.target;
-
-  //   setMessage(value);
-  // };
-
-  // const messageSendHandler = () => {
-  //   console.log("전송하기");
-  // };
+  console.log(chat, socketId);
 
   const textChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -54,61 +63,65 @@ const InquiryMessage = () => {
 
   const messageSubmitHandler = (e) => {
     e.preventDefault();
+
     const { name, message } = state;
-    socket.emit("message", { name, message });
-    setState({ message: "", name });
+
+    socket.emit("message", { name, message, time: new Date() });
+
+    setState({ message: "", name: "", time: "" });
   };
 
   const renderChat = () => {
-    return chat.map(({ name, message }, index) => (
-      <div key={index}>
-        <h3>
-          {name}:<span>{message}</span>
-        </h3>
-      </div>
+    return chat.map(({ name, message, time }, index) => (
+      <MessageBubble
+        key={index}
+        text={message}
+        time={`${new Date(time).getHours()}:${new Date(time).getMinutes()}`}
+        isMe={socketId === name ? true : false}
+      />
     ));
   };
 
   useEffect(() => {
-    socket.on("message", ({ name, message }) => {
-      setChat([...chat, { name, message }]);
+    socket.on("send_msg", ({ name, message, time }, id) => {
+      setChat([...chat, { name: id, message, time }]);
+    });
+
+    socket.on("connect", (res) => {
+      setSocketId(socket.id);
     });
   });
 
-  // const date = new Date(response.date);
-
   return (
-    <PageLayout isGoBack={true} headerTitle={nickname}>
+    <PageLayout isGoBack={true} headerTitle={roomName}>
       <PaddingLayout>
         <RowLayout>
-          <Section>
-            {renderChat()}
-            {/* <time>{`${date.getFullYear()}년 ${
-              date.getMonth() + 1 < 10
-                ? `0${date.getMonth() + 1}`
-                : date.getMonth() + 1
-            }월 ${
-              date.getDay() < 10 ? `0${date.getDay()}` : date.getDay()
-            }일`}</time> */}
+          <Wrapper>
+            <Section>
+              <time>{`${date.getFullYear()}년 ${
+                date.getMonth() + 1 < 10
+                  ? `0${date.getMonth() + 1}`
+                  : date.getMonth() + 1
+              }월 ${
+                date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+              }일`}</time>
 
-            {/* <MessageBubble
-              text="안녕하세요^^ 프리다이빙 배우고 싶은데...  수영을 못해도 가능할까용??"
-              time="12:00"
-              isMe={false}
-            />
+              <MessageBubble
+                key={0}
+                text="안녕하세요"
+                time={`12:00`}
+                isMe={true}
+              />
+              <MessageBubble
+                key={1}
+                text="안녕하세요 !"
+                time={`12:01`}
+                isMe={false}
+              />
 
-            <MessageBubble
-              text="프리다이빙은 수영 실력과 무관합니다!"
-              time="14:10"
-              isMe={true}
-            />
-
-            <MessageBubble
-              text="그럼 혹시 언제 12월 29일 2시에 예약이 가능할까용??"
-              time="14:30"
-              isMe={false}
-            /> */}
-          </Section>
+              {renderChat()}
+            </Section>
+          </Wrapper>
         </RowLayout>
 
         <SendMessageField

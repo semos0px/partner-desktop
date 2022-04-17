@@ -93,9 +93,9 @@ const Category = styled.p`
   }
 `;
 
-const CommonCard = ({ item, page }) => {
+const CommonCard = ({ item, page, enterRoomHandler }) => {
   return (
-    <Card>
+    <Card onClick={() => enterRoomHandler(item.id)}>
       <SLink to={`/${page}/${item.id}`}>
         <LeftData>
           <Nickname>{item.nickname}님</Nickname>
